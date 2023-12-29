@@ -1,0 +1,11 @@
+/* Fixed height posts media mode */
+.post-media img{
+    object-fit: cover; /* Do not scale the image */
+    width: 100%;
+    max-height: $heightpx;
+}
+
+.post-media video{
+    width: 100%;
+    max-height: $heightpx;
+}
