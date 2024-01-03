@@ -54,9 +54,7 @@ body {
     position: relative;
     display: inline-block;
 }
-.dropdown-menu-header .dropdown-menu li {
-    text-align: center;
-}
+
 
 .dropdown-menu {
     display: none;

@@ -9,8 +9,10 @@
 @include('template.NewHeader')
 <div class="blank-first-blue-block"></div>
 <div class="white-blank-div post-wiki-tabs">
+    <div class="container">
     <a href="#" onclick="showContent('post')">Post</a>
     <a href="#" onclick="showContent('wiki')">Wiki</a>
+</div>
 </div>
 
 <div class="content-post">

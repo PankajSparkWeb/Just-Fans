@@ -12,11 +12,18 @@
 <div class="dropdown-menu-header" aria-labelledby="dropdownMenuButton">
     Menu
     <div class="dropdown-menu" id="myDropdown">
-        <li><a class="dropdown-items menu-option" href="#">Option 1</a></li>
-        <li><a class="dropdown-items menu-option" href="#">Option 2</a></li>
-        <li><a class="dropdown-items menu-option" href="#">Option 3</a></li>
-        <li><a class="dropdown-items menu-option" href="#">Option 4</a></li>
-        <li><a class="dropdown-items menu-option" href="#">Option 5</a></li>
+        <input type="text" id="searchInput" placeholder="Filter" onclick="event.stopPropagation();">
+        <li>FEEDS</li>
+        <li><a class="dropdown-items menu-option" href="#">Home</a></li>
+        <li><a class="dropdown-items menu-option" href="#">Popular</a></li>
+        <li><a class="dropdown-items menu-option" href="#">All</a></li>
+        <li>OTHER</li>
+        <li><a class="dropdown-items menu-option" href="#">User Settings</a></li>
+        <li><a class="dropdown-items menu-option" href="#">Messages</a></li>
+        <li><a class="dropdown-items menu-option" href="#">Create Post</a></li>
+        <li><a class="dropdown-items menu-option" href="#">Notification</a></li>
+        <li><a class="dropdown-items menu-option" href="#">Premium</a></li>
+        <li><a class="dropdown-items menu-option" href="#">Avtar</a></li>
     </div>
 </div>
 

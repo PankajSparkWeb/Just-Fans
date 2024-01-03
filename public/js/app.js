@@ -595,6 +595,17 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+
+// js for dropdown filter
+$(document).ready(function(){
+    $("#searchInput").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+        $("#myDropdown li").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
  
 
 
