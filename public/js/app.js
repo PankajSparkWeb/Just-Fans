@@ -574,3 +574,75 @@ function getWebsiteFormattedAmount(amount){
 
     return currencyPosition === 'left' ? currency + amount : amount + currency;
 }
+
+
+// js for dorpdown menu
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Toggle dropdown on click
+    document.querySelector('.dropdown-menu-header').addEventListener('click', function () {
+        document.getElementById('myDropdown').style.display = 
+            (document.getElementById('myDropdown').style.display === 'block') ? 'none' : 'block';
+    });
+
+    // Close the dropdown if the user clicks outside of it
+    window.addEventListener('click', function (event) {
+        if (!event.target.matches('.dropdown-menu-header')) {
+            var dropdown = document.getElementById('myDropdown');
+            if (dropdown.style.display === 'block') {
+                dropdown.style.display = 'none';    
+            }
+        }
+    });
+});
+ 
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const accordionItems = document.querySelectorAll('.accordion-item');
+
+    accordionItems.forEach(function (item) {
+      const header = item.querySelector('.accordion-header');
+
+      header.addEventListener('click', function () {
+        item.classList.toggle('active');
+        const content = item.querySelector('.accordion-content');
+        if (item.classList.contains('active')) {
+          content.style.display = 'block';
+        } else {
+          content.style.display = 'none';
+        }
+        header.classList.toggle('rotate-arrow'); // Toggle the rotate class
+      });
+    });
+  });
+
+
+
+//   js for wiki and post tabs
+
+document.addEventListener('DOMContentLoaded', function () {
+    
+    var lastSelectedContent = localStorage.getItem('lastSelectedContent');
+
+    var defaultContentType = lastSelectedContent || 'post';
+
+    showContent(defaultContentType);
+});
+
+function showContent(contentType) {
+    var postContent = document.querySelector('.content-post');
+    var wikiContent = document.querySelector('.content-wiki');
+
+    if (contentType === 'post') {
+        postContent.style.display = 'block';
+        wikiContent.style.display = 'none';
+    } else if (contentType === 'wiki') {
+        postContent.style.display = 'none';
+        wikiContent.style.display = 'block';
+    }
+
+    localStorage.setItem('lastSelectedContent', contentType);
+}
+
+//   js for wiki and post tabs end

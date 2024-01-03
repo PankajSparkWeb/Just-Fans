@@ -7,6 +7,141 @@ body {
     padding:1rem;
 }
 
+
+
+/* css  pankaj*/
+
+
+/* header second dropdown accordian css start */
+.accordion {
+    width: 300px;
+  }
+
+  .accordion-item {
+    margin-left: 15px;
+    margin-bottom: 10px;
+    overflow: hidden;
+  }
+
+  .accordion-header {
+   
+   
+    cursor: pointer;
+  }
+
+  .accordion-header::after {
+    content: '\005E';  /* Text for down arrow */
+    transform: rotate(180deg);
+    float: right;
+    transition: transform 0.3s ease; /* Add transition property for smooth rotation */
+  }
+
+  .accordion-header.active::after {
+    content: 'v'; /* Text for down arrow */
+    transform: rotate(180deg); /* Rotate the arrow 180 degrees when active */
+  }
+
+  .accordion-content {
+    padding: 10px;
+    display: none;
+  }
+
+/* header second dropdown accordian css end */
+
+
+/* header dropdown css for both dropdown start */
+.dropdown-menu-header {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-menu-header .dropdown-menu li {
+    text-align: center;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1;
+}
+
+.dropdown-item {
+    display: block;
+    padding: 8px 16px;
+    text-decoration: none;
+    color: #333;
+}
+
+.dropdown-item:hover {
+    background-color: #f2f2f2;
+}
+
+/* header dropdown css for both dropdown end */
+
+
+
+.input-group.input-group-seamless-append{
+     width: 80% !important;
+}
+
+.menu-option{
+     cursor: pointer !important;
+}
+
+.dropdown-menu-header {
+    border: 1px solid black;
+    padding: 5px 100px;
+    cursor: pointer !important;
+}
+
+.new-header {
+    align-items: center;
+}
+
+.search-box-header {
+    width: 90% !important;
+    margin-left: 100px;
+    margin-right: 25px;
+}
+.blank-first-blue-block {
+    background-color: #33a8ff !important;
+    height: 80px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.container .inner .wrapper .inner-content {
+    display: flex;
+    height: 1200px;
+    width:100%;
+}
+.container .inner .wrapper .inner-content .left-side-section.border-left.border-right{
+    width:75%;
+}
+
+
+
+
+.container .inner .wrapper .inner-content .right-side-section.border-right{
+    width:25%;
+}
+
+
+/* wiki and post css start */
+
+.content-post,
+.content-wiki {
+    display: none;
+}
+
+
+/* wiki and post css end */
+
+
+
+/* end pankaj css */
+
 .navbar-brand img{
     max-width: 180px;
     max-height: 60px;

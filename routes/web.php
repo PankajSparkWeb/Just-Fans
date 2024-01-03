@@ -11,6 +11,8 @@
 |
 */
 
+
+
 // Admin routes ( Needs to be placed above )
 Route::group(['prefix' => 'admin', 'middleware' => 'jsVars'], function () {
     Voyager::routes();
@@ -28,6 +30,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'jsVars'], function () {
     Route::get('/leave-impersonation', 'UserController@leaveImpersonation')->name('admin.leaveImpersonation');
 });
 
+
 // Home & contact page
 Route::get('/', ['uses' => 'HomeController@index', 'as'   => 'home']);
 Route::get('/contact', ['uses' => 'GenericController@contact', 'as'   => 'contact']);
@@ -44,13 +47,20 @@ Route::post('resendVerification', ['uses' => 'GenericController@resendConfirmati
 Route::get('socialAuth/{provider}', ['uses' => 'Auth\LoginController@redirectToProvider', 'as' => 'social.login.start']);
 Route::get('socialAuth/{provider}/callback', ['uses' => 'Auth\LoginController@handleProviderCallback', 'as' => 'social.login.callback']);
 
+
 /*
  * (User) Protected routes
  */
 Route::group(['middleware' => ['auth','verified','2fa']], function () {
     // Settings panel routes
+    
+    Route::get('/new-home', ['uses' => 'NewHome@ShowHome', 'as'   => 'NewHome']);
+    
     Route::group(['prefix' => 'my', 'as' => 'my.'], function () {
-
+        
+        
+        
+       
         /*
          * (My) Settings
          */
@@ -69,7 +79,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
         Route::post('/settings/verify/upload/delete', ['uses' => 'SettingsController@deleteVerifyAsset', 'as'   => 'settings.verify.delete']);
         Route::post('/settings/verify/save', ['uses' => 'SettingsController@saveVerifyRequest', 'as'   => 'settings.verify.save']);
         Route::get('/settings/privacy/countries', ['uses' => 'SettingsController@getCountries', 'as'   => 'settings.verify.countries']);
-
+        
         // Profile save
         Route::get('/settings/{type?}', ['uses' => 'SettingsController@index', 'as'   => 'settings']);
         Route::post('/settings/account/save', ['uses' => 'SettingsController@saveAccount', 'as'   => 'settings.account.save']);
@@ -263,6 +273,9 @@ Route::get('/{username}', ['uses' => 'ProfileController@index', 'as'   => 'profi
 Route::get('/{username}/posts', ['uses' => 'ProfileController@getUserPosts', 'as'   => 'profile.posts']);
 Route::get('/{username}/streams', ['uses' => 'ProfileController@getUserStreams', 'as'   => 'profile.streams']);
 
+
+
 Route::fallback(function () {
     return view('errors.404'); // template should exists
 });
+

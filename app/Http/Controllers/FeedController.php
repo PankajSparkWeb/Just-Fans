@@ -28,6 +28,9 @@ class FeedController extends Controller
 
         $startPage = PostsHelperServiceProvider::getFeedStartPage(PostsHelperServiceProvider::getPrevPage($request));
         $posts = PostsHelperServiceProvider::getFeedPosts(Auth::user()->id, false, $startPage);
+
+
+        
         PostsHelperServiceProvider::shouldDeletePaginationCookie($request);
 
         JavaScript::put([

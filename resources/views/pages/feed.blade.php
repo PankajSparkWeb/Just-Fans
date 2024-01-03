@@ -1,4 +1,4 @@
-@extends('layouts.user-no-nav')
+@extends('layouts.NewHomeLayout')
 @section('page_title', __('Your feed'))
 
 {{-- Page specific CSS --}}
@@ -43,7 +43,7 @@
 @section('content')
     <div class="container">
         <div class="row">
-            <div class="col-12 col-sm-12 col-lg-8 col-md-7 second p-0 ">
+            <div class="col-12 col-sm-12 col-lg-8 col-md-7 second p-0">
                 <div class="d-flex d-md-none px-3 py-3 feed-mobile-search neutral-bg fixed-top-m">
                     @include('elements.search-box')
                 </div>

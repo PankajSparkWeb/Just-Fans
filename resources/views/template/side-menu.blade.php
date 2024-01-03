@@ -1,4 +1,4 @@
-<div class="side-menu px-1 px-md-2 px-lg-3">
+<div class="side-menu px-1 px-md-2 px-lg-3 test">
     <div class="user-details mb-4 d-flex open-menu pointer-cursor flex-row-no-rtl">
         <div class="ml-0 ml-md-2">
             @if(Auth::check())
