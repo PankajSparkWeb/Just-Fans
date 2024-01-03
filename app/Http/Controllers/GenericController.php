@@ -209,4 +209,14 @@ class GenericController extends Controller
         }
     }
 
+
+
+    public function showAboutUs(){
+        return "<h1>About Page</h1>";
+    }
+
+
+    public function showContentPolicy(){
+        return "<h1>Content Policy</h1>";
+    }
 }

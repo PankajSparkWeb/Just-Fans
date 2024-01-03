@@ -66,7 +66,7 @@
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block">
-
+                <div>Side Bar</div>
                 <div class="feed-widgets">
                     <div class="mb-4">
                         @include('elements.search-box')
@@ -101,3 +101,6 @@
     ])
 
 @stop
+
+{{-- Wiki --}}
+

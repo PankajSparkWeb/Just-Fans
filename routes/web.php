@@ -35,6 +35,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'jsVars'], function () {
 Route::get('/', ['uses' => 'HomeController@index', 'as'   => 'home']);
 Route::get('/contact', ['uses' => 'GenericController@contact', 'as'   => 'contact']);
 Route::post('/contact/send', ['uses' => 'GenericController@sendContactMessage', 'as'   => 'contact.send']);
+Route::get('/about-us', ['uses' => 'GenericController@showAboutUs', 'as'   => 'about-us']);
+Route::get('/content-policy', ['uses' => 'GenericController@showContentPolicy', 'as'   => 'content-policy']);
+
 
 // Language switcher route
 Route::get('language/{locale}', ['uses' => 'GenericController@setLanguage', 'as'   => 'language']);
