@@ -146,18 +146,29 @@
                 <a class="dropdown-item" href="{{'#'}}">
                     {{__('Premimum')}}
                 </a>
+
+                {{-- Accordian Start --}}
                 <div class="accordion">
                     <div class="accordion-item">
-                        <div class="accordion-header" onclick="event.stopPropagation();">Section 1</div>
+
+                        {{-- First Accordian --}}
+                        <div class="accordion-header" onclick="event.stopPropagation();">Explore</div>
                         <div class="accordion-content">
                             <!-- First Sub-Accordion -->
                             <div class="sub-accordion">
                                 <div class="accordion-item">
-                                    <div class="accordion-header" onclick="event.stopPropagation();">Sub-Section 1.1</div>
+                                    <div class="accordion-header" onclick="event.stopPropagation();">Gaming</div>
                                     <div class="accordion-content">
-                                        <li><a href="">Sub-Option 1.1</a></li>
-                                        <li><a href="">Sub-Option 1.2</a></li>
-                                        <li><a href="">Sub-Option 1.3</a></li>
+                                        <li><a href="">Valheim</a></li>
+                                        <li><a href="">Genshin Impact</a></li>
+                                        <li><a href="">Minecraft</a></li>
+                                        <li><a href="">Pokimane</a></li>
+                                        <li><a href="">Halo Infinite</a></li>
+                                        <li><a href="">Call of Duty: Warzone</a></li>
+                                        <li><a href="">Path of Exile</a></li>
+                                        <li><a href="">Hollow Knight: Silksong</a></li>
+                                        <li><a href="">Escape from Tarkov</a></li>
+                                        <li><a href="">Watch Dogs: Legion</a></li>
                                     </div>
                                 </div>
                             </div>
@@ -165,7 +176,74 @@
                             <!-- Second Sub-Accordion -->
                             <div class="sub-accordion">
                                 <div class="accordion-item">
-                                    <div class="accordion-header" onclick="event.stopPropagation();">Sub-Section 1.2</div>
+                                    <div class="accordion-header" onclick="event.stopPropagation();">Sports</div>
+                                    <div class="accordion-content">
+                                        <li><a href="">Valheim</a></li>
+                                        <li><a href="">Genshin Impact</a></li>
+                                        <li><a href="">Minecraft</a></li>
+                                        <li><a href="">Pokimane</a></li>
+                                        <li><a href="">Halo Infinite</a></li>
+                                        <li><a href="">Call of Duty: Warzone</a></li>
+                                        <li><a href="">Path of Exile</a></li>
+                                        <li><a href="">Hollow Knight: Silksong</a></li>
+                                        <li><a href="">Escape from Tarkov</a></li>
+                                        <li><a href="">Watch Dogs: Legion</a></li>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Third Sub-Accordion -->
+                            <div class="sub-accordion">
+                                <div class="accordion-item">
+                                    <div class="accordion-header" onclick="event.stopPropagation();">Business, Economics, and Finance</div>
+                                    <div class="accordion-content">
+                                        <li><a href="">Sub-Option 1.1</a></li>
+                                        <li><a href="">Sub-Option 1.2</a></li>
+                                        <li><a href="">Sub-Option 1.3</a></li>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fourth Sub-Accordion -->
+                            <div class="sub-accordion">
+                                <div class="accordion-item">
+                                    <div class="accordion-header" onclick="event.stopPropagation();">Crypto</div>
+                                    <div class="accordion-content">
+                                        <li><a href="">Sub-Option 1.1</a></li>
+                                        <li><a href="">Sub-Option 1.2</a></li>
+                                        <li><a href="">Sub-Option 1.3</a></li>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Fifth Sub-Accordion -->
+                            <div class="sub-accordion">
+                                <div class="accordion-item">
+                                    <div class="accordion-header" onclick="event.stopPropagation();">Television</div>
+                                    <div class="accordion-content">
+                                        <li><a href="">Sub-Option 1.1</a></li>
+                                        <li><a href="">Sub-Option 1.2</a></li>
+                                        <li><a href="">Sub-Option 1.3</a></li>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sixth Sub-Accordion -->
+                            <div class="sub-accordion">
+                                <div class="accordion-item">
+                                    <div class="accordion-header" onclick="event.stopPropagation();">Celebrity</div>
+                                    <div class="accordion-content">
+                                        <li><a href="">Sub-Option 1.1</a></li>
+                                        <li><a href="">Sub-Option 1.2</a></li>
+                                        <li><a href="">Sub-Option 1.3</a></li>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Seventh Sub-Accordion -->
+                            <div class="sub-accordion">
+                                <div class="accordion-item">
+                                    <div class="accordion-header" onclick="event.stopPropagation();">More Topics</div>
                                     <div class="accordion-content">
                                         <li><a href="">Sub-Option 1.1</a></li>
                                         <li><a href="">Sub-Option 1.2</a></li>
@@ -181,25 +259,35 @@
                     <a href="">Help Center</a>    
                     </div>
 
-
+                    {{-- Second Accordian --}}
                     <div class="accordion-item">
-                        <div class="accordion-header" onclick="event.stopPropagation();">Section 1</div>
+                        <div class="accordion-header" onclick="event.stopPropagation();">More</div>
                         <div class="accordion-content">
-                          <li><a href="">Option 1</a></li>
-                          <li><a href="">Option 2</a></li>
-                          <li><a href="">Option 3</a></li>
+                          <li><a href="">Reddit IOS</a></li>
+                          <li><a href="">Reddit Android</a></li>
+                          <li><a href="">Rereddit</a></li>
+                          <li><a href="">Best Communities</a></li>
+                          <li><a href="">Communities</a></li>
+                          <li><a href="">About Reddit</a></li>
+                          <li><a href="">Blog</a></li>
+                          <li><a href="">Careers</a></li>
+                          <li><a href="">Press</a></li>
+                          <li><a href="">Visit old Reddit</a></li>
                         </div>
                       </div>
 
+                      {{-- Third Accordian --}}
                       <div class="accordion-item">
-                        <div class="accordion-header" onclick="event.stopPropagation();">Section 1</div>
+                        <div class="accordion-header" onclick="event.stopPropagation();">Terms & Policies</div>
                         <div class="accordion-content">
-                          <li><a href="">Option 1</a></li>
-                          <li><a href="">Option 2</a></li>
-                          <li><a href="">Option 3</a></li>
+                          <li><a href="">User Agreement</a></li>
+                          <li><a href="">Privacy Policy</a></li>
+                          <li><a href="">Content Policy</a></li>
+                          <li><a href="">Moderator Code of Conduct</a></li>
                         </div>
                       </div>
                   </div>
+
                 <a class="dropdown-item" href="{{ route('logout') }}"
                    onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">

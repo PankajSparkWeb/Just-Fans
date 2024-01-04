@@ -1,6 +1,7 @@
 body {
     font-family: 'Open Sans', sans-serif;
     min-height: 100%!important;
+    background-color: #dae0e6 !important;
 }
 /* Top Navbar Menu */
 .navbar{
@@ -11,6 +12,55 @@ body {
 
 /* css  pankaj*/
 
+.new-side-bar .side-bar-heading {
+    background-color: #0079d3;
+}
+
+.new-side-bar {}
+
+.new-side-bar .side-bar-heading h3 {
+    font-size: 14px;
+    color: white;
+    font-weight: 700;
+    padding: 10px;
+}
+
+
+
+.top-white-bar-content .today_i_learnd_logo img {
+    width: 65px;
+}
+
+.top-bar-area .top-white-bar-content {
+    display: flex;
+}
+
+
+
+.top-bar-area .top-white-bar-content .today_i_learnd_text h2 {
+    font-size: 26px;
+    font-weight: 600;
+}
+
+.top-bar-area .top-white-bar-content .today_i_learnd_text p {
+    font-size: 14px;
+}
+
+.top-white-bar-btns a {
+    font-size: 15px;
+    color: black;
+}
+
+
+
+.white-blank-div.post-wiki-tabs {
+    background-color: white;
+    height: 100px;
+}
+
+.top-bar-area .top-white-bar-content .today_i_learnd_text_JoinBtn {
+    display: flex;
+}
 
 /* header second dropdown accordian css start */
 .accordion {

@@ -40,22 +40,11 @@
     !!}
 @stop
 
+{{-- Post Section Start --}}
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-12 col-sm-12 col-lg-8 col-md-7 second p-0">
-                <div class="d-flex d-md-none px-3 py-3 feed-mobile-search neutral-bg fixed-top-m">
-                    @include('elements.search-box')
-                </div>
-
-                @if(!getSetting('feed.hide_suggestions_slider'))
-                    <div class="d-block d-md-none d-lg-none m-pt-70 feed-suggestions-wrapper">
-                        @include('elements.feed.suggestions-box',['profiles'=>$suggestions, 'isMobile'=> true])
-                    </div>
-                @endif
-
-                {{-- @include('elements.user-stories-box')--}}
-
                 <div class="">
                     @include('elements.message-alert',['classes'=>'pt-4 pb-4 px-2'])
                     @include('elements.feed.posts-load-more')
@@ -66,27 +55,15 @@
                 </div>
             </div>
             <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block">
-                <div>Side Bar</div>
                 <div class="feed-widgets">
                     <div class="mb-4">
-                        @include('elements.search-box')
+                       @include('template.NewSideBar')
                     </div>
-
-                    @if(!getSetting('feed.hide_suggestions_slider'))
-                        @include('elements.feed.suggestions-box',['profiles'=>$suggestions, 'isMobile'=> false])
-                    @endif
-                    @if(getSetting('custom-code-ads.sidebar_ad_spot'))
-                        <div class="mt-4">
-                            {!! getSetting('custom-code-ads.sidebar_ad_spot') !!}
-                        </div>
-                    @endif
                 </div>
 
             </div>
         </div>
-        @include('elements.checkout.checkout-box')
     </div>
-
     <div class="d-none">
         <ion-icon name="heart"></ion-icon>
         <ion-icon name="heart-outline"></ion-icon>
