@@ -142,6 +142,7 @@ class PostsController extends Controller
             'postData' => [
                 'id' => $post->id,
                 'text' => $post->text,
+                'external_post_link' => $post->external_post_link,
                 'attachments' => $post->attachments,
                 'price' => $post->price,
             ],
@@ -183,6 +184,7 @@ class PostsController extends Controller
                 $postID = Post::create(array_merge([
                     'user_id' => $request->user()->id,
                     'text' => $request->get('text'),
+                    'external_post_link' => $request->get('external_post_link'),
                     'price' => $request->get('price'),
                     'status' => $postStatus,
                 ], $postSchedulingData))->id;
@@ -192,6 +194,7 @@ class PostsController extends Controller
                 if ($post) {
                     $post->update(array_merge([
                         'text' => $request->get('text'),
+                        'external_post_link' => $request->get('external_post_link'),
                         'price' => $request->get('price'),
                     ], $postSchedulingData));
                     $postID = $post->id;
@@ -353,6 +356,9 @@ class PostsController extends Controller
             'reaction_type' => 'like',
             'user_id' => Auth::user()->id,
         ];
+        $where_reaction = [
+            'user_id' => Auth::user()->id,
+        ];
 
         try {
             // Checking authorization & post existence
@@ -371,23 +377,60 @@ class PostsController extends Controller
             if ($this->validateUserAccessForPost($post)) {
                 if ($type == 'post') {
                     $data['post_id'] = $id;
+                    $where_reaction['post_id'] = $id;
                 } elseif ($type == 'comment') {
                     $data['post_comment_id'] = $id;
+                    $where_reaction['post_comment_id'] = $id;
                 }
+
+               $is_reaction_id      = Reaction::where($where_reaction)->first();
+               $reaction_id         = $is_reaction_id ? $is_reaction_id->id : 0;
+
                 $message = '';
                 if ($action == 'add') {
                     $message = __('Reaction added.');
-                    $reaction = Reaction::create($data);
+                    //if reaction id exists
+                    if( $reaction_id ){                        
+                        $reaction = Reaction::find($reaction_id);
+                        $reaction->update($data);                    
+                        // Save the changes to the database
+                        $reaction->save();
+                    }else{
+                        $reaction = Reaction::create($data);
+                    }
 
                     if ($reaction != null) {
                         NotificationServiceProvider::createNewReactionNotification($reaction);
                     }
                 } elseif ($action == 'remove') {
-                    $message = __('Reaction removed.');
+                    $data['reaction_type'] = 'dislike';
+                    if( $reaction_id ){                        
+                        $reaction = Reaction::find($reaction_id);
+                        $reaction->update($data);                    
+                        // Save the changes to the database
+                        $reaction->save();
+                    }else{
+                        $reaction = Reaction::create($data);
+                    }
+                    $message = __('Reaction Dislike.');
+                    //Reaction::where($data)->first()->delete();
+                } elseif ($action == 'delete') {
+                    unset($data['reaction_type']);
                     Reaction::where($data)->first()->delete();
+                    $message = __('Reaction Dislike.');
+                }
+                
+                
+                if( $type === 'post'  ){
+                    $post = Post::with('reactions')->where('id', $id)->first();
+                    $reaction_count = $post->count_reactions;
+                }else{
+                    //need to count comment reaction TODO
+                    $post = Post::with('reactions')->where('id', $id)->first();
+                    $reaction_count = $post->count_reactions;
                 }
 
-                return response()->json(['success' => true, 'message' => $message]);
+                return response()->json(['success' => true, 'message' => $message, 'reaction_count' => $reaction_count]);
             }
 
         } catch (\Exception $exception) {

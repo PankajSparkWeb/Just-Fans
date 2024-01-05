@@ -474,11 +474,14 @@ class PostsHelperServiceProvider extends ServiceProvider
      * @param $reactions
      * @return bool
      */
-    public static function didUserReact($reactions)
+    public static function didUserReact($reactions, $type=false)
     {
         if (Auth::check()) {
             foreach ($reactions as $reaction) {
                 if (Auth::user()->id == $reaction->user_id) {
+                    if( $type ){
+                        return $reaction->reaction_type;
+                    }
                     return true;
                 }
             }

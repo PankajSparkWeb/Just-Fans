@@ -657,3 +657,23 @@ function showContent(contentType) {
 }
 
 //   js for wiki and post tabs end
+
+
+document.getElementById('comunity_theameClick').addEventListener('click', function() {
+    // Get references to all elements with the 'side-bar-heading' class
+    var addThereDivs = document.querySelectorAll('.side-bar-heading');
+
+    // Loop through each element
+    addThereDivs.forEach(function(addThereDiv) {
+        // Check if the div already has the 'bg-white' class
+        if (addThereDiv.classList.contains('bg-white')) {
+            // If it has, remove the 'bg-white' class
+            addThereDiv.classList.remove('bg-white');
+        } else {
+            // If it doesn't have, add the 'bg-white' class
+            addThereDiv.classList.add('bg-white');
+        }
+    });
+});
+
+

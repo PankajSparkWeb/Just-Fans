@@ -174,8 +174,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
         Route::get('/{post_id}/{username}', ['uses' => 'PostsController@getPost', 'as'   => 'get']);
         Route::get('/comments', ['uses' => 'PostsController@getPostComments', 'as'   => 'get.comments']);
         Route::post('/comments/add', ['uses' => 'PostsController@addNewComment', 'as'   => 'add.comments']);
-        Route::delete('/comments/delete', ['uses' => 'PostsController@deleteComment', 'as'   => 'delete.comments']);
-
+        Route::delete('/comments/delete', ['uses' => 'PostsController@deleteComment', 'as'   => 'delete.comments']);                
         Route::post('/reaction', ['uses' => 'PostsController@updateReaction', 'as'   => 'react']);
         Route::post('/bookmark', ['uses' => 'PostsController@updatePostBookmark', 'as'   => 'bookmark']);
         Route::post('/pin', ['uses' => 'PostsController@updatePostPin', 'as'   => 'pin']);

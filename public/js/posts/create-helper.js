@@ -173,6 +173,7 @@ var PostCreate = {
         let data = {
             'attachments': FileUpload.attachaments,
             'text': $('#dropzone-uploader').val(),
+            'external_post_link': $('#external_post_link').val(),
             'price': PostCreate.postPrice,
             'postNotifications' : PostCreate.postNotifications,
             'postReleaseDate': PostCreate.postReleaseDate,
@@ -202,7 +203,7 @@ var PostCreate = {
             },
             error: function (result) {
                 if(result.status === 422 || result.status === 500) {
-                    $.each(result.responseJSON.errors, function (field, error) {
+                    $.each(result.responseJSON.errors, function (field, error) {                        
                         if (field === 'text') {
                             $('.post-invalid-feedback').html(trans_choice('Your post must contain more than 10 characters.',mediaSettings.max_post_description_size, {'num':mediaSettings.max_post_description_size}));
                             $('#dropzone-uploader').addClass('is-invalid');
@@ -212,6 +213,12 @@ var PostCreate = {
                             $('.post-invalid-feedback').html(trans('Your post must contain at least one attachment.'));
                             $('#dropzone-uploader').addClass('is-invalid');
                             $('#dropzone-uploader').focus();
+                        }
+
+                        if (field === 'external_post_link') {
+                            $('#external_post_link').addClass('is-invalid');
+                            $('#external_post_link').focus();
+                            $('.post-invalid-feedback').html(trans('Only valid URL required.'));                            
                         }
 
                         if(field === 'permissions'){

@@ -51,7 +51,9 @@
                 <div class="d-flex flex-column-reverse">
                     <div class="w-100">
                         <textarea  id="dropzone-uploader" name="input-text" class="form-control border dropzone w-100" rows="3" spellcheck="false" placeholder="{{__('Write a new post, drag and drop files to add attachments.')}}" value="{{isset($post) ? $post->text : ''}}"></textarea>
-                        <span class="invalid-feedback" role="alert">
+                        <input type='url' id="external_post_link" name="external_post_link" class="form-control border w-100" value="{{isset($post) ? $post->external_post_link : ''}}">                        
+                      
+                         <span class="invalid-feedback" role="alert">
                             <strong class="post-invalid-feedback">{{__('Your post must contain more than 10 characters.')}}</strong>
                         </span>
 

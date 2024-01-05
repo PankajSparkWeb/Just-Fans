@@ -1,50 +1,58 @@
+
 <div class="new-side-bar-container">
     <div class="new-side-bar">
-        <div class="about-community-card">
+
+        {{-- first card --}}
+        <div class="about-community-card new-side-bar-card">
             <div class="about-comunity-text-area">
                 <div class="side-bar-heading">
                     <h3>About Community</h3>
                 </div>
+                <div class="card-lower-body">
                 <div class="discription">
                     <p>You learn something new every day; what did you learn today? Submit interesting and specific
                         facts about something that you just found out here.</p>
                     <p>Created Dec 28, 2008</p>
                 </div>
-            </div>
+            
             <div class="about-comunity-member-area">
                 <div class="mambers">
-                    <h4>1</h4>
-                    <p></p>
+                    <h4>Members</h4>
+                    <p>200M</p>
                 </div>
                 <div class="Online">
-                    <h4>2</h4>
-                    <p></p>
-                </div>
+                    <h4>Online</h4>
+                    <p>200</p>
+                </div> 
                 <div class="ranked-by-size">
-                    <h4>3</h4>
-                    <p></p>
+                    <h4>Ranked by Size</h4>
+                    <p>#6</p>
                 </div>
             </div>
 
-            <div class="about-comunity-createPost"><a href="">Create Post</a></div>
+            <div class="about-comunity-createPost"><a href="{{route('posts.create')}}">Create Post</a></div>
             <div class="about-community-options">
                 <div class="accordion side-bar-accordian">
                     <div class="accordion-item">
                         <div class="accordion-header">Community Options</div>
                         <div class="accordion-content">
-                            <li><a href="">Comunity Theame</a></li>
+                            <li><a href="#" id="comunity_theameClick">Comunity Theame</a></li>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        </div>
 
 
 
-        <div class="rules-card">
+        {{-- Second Card --}}
+        <div class="rules-card new-side-bar-card">
             <div class="side-bar-heading">
                 <h3>Rules</h3>
             </div>
+
+            <div class="card-lower-body">
             <div class="accordion side-bar-accordian">
                 <div class="accordion-item">
                     <div class="accordion-header">1. Inaccurate/unverifiable/not supported by source</div>
@@ -127,24 +135,44 @@
                 <p>All NSFW links must be tagged.
                 </p>
             </div>
-
-
-
         </div>
-        <div class="wikipeadia-card">
+        </div>
+
+        {{-- third card --}}
+        <div class="wikipeadia-card new-side-bar-card">
             <div class="side-bar-wiki-heading side-bar-heading">
                 <h3>Wiki</h3>
                 </div>
-            <div class="side-bar-wiki-discription">Please see the wiki for more detailed explanations of the rules as
-                well as additional rules that may not be listed here</div>
+                <div class="card-lower-body">
+            <div class="side-bar-wiki-discription"><p>Please see the wiki for more detailed explanations of the rules as
+                well as additional rules that may not be listed here</p></div>
+        </div>
         </div>
 
-
-        <div class="moderators-card">
+        {{-- fourth card --}}
+        <div class="moderators-card new-side-bar-card">
             <div class="side-bar-moderators-heading side-bar-heading">
                 <h3>Moderators</h3>
                 </div>
-            <div class="side-bar-discription"></div>
+                <div class="card-lower-body">
+            <div class="side-bar-discription">
+                <div class="message-the-mode">
+                    <a href="">Message The Mode</a>
+                </div>
+                <div class="moderators-links">
+                    <li><a href="">u/wacrover</a></li>
+                    <li><a href="">u/relic2279</a></li>
+                    <li><a href="">u/lukemcr</a></li>
+                    <li><a href="">u/Geekymumma</a></li>
+                    <li><a href="">u/sdn</a></li>
+                    <li><a href="">u/roger_</a></li>
+                    <li><a href="">u/Lynda73</a></li>
+                    <li><a href="">u/lanismycousin</a> 36 DD</li>
+                    <li><a href="">u/roger_bot</a></li>
+                    <li><a href="">u/TIL_mod</a> Does not answer PMs</li>
+                </div>
+            </div>
+        </div>
         </div>
     </div>
 </div>

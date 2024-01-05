@@ -12,11 +12,45 @@ body {
 
 /* css  pankaj*/
 
+
+
+
+.post-box .post-content.mt-3.pl-3.pr-3 {
+    display: flex;
+}
+.post-box .upvote-downvote .down-vote-icon {
+    transform: rotate(180deg);
+}
+
+.new-side-bar .card-lower-body {
+    padding: 5px 15px;
+}
+
+.bg-white{
+    background-color: white !important;
+}
+
+.bg-white h3{
+    color: black !important;
+}
+
+.new-side-bar .new-side-bar-card {
+    background-color: white !important;
+}
+
+
+.feed-box.mt-0.pt-4.posts-wrapper .post-box {
+    background-color: white;
+}
+
+.container, .container-lg, .container-md, .container-sm, .container-xl{
+    max-width: 1000px !important;
+}
 .new-side-bar .side-bar-heading {
     background-color: #0079d3;
 }
 
-.new-side-bar {}
+
 
 .new-side-bar .side-bar-heading h3 {
     font-size: 14px;
@@ -178,10 +212,7 @@ body {
 
 /* wiki and post css start */
 
-.content-post,
-.content-wiki {
-    display: none;
-}
+
 
 
 /* wiki and post css end */

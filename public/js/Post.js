@@ -224,7 +224,7 @@ var Post = {
         }
 
     },
-
+   
     /**
      * Add new reaction
      * Can be used for post or comment reactionn
@@ -285,6 +285,76 @@ var Post = {
             }
         });
     },
+
+    /**
+     * Add new reaction
+     * Can be used for post or comment reactionn
+     * @param type
+     * @param id
+     */
+    reactToPost: function (thisEle, type,id, reaction_type='like') {
+        let reactElement = null;
+        let reactionsCountLabel = null;
+        let reactionsLabel = null;
+        var reaction_type_value = (reaction_type === 'dislike' ? 'remove' : 'add');
+        if(type === 'post'){
+            reactElement = $('*[data-postID="'+id+'"] .upvote_downvote_section .react-button');
+            reactionsCountLabel = $('*[data-postID="'+id+'"] .upvote_downvote_section .post-reactions-label-count');
+            reactionsLabel = $('*[data-postID="'+id+'"] .upvote_downvote_section .post-reactions-label');
+        }
+        else{
+            reactElement = $('*[data-commentID="'+id+'"] .react-button');
+            reactionsCountLabel = $('*[data-commentID="'+id+'"] .comment-reactions-label-count');
+            reactionsLabel = $('*[data-commentID="'+id+'"] .comment-reactions-label');
+        }
+        const didReact = $(thisEle).hasClass('active');
+        if(didReact){
+            reaction_type_value = 'delete';
+            reactElement.removeClass('active');
+            // reactElement.html(`<ion-icon name="heart-outline" class="icon-medium"></ion-icon>`);
+        }
+        else{
+            reactElement.removeClass('active');
+            $(thisEle).addClass('active');
+          //  reactElement.addClass('active');
+           // reactElement.html(`<ion-icon name="heart" class="icon-medium text-primary"></ion-icon>`);
+        }
+
+        $.ajax({
+            type: 'POST',
+            data: {
+                'type': type,
+                'action': reaction_type_value,
+                'id': id
+            },
+            dataType: 'json',
+            url: app.baseUrl+'/posts/reaction',
+            success: function (result) {
+                if(result.success){
+                    let count = parseInt(reactionsCountLabel.html());
+                    if(didReact){
+                        count--;
+                    }
+                    else{
+                        count++;
+                    }
+                    if(type === 'post'){
+                        count = result.reaction_count;
+                    }
+                    reactionsCountLabel.html(count);
+                    reactionsLabel.html(trans_choice('likes',count));
+                    // launchToast('success',trans('Success'),result.message);
+                }
+                else{
+                    launchToast('danger',trans('Error'),result.errors[0]);
+                }
+            },
+            error: function (result) {
+                launchToast('danger',trans('Error'),result.responseJSON.message);
+            }
+        });
+    },
+    
 
     /**
      * Appends replied username to comment field

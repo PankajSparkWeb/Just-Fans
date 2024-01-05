@@ -24,6 +24,7 @@ class Post extends Model
         'text',
         'price',
         'status',
+        'external_post_link',
         'release_date',
         'expire_date',
         'is_pinned'
@@ -79,6 +80,28 @@ class Post extends Model
     {
         return $this->hasMany('App\Model\Reaction');
     }
+    
+    public function getCountReactionsAttribute()
+    {
+        // Ensure that 'reactions' relationship is loaded
+        if ($this->relationLoaded('reactions')) {
+            $postReactions = $this->reactions;
+    
+            $likeCount = $postReactions->where('reaction_type', 'like')->count();
+            $dislikeCount = $postReactions->where('reaction_type', 'dislike')->count();
+    
+            // You may further filter based on 'post_id' and 'id' columns if needed
+            // For example:
+            // $likeCount = $postReactions->where('reaction_type', 'like')->where('post_id', $this->id)->count();
+            // $dislikeCount = $postReactions->where('reaction_type', 'dislike')->where('post_id', $this->id)->count();
+            $total_votes = $likeCount - $dislikeCount;
+            return $total_votes > 0 ? $total_votes : 0;
+        } else {
+            // If 'reactions' relationship is not loaded, you may choose to load it or return a default value
+            return 0; // Default value when the relationship is not loaded
+        }
+    }
+     
 
     public function bookmarks()
     {

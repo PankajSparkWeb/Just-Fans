@@ -32,7 +32,7 @@ class SavePostRequest extends FormRequest
         else{
             $rules['attachments'] = 'required';
         }
-
+        $rules['external_post_link'] = 'required|url'; // Add the 'url' validation rule
         $rules['price'] = [New PPVMinMax];
 
         return $rules;
