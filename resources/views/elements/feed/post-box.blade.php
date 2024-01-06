@@ -71,52 +71,7 @@
                                 {{ $post->created_at->diffForHumans(null, false, true) }}
                             </a>
                         </div>
-                        <div
-                            class="dropdown {{ GenericHelper::getSiteDirection() == 'rtl' ? 'dropright' : 'dropleft' }}">
-                            <a class="btn btn-sm text-dark-r text-hover btn-outline-{{ Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? 'dark' : 'light') : (Cookie::get('app_theme') == 'dark' ? 'dark' : 'light') }} dropdown-toggle px-2 py-1 m-0"
-                                data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
-                                aria-expanded="false">
-                                @include('elements.icon', ['icon' => 'ellipsis-horizontal-outline'])
-                            </a>
-                            <div class="dropdown-menu">
-                                <!-- Dropdown menu links -->
-                                <a class="dropdown-item" href="javascript:void(0)"
-                                    onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a>
-                                @if (Auth::check())
-                                    <a class="dropdown-item bookmark-button {{ PostsHelper::isPostBookmarked($post->bookmarks) ? 'is-active' : '' }}"
-                                        href="javascript:void(0);"
-                                        onclick="Post.togglePostBookmark({{ $post->id }});">{{ PostsHelper::isPostBookmarked($post->bookmarks) ? __('Remove the bookmark') : __('Bookmark this post') }}
-                                    </a>
-                                    @if (Auth::user()->id === $post->user_id)
-                                        <a class="dropdown-item pin-button {{ $post->is_pinned ? 'is-active' : '' }}"
-                                            href="javascript:void(0);"
-                                            onclick="Post.togglePostPin({{ $post->id }});">{{ $post->is_pinned ? __('Un-pin post') : __('Pin this post') }}
-                                        </a>
-                                    @endif
-                                    @if (Auth::check() && Auth::user()->id != $post->user->id)
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="javascript:void(0);"
-                                            onclick="Lists.showListManagementConfirmation('{{ 'unfollow' }}', {{ $post->user->id }});">{{ __('Unfollow') }}</a>
-                                        <a class="dropdown-item" href="javascript:void(0);"
-                                            onclick="Lists.showListManagementConfirmation('{{ 'block' }}', {{ $post->user->id }});">{{ __('Block') }}</a>
-                                        <a class="dropdown-item" href="javascript:void(0);"
-                                            onclick="Lists.showReportBox({{ $post->user->id }},{{ $post->id }});">{{ __('Report') }}</a>
-                                    @endif
-                                    @if (Auth::check() && Auth::user()->id == $post->user->id)
-                                        <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item"
-                                            href="{{ route('posts.edit', ['post_id' => $post->id]) }}">{{ __('Edit post') }}</a>
-                                        @if (
-                                            !getSetting('compliance.minimum_posts_deletion_limit') ||
-                                                (getSetting('compliance.minimum_posts_deletion_limit') > 0 &&
-                                                    count($post->user->posts) > getSetting('compliance.minimum_posts_deletion_limit')))
-                                            <a class="dropdown-item" href="javascript:void(0);"
-                                                onclick="Post.confirmPostRemoval({{ $post->id }});">{{ __('Delete post') }}</a>
-                                        @endif
-                                    @endif
-                                @endif
-                            </div>
-                        </div>
+                        
                     </div>
 
                 </div>
@@ -166,9 +121,8 @@
 					</div>
 				</div>
 			@endif
-				
-        <p
-            class="text-break post-content-data {{ getSetting('feed.enable_post_description_excerpts') && (strlen($post->text) >= 85 || substr_count($post->text, "\r\n") > 1) ? 'line-clamp-1 pb-0 mb-0' : '' }}">
+			<div class="post-text-area-main">	
+        <p class="text-break post-content-data {{ getSetting('feed.enable_post_description_excerpts') && (strlen($post->text) >= 85 || substr_count($post->text, "\r\n") > 1) ? 'line-clamp-1 pb-0 mb-0' : '' }}">
             {{ $post->text }}</p>
         @if (getSetting('feed.enable_post_description_excerpts') &&
                 (strlen($post->text) >= 85 || substr_count($post->text, "\r\n") > 1))
@@ -183,7 +137,7 @@
                 class='view_ext_link'>{{ $post->external_post_link }}</a>
         @endif
 
-
+    </div>
     </div>
 
     @if (count($post->attachments))
@@ -276,6 +230,7 @@
                         </div>
                     @endif
                 @endif
+                
                 {{-- Tips --}}
                 {{-- @if (Auth::check() && $post->user->id != Auth::user()->id)
                     @if ($post->isSubbed || (getSetting('profiles.allow_users_enabling_open_profiles') && $post->user->open_profile))
@@ -336,6 +291,52 @@
                             onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a>
                     </div>
                 </div>
+                <div
+                            class="dropdown {{ GenericHelper::getSiteDirection() == 'rtl' ? 'dropright' : 'dropleft' }}">
+                            <a class="btn btn-sm text-dark-r text-hover btn-outline-{{ Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? 'dark' : 'light') : (Cookie::get('app_theme') == 'dark' ? 'dark' : 'light') }} dropdown-toggle px-2 py-1 m-0"
+                                data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
+                                aria-expanded="false">
+                                @include('elements.icon', ['icon' => 'ellipsis-horizontal-outline'])
+                            </a>
+                            <div class="dropdown-menu">
+                                <!-- Dropdown menu links -->
+                                <a class="dropdown-item" href="javascript:void(0)"
+                                    onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a>
+                                @if (Auth::check())
+                                    <a class="dropdown-item bookmark-button {{ PostsHelper::isPostBookmarked($post->bookmarks) ? 'is-active' : '' }}"
+                                        href="javascript:void(0);"
+                                        onclick="Post.togglePostBookmark({{ $post->id }});">{{ PostsHelper::isPostBookmarked($post->bookmarks) ? __('Remove the bookmark') : __('Bookmark this post') }}
+                                    </a>
+                                    @if (Auth::user()->id === $post->user_id)
+                                        <a class="dropdown-item pin-button {{ $post->is_pinned ? 'is-active' : '' }}"
+                                            href="javascript:void(0);"
+                                            onclick="Post.togglePostPin({{ $post->id }});">{{ $post->is_pinned ? __('Un-pin post') : __('Pin this post') }}
+                                        </a>
+                                    @endif
+                                    @if (Auth::check() && Auth::user()->id != $post->user->id)
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item" href="javascript:void(0);"
+                                            onclick="Lists.showListManagementConfirmation('{{ 'unfollow' }}', {{ $post->user->id }});">{{ __('Unfollow') }}</a>
+                                        <a class="dropdown-item" href="javascript:void(0);"
+                                            onclick="Lists.showListManagementConfirmation('{{ 'block' }}', {{ $post->user->id }});">{{ __('Block') }}</a>
+                                        <a class="dropdown-item" href="javascript:void(0);"
+                                            onclick="Lists.showReportBox({{ $post->user->id }},{{ $post->id }});">{{ __('Report') }}</a>
+                                    @endif
+                                    @if (Auth::check() && Auth::user()->id == $post->user->id)
+                                        <div class="dropdown-divider"></div>
+                                        <a class="dropdown-item"
+                                            href="{{ route('posts.edit', ['post_id' => $post->id]) }}">{{ __('Edit post') }}</a>
+                                        @if (
+                                            !getSetting('compliance.minimum_posts_deletion_limit') ||
+                                                (getSetting('compliance.minimum_posts_deletion_limit') > 0 &&
+                                                    count($post->user->posts) > getSetting('compliance.minimum_posts_deletion_limit')))
+                                            <a class="dropdown-item" href="javascript:void(0);"
+                                                onclick="Post.confirmPostRemoval({{ $post->id }});">{{ __('Delete post') }}</a>
+                                        @endif
+                                    @endif
+                                @endif
+                            </div>
+                        </div>
             </div>
             <div class="mt-0 d-flex align-items-center justify-content-center post-count-details">
 			{{--

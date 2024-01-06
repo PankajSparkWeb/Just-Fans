@@ -13,7 +13,15 @@ body {
 /* css  pankaj*/
 
 
+/* Css for layout dropdown menu */
 
+
+
+
+
+.post-box .upvote-downvote span.material-symbols-outlined {
+    cursor: pointer !important;
+}
 
 .post-box .post-content.mt-3.pl-3.pr-3 {
     display: flex;
@@ -97,9 +105,6 @@ body {
 }
 
 /* header second dropdown accordian css start */
-.accordion {
-    width: 300px;
-  }
 
   .accordion-item {
     margin-left: 15px;

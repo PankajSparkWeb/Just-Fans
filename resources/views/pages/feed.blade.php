@@ -44,6 +44,8 @@
     {{-- Post Section Start --}}
     <div class="content-post">
         <div class="container">
+            <div class="top-post-and-layout">
+                @include('elements.feed.top-post-and-layout-box')</div>
             <div class="row">
                 <div class="col-12 col-sm-12 col-lg-8 col-md-7 second p-0">
                     <div class="">
@@ -61,7 +63,7 @@
                             @include('template.NewSideBar')
                         </div>
                     </div>
-
+                    
                 </div>
             </div>
         </div>
@@ -78,10 +80,12 @@
             'actionFunction' => 'Post.deleteComment();',
         ])
     </div>
-
+</div>
     <div class="content-wiki">
-        <div class="container">
-            <h2>Wiki</h2>
+        <div class="container d-flex">
+            <div class="wikipeadia-area">
+                @include('elements.feed.wiki-text-area')
+            </div>
             <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block">
                 <div class="feed-widgets">
                     <div class="mb-4">
