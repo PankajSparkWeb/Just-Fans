@@ -212,11 +212,11 @@ class GenericController extends Controller
 
 
     public function showAboutUs(){
-        return "<h1>About Page</h1>";
+        return view('Terms&Policies.AboutUs');
     }
 
 
     public function showContentPolicy(){
-        return "<h1>Content Policy</h1>";
+        return view('Terms&Policies.content-policy');
     }
 }

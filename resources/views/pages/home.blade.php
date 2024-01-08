@@ -29,7 +29,7 @@
 @stop
 
 @section('content')
-    <div class="home-header min-vh-75 relative pt-2" >
+    <div class="home-header min-vh-75 relative pt-2">
         <div class="container h-100">
             <div class="row d-flex flex-row align-items-center h-100">
                 <div class="col-12 col-md-6 mt-4 mt-md-0">

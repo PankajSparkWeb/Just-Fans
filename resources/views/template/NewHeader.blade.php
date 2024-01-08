@@ -128,7 +128,7 @@
                 <a class="dropdown-item" href="{{route('my.settings')}}">
                     {{__('User Settings')}}
                 </a>
-                <a class="scroll-link d-flex align-items-center dark-mode-switcher" href="#">
+                <a class="scroll-link d-flex align-items-center dark-mode-switcher same-pd" href="#">
                     @if(Cookie::get('app_theme') == 'dark')
                         @include('elements.icon',['icon'=>'contrast-outline','variant'=>'medium','centered'=>false,'classes'=>'mr-2'])
                         {{__('Light mode')}}
@@ -256,7 +256,7 @@
 
 
                     <div class="help-center-header-drp">
-                    <a href="">Help Center</a>    
+                    <a href="" class="same-pd">Help Center</a>    
                     </div>
 
                     {{-- Second Accordian --}}
@@ -275,15 +275,17 @@
                           <li><a href="">Visit old Reddit</a></li>
                         </div>
                       </div>
-
+                      <div class="about-us">
+                          <a href="/pages/about-us" class="same-pd">About Us</a></li>
+                      </div>
                       {{-- Third Accordian --}}
                       <div class="accordion-item">
                         <div class="accordion-header" onclick="event.stopPropagation();">Terms & Policies</div>
                         <div class="accordion-content">
-                          <li><a href="">User Agreement</a></li>
-                          <li><a href="">Privacy Policy</a></li>
-                          <li><a href="">Content Policy</a></li>
-                          <li><a href="">Moderator Code of Conduct</a></li>
+                          <li><a href="/pages/terms-and-conditions">Terms & Condition</a></li>
+                          <li><a href="/pages/privacy">Privacy Policy</a></li>
+                          <li><a href="/pages/content-policy">Content Policy</a></li>
+                          
                         </div>
                       </div>
                   </div>

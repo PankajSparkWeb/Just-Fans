@@ -16,6 +16,14 @@ else{reactElement.addClass('active');reactElement.html(`<ion-icon name="heart" c
 $.ajax({type:'POST',data:{'type':type,'action':(didReact===true?'remove':'add'),'id':id},dataType:'json',url:app.baseUrl+'/posts/reaction',success:function(result){if(result.success){let count=parseInt(reactionsCountLabel.html());if(didReact){count--;}
 else{count++;}
 reactionsCountLabel.html(count);reactionsLabel.html(trans_choice('likes',count));}
+else{launchToast('danger',trans('Error'),result.errors[0]);}},error:function(result){launchToast('danger',trans('Error'),result.responseJSON.message);}});},reactToPost:function(thisEle,type,id,reaction_type='like'){let reactElement=null;let reactionsCountLabel=null;let reactionsLabel=null;var reaction_type_value=(reaction_type==='dislike'?'remove':'add');if(type==='post'){reactElement=$('*[data-postID="'+id+'"] .upvote_downvote_section .react-button');reactionsCountLabel=$('*[data-postID="'+id+'"] .upvote_downvote_section .post-reactions-label-count');reactionsLabel=$('*[data-postID="'+id+'"] .upvote_downvote_section .post-reactions-label');}
+else{reactElement=$('*[data-commentID="'+id+'"] .react-button');reactionsCountLabel=$('*[data-commentID="'+id+'"] .comment-reactions-label-count');reactionsLabel=$('*[data-commentID="'+id+'"] .comment-reactions-label');}
+const didReact=$(thisEle).hasClass('active');if(didReact){reaction_type_value='delete';reactElement.removeClass('active');}
+else{reactElement.removeClass('active');$(thisEle).addClass('active');}
+$.ajax({type:'POST',data:{'type':type,'action':reaction_type_value,'id':id},dataType:'json',url:app.baseUrl+'/posts/reaction',success:function(result){if(result.success){let count=parseInt(reactionsCountLabel.html());if(didReact){count--;}
+else{count++;}
+if(type==='post'){count=result.reaction_count;}
+reactionsCountLabel.html(count);reactionsLabel.html(trans_choice('likes',count));}
 else{launchToast('danger',trans('Error'),result.errors[0]);}},error:function(result){launchToast('danger',trans('Error'),result.responseJSON.message);}});},addReplyUser:function(username){$('.new-post-comment-area textarea').val($('.new-post-comment-area textarea').val()+' @'+username+' ');},confirmPostRemoval:function(post_id){Post.postID=post_id;$('#post-delete-dialog').modal('show');},removePost:function(){let postElement=$('*[data-postID="'+Post.postID+'"]');$.ajax({type:'DELETE',data:{'id':Post.postID},dataType:'json',url:app.baseUrl+'/posts/delete',success:function(result){if(result.success){if(Post.activePage!=='post'){$('#post-delete-dialog').modal('hide');postElement.fadeOut("normal",function(){$(this).remove();});}
 else{if(document.referrer.indexOf('feed')>0){redirect(app.baseUrl+'/feed');}
 else{redirect(document.referrer);}}

@@ -1,4 +1,4 @@
-@extends('layouts.user-no-nav')
+@extends('layouts.NewHomeLayout')
 @section('page_title', __('New post'))
 
 @section('styles')

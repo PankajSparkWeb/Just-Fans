@@ -14,7 +14,7 @@
                 <div class="col-12">
                     <div class="mt-1 mb-5 text-center">
                         <h1 class=" text-bold">{{$page->title}}</h1>
-                        @if(in_array($page->slug,['help','privacy','terms-and-conditions']))
+                        @if(in_array($page->slug,['help','privacy','terms-and-conditions', 'about-us', 'content-policy']))
                             <p class="text-muted mb-0 mt-2">{{__("Last updated")}}: {{$page->updated_at->format('Y-m-d')}}</p>
                         @endif
                     </div>

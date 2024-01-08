@@ -11,13 +11,47 @@ body {
 
 
 /* css  pankaj*/
+.dropDownFor-content{
+    display: none !important;
+}
+.dropdown-menu-header .dropdown-menu {
+    padding: 15px;
+}
 
+.col-12.col-sm-12.col-lg-8.col-md-7.second.p-0 .top-post-and-layout {
+    padding-top: 1.5rem;
+}
+.col-12.col-sm-12.col-lg-8.col-md-7.second.p-0 .tabs-and-layout{
+    margin-top: 1.5rem;
+}
+.feed-top-container-inner .feed-top-dfrt-sec {
+    padding: 7px 10px;
+}
 
+.top-post-and-layout .feed-top-container .home-user-avatar {
+    margin: 0 !important;
+    border-radius: 50% !important;
+}
+
+.top-post-and-layout .feed-top-container .create-post-input {
+    width: 100%;
+    margin: 0px 15px;
+}
+
+.top-post-and-layout .feed-top-container .create-post-input input {
+    width: 100%;
+}
+
+.help-center-header-drp {
+    margin-bottom: 10px;
+}
+.rotate-180 {
+    transform: rotate(180deg);
+  }
 /* Css for layout dropdown menu */
-
-
-
-
+.same-pd{
+    padding: 8px 16px !important;
+}
 
 .post-box .upvote-downvote span.material-symbols-outlined {
     cursor: pointer !important;

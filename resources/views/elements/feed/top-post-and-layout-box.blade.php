@@ -1,12 +1,13 @@
 <div class="feed-top-container">
-    <div class="create-post-area d-flex">
+    <div class="feed-top-container-inner">
+    <div class="create-post-area d-flex justify-content-between bg-white align-items-center feed-top-dfrt-sec">
         <div class="create-post-avtar"><img src="{{Auth::user()->avatar}}" class="home-user-avatar"></div>
         <div class="create-post-input"><input type="text" placeholder="Create Post"></div>
         <div class="create-post-link-icon"><span class="material-symbols-outlined">
             attach_file
             </span></div>
     </div>
-    <div class="tabs-and-layout d-flex">
+    <div class="tabs-and-layout d-flex justify-content-between bg-white align-items-center feed-top-dfrt-sec">
         <div class="hot-posts">Hot</div>
         <div class="new-posts">New</div>
         <div class="top-posts">Top</div>
@@ -33,6 +34,6 @@
                 </div>
             </div>
         </div>
-
+    </div>
     </div>
 </div>
