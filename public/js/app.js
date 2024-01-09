@@ -675,7 +675,3 @@ document.getElementById('comunity_theameClick').addEventListener('click', functi
         }
     });
 });
-
-
-// js for feed layout change start
-

@@ -12,7 +12,7 @@ class PostComment extends Model
      * @var array
      */
     protected $fillable = [
-        'user_id', 'post_id', 'message',
+        'user_id', 'post_id', 'message', 'comment_parent_id',
     ];
 
     /**
@@ -44,9 +44,35 @@ class PostComment extends Model
     {
         return $this->belongsTo('App\Model\Post');
     }
+    public function replies()
+    {
+        return $this->hasMany(PostComment::class, 'comment_parent_id');
+    }
 
     public function reactions()
     {
         return $this->hasMany('App\Model\Reaction');
+    }
+        
+    public function getCountReactionsAttribute()
+    {
+        // Ensure that 'reactions' relationship is loaded
+        if ($this->relationLoaded('reactions')) {
+            $postReactions = $this->reactions;
+    
+            $likeCount = $postReactions->where('reaction_type', 'like')->count();
+            $dislikeCount = $postReactions->where('reaction_type', 'dislike')->count();
+    
+            // You may further filter based on 'post_id' and 'id' columns if needed
+            // For example:
+            // $likeCount = $postReactions->where('reaction_type', 'like')->where('post_id', $this->id)->count();
+            // $dislikeCount = $postReactions->where('reaction_type', 'dislike')->where('post_id', $this->id)->count();
+            $total_votes = $likeCount - $dislikeCount;
+            return $total_votes;
+            //return $total_votes > 0 ? $total_votes : 0;
+        } else {
+            // If 'reactions' relationship is not loaded, you may choose to load it or return a default value
+            return 0; // Default value when the relationship is not loaded
+        }
     }
 }

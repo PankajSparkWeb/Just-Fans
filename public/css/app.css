@@ -14,6 +14,19 @@ body {
 .dropDownFor-content{
     display: none !important;
 }
+.create-post-area-go-to-create {
+    width: 100%;
+}
+
+/* .w-100 .d-flex.justify-content-between.w-100.mb-3.mt-3 {
+    display: none !important;
+} */
+
+.top-post-and-layout .tabs-and-layout .option-categery{
+    width:35% !important;
+}
+
+
 .dropdown-menu-header .dropdown-menu {
     padding: 15px;
 }
@@ -201,29 +214,39 @@ body {
 /* header dropdown css for both dropdown end */
 
 
-
-.input-group.input-group-seamless-append{
-     width: 80% !important;
+.new-navbar .new-header .search-box-header {
+    max-width: 1000px !important;
+    width: 100%;
 }
-
 .menu-option{
      cursor: pointer !important;
 }
 
+.new-header .navbar-brand img {
+    max-width: 100px !important;
+    margin-left:30px !important;
+}
+
 .dropdown-menu-header {
     border: 1px solid black;
-    padding: 5px 100px;
+    padding: 5px 85px;
     cursor: pointer !important;
 }
+
+.new-header .popular-btn-header .ion-icon-inner svg {
+    transform:rotate(135deg);
+    border:1px solid;
+    border-radius:50%;
+}
+
+ 
 
 .new-header {
     align-items: center;
 }
 
 .search-box-header {
-    width: 90% !important;
-    margin-left: 100px;
-    margin-right: 25px;
+   
 }
 .blank-first-blue-block {
     background-color: #33a8ff !important;

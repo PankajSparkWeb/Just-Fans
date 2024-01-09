@@ -3,7 +3,7 @@
 
 <nav class="new-navbar navbar-expand-md {{(Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-white') : (Cookie::get('app_theme') == 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-white'))}} ">
     
-    <div class="row container-fluid new-header">
+    <div class="row container-fluid new-header justify-content-between">
 
         <a class="navbar-brand" href="{{ route('home') }}">
         <img src="{{asset( (Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? getSetting('site.dark_logo') : getSetting('site.light_logo')) : (Cookie::get('app_theme') == 'dark' ? getSetting('site.dark_logo') : getSetting('site.light_logo'))) )}}" class="d-inline-block align-top mr-1 ml-3" alt="{{__("Site logo")}}">
@@ -46,7 +46,7 @@
     <a href="{{'#'}}">
     <div class="d-flex justify-content-center align-items-center">
         <div class="icon-wrapper d-flex justify-content-center align-items-center position-relative">
-            @include('elements.icon',['icon'=>'bag-check','variant'=>'medium'])
+            <span class="material-symbols-outlined">shield</span>
         </div>
         </div>
     </a>
@@ -99,7 +99,7 @@
     <a href="{{'#'}}">
     <div class="d-flex justify-content-center align-items-center">
         <div class="icon-wrapper d-flex justify-content-center align-items-center position-relative">
-            @include('elements.icon',['icon'=>'bookmarks','variant'=>'medium'])
+            <span class="material-symbols-outlined">campaign</span>
         </div>
         </div>
 </a></div>

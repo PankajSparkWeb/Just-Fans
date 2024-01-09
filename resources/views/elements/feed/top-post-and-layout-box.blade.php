@@ -1,17 +1,29 @@
 <div class="feed-top-container">
     <div class="feed-top-container-inner">
-    <div class="create-post-area d-flex justify-content-between bg-white align-items-center feed-top-dfrt-sec">
-        <div class="create-post-avtar"><img src="{{Auth::user()->avatar}}" class="home-user-avatar"></div>
+    <div class="create-post-area d-flex d-flex feed-top-dfrt-sec bg-white">
+        <a href="{{route('profile',['username'=>Auth::user()->username])}}">
+            <div class="create-post-avtar"><img src="{{Auth::user()->avatar}}" class="home-user-avatar"></div>
+        </a>
+    <a href="{{route('posts.create')}}" class=" d-flex justify-content-between align-items-center create-post-area-go-to-create">
+        
         <div class="create-post-input"><input type="text" placeholder="Create Post"></div>
         <div class="create-post-link-icon"><span class="material-symbols-outlined">
             attach_file
-            </span></div>
+            </span></div></a>
     </div>
     <div class="tabs-and-layout d-flex justify-content-between bg-white align-items-center feed-top-dfrt-sec">
-        <div class="hot-posts">Hot</div>
-        <div class="new-posts">New</div>
-        <div class="top-posts">Top</div>
+        <div class="option-categery d-flex justify-content-between">
+        <div class="hot-posts">
+            <a href="">Hot</a>
+        </div>
+        <div class="new-posts">
+            <a href="">New</a>
+        </div>
+        <div class="top-posts">
+            <a href="">Top</a>
+        </div>
         <div class="more-btn"></div>
+    </div>
 
         <div class="post-layout">
             <div class="dropDownFor-layout">

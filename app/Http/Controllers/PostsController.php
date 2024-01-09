@@ -426,7 +426,7 @@ class PostsController extends Controller
                     $reaction_count = $post->count_reactions;
                 }else{
                     //need to count comment reaction TODO
-                    $post = Post::with('reactions')->where('id', $id)->first();
+                    $post = PostComment::with('reactions')->where('id', $id)->first();
                     $reaction_count = $post->count_reactions;
                 }
 

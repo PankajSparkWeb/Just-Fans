@@ -26,7 +26,7 @@
 @section('content')
 
     <div class="row">
-        <div class="col-12">
+        <div class="container col-12">
             @include('elements.uploaded-file-preview-template')
             @include('elements.post-price-setup',['postPrice'=>(isset($post) ? $post->price : 0)])
             @include('elements.attachments-uploading-dialog')
@@ -50,15 +50,16 @@
                 @endif
                 <div class="d-flex flex-column-reverse">
                     <div class="w-100">
-                        <textarea  id="dropzone-uploader" name="input-text" class="form-control border dropzone w-100" rows="3" spellcheck="false" placeholder="{{__('Write a new post, drag and drop files to add attachments.')}}" value="{{isset($post) ? $post->text : ''}}"></textarea>
-                        <input type='url' id="external_post_link" name="external_post_link" class="form-control border w-100" value="{{isset($post) ? $post->external_post_link : ''}}">                        
+                        <textarea  id="dropzone-uploader" name="input-text" class="form-control border dropzone w-100" rows="1" spellcheck="false" placeholder="{{__('Title')}}" value="{{isset($post) ? $post->text : ''}}"></textarea>
+                        <br>
+                        <input type='url' id="external_post_link" name="external_post_link" class="form-control border w-100" value="{{isset($post) ? $post->external_post_link : ''}}" placeholder="URL">                        
                       
                          <span class="invalid-feedback" role="alert">
                             <strong class="post-invalid-feedback">{{__('Your post must contain more than 10 characters.')}}</strong>
                         </span>
 
                         <div class="d-flex justify-content-between w-100 mb-3 mt-3">
-                            @include('elements.post-create-actions')
+                            {{-- @include('elements.post-create-actions') --}}
                             <div class="d-flex align-items-center justify-content-center">
                                 @if(Route::currentRouteName() == 'posts.create')
                                     <div class="">

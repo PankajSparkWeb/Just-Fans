@@ -5,6 +5,7 @@
 /* global app, postVars, Post, CommentsPaginator */
 
 $(function () {
+    
     // Initing button save
     $('.post-create-button').on('click',function () {
         Post.create();
@@ -13,6 +14,8 @@ $(function () {
     $('.emoji-picker__emojis').mCustomScrollbar({
         theme: "minimal-dark"
     });
+
+    
 
     Post.setActivePage('post');
     Post.initPostsMediaModule();

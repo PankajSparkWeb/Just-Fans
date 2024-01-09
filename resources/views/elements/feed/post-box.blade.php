@@ -289,6 +289,10 @@
                         <!-- Dropdown menu links -->
                         <a class="dropdown-item" href="javascript:void(0)"
                             onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a>
+
+                        <a href="" class="dropdown-item">Share on Profile</a>
+
+                        <a href="{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}" class="dropdown-item">Share</a>
                     </div>
                 </div>
                 <div
@@ -300,25 +304,25 @@
                             </a>
                             <div class="dropdown-menu">
                                 <!-- Dropdown menu links -->
-                                <a class="dropdown-item" href="javascript:void(0)"
-                                    onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a>
+                                {{-- <a class="dropdown-item" href="javascript:void(0)"
+                                    onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a> --}}
                                 @if (Auth::check())
-                                    <a class="dropdown-item bookmark-button {{ PostsHelper::isPostBookmarked($post->bookmarks) ? 'is-active' : '' }}"
+                                    {{-- <a class="dropdown-item bookmark-button {{ PostsHelper::isPostBookmarked($post->bookmarks) ? 'is-active' : '' }}"
                                         href="javascript:void(0);"
                                         onclick="Post.togglePostBookmark({{ $post->id }});">{{ PostsHelper::isPostBookmarked($post->bookmarks) ? __('Remove the bookmark') : __('Bookmark this post') }}
-                                    </a>
+                                    </a> --}}
                                     @if (Auth::user()->id === $post->user_id)
-                                        <a class="dropdown-item pin-button {{ $post->is_pinned ? 'is-active' : '' }}"
+                                        {{-- <a class="dropdown-item pin-button {{ $post->is_pinned ? 'is-active' : '' }}"
                                             href="javascript:void(0);"
                                             onclick="Post.togglePostPin({{ $post->id }});">{{ $post->is_pinned ? __('Un-pin post') : __('Pin this post') }}
-                                        </a>
+                                        </a> --}}
                                     @endif
                                     @if (Auth::check() && Auth::user()->id != $post->user->id)
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item" href="javascript:void(0);"
+                                        {{-- <a class="dropdown-item" href="javascript:void(0);"
                                             onclick="Lists.showListManagementConfirmation('{{ 'unfollow' }}', {{ $post->user->id }});">{{ __('Unfollow') }}</a>
                                         <a class="dropdown-item" href="javascript:void(0);"
-                                            onclick="Lists.showListManagementConfirmation('{{ 'block' }}', {{ $post->user->id }});">{{ __('Block') }}</a>
+                                            onclick="Lists.showListManagementConfirmation('{{ 'block' }}', {{ $post->user->id }});">{{ __('Block') }}</a> --}}
                                         <a class="dropdown-item" href="javascript:void(0);"
                                             onclick="Lists.showReportBox({{ $post->user->id }},{{ $post->id }});">{{ __('Report') }}</a>
                                     @endif
@@ -362,7 +366,7 @@
                         <strong class="post-comments-label-count">{{ count($post->comments) }}</strong>
                         <span class="post-comments-label">
                             {{ trans_choice('comments', count($post->comments)) }}
-                        </span>
+                        </span>                        
                     </span>
                 @endif
                 <span class="ml-2-h d-none d-lg-block">

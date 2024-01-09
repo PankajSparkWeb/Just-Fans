@@ -164,8 +164,7 @@ var Post = {
      * @param post_id
      */
     showPostComments: function(post_id){
-        let postElement = $('*[data-postID="'+post_id+'"] .post-comments');
-
+        let postElement = $('*[data-postID="'+post_id+'"] .post-comments');        
         // No pagination needed - on feed
         if(typeof postVars === 'undefined'){
             CommentsPaginator.nextPageUrl = '';
@@ -303,8 +302,8 @@ var Post = {
             reactionsLabel = $('*[data-postID="'+id+'"] .upvote_downvote_section .post-reactions-label');
         }
         else{
-            reactElement = $('*[data-commentID="'+id+'"] .react-button');
-            reactionsCountLabel = $('*[data-commentID="'+id+'"] .comment-reactions-label-count');
+            reactElement = $('*[data-commentID="'+id+'"] .comment_upvote_downvote_section .react-button');
+            reactionsCountLabel = $('*[data-commentID="'+id+'"] .comment_upvote_downvote_section .comment-reactions-label-count');
             reactionsLabel = $('*[data-commentID="'+id+'"] .comment-reactions-label');
         }
         const didReact = $(thisEle).hasClass('active');
@@ -338,9 +337,9 @@ var Post = {
                     else{
                         count++;
                     }
-                    if(type === 'post'){
+                   // if(type === 'post'){
                         count = result.reaction_count;
-                    }
+                    //}
                     reactionsCountLabel.html(count);
                     reactionsLabel.html(trans_choice('likes',count));
                     // launchToast('success',trans('Success'),result.message);
