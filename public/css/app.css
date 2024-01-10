@@ -18,10 +18,9 @@ body {
     width: 100%;
 }
 
-/* .w-100 .d-flex.justify-content-between.w-100.mb-3.mt-3 {
-    display: none !important;
-} */
-
+.feed-box .post-box {
+    cursor: pointer;
+}
 .top-post-and-layout .tabs-and-layout .option-categery{
     width:35% !important;
 }

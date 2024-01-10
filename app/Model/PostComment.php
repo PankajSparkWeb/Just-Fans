@@ -44,15 +44,25 @@ class PostComment extends Model
     {
         return $this->belongsTo('App\Model\Post');
     }
+ 
+
+    // In your PostComment model
+
     public function replies()
     {
         return $this->hasMany(PostComment::class, 'comment_parent_id');
     }
 
+    public function parentComment()
+    {
+        return $this->belongsTo(PostComment::class, 'comment_parent_id');
+    }
+
+
     public function reactions()
     {
         return $this->hasMany('App\Model\Reaction');
-    }
+    }   
         
     public function getCountReactionsAttribute()
     {

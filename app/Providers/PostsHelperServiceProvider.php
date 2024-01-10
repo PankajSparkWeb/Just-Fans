@@ -422,31 +422,113 @@ class PostsHelperServiceProvider extends ServiceProvider
      * @return array|\Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
     public static function getPostComments($post_id, $limit = 9, $order = 'DESC', $encodePostsToHtml = false)
-    {
-        $comments = PostComment::with(['author', 'reactions'])->orderBy('created_at', $order)->where('post_id', $post_id)->paginate($limit);
+{
+    $paginatedComments = PostComment::with([
+        'author',
+        'reactions',
+        'replies.author',
+        'replies.reactions',
+        'replies.replies.author',
+        'replies.replies.reactions',
+    ])
+        ->orderBy('created_at', $order)
+        ->where(function ($query) use ($post_id) {
+            $query->where('post_id', $post_id)
+                ->orWhere('comment_parent_id', $post_id);
+        })
+        ->paginate($limit);
 
-        if ($encodePostsToHtml) {
-            $data = [
-                'total' => $comments->total(),
-                'currentPage' => $comments->currentPage(),
-                'last_page' => $comments->lastPage(),
-                'prev_page_url' => $comments->previousPageUrl(),
-                'next_page_url' => $comments->nextPageUrl(),
-                'first_page_url' => $comments->nextPageUrl(),
-                'hasMore' => $comments->hasMorePages(),
-            ];
-            $commentsData = $comments->map(function ($comment) {
-                $post = ['id' => $comment->id, 'post_id' => $comment->post->id, 'html' => View::make('elements.feed.post-comment')->with('comment', $comment)->render()];
+    // Recursive function to convert nested replies into a tree-like structure
+    function buildCommentTree($comments, $parentCommentId = null, $order) {
+        $filteredComments = collect();
+        foreach ($comments as $comment) {
+            if ($comment->comment_parent_id === $parentCommentId) {
+                $comment->replies = loadReplies($comment->id, $order);
+                $comment->replies = buildCommentTree($comment->replies, $comment->id, $order); // Fetch replies recursively
+                $filteredComments->push($comment);
+            }
+        }
+        return $filteredComments;
+    }
 
-                return $post;
+    // Function to load replies for a specific comment
+    function loadReplies($commentId, $order) {
+        return PostComment::with([
+            'author',
+            'reactions',
+            'replies.author',
+            'replies.reactions',
+        ])
+            ->where('comment_parent_id', $commentId)
+            ->orderBy('created_at', $order)
+            ->get();
+    }
+
+    // Build the comment tree structure
+    $comments = buildCommentTree($paginatedComments, null, $order);
+
+    if ($encodePostsToHtml) {
+
+        // Function to fetch replies HTML recursively
+        function fetchRepliesHtml($replies) {
+            return $replies->map(function ($reply) {
+                try {
+                    return [
+                        'id'      => $reply->id,
+                        'post_id' => $reply->post->id,
+                        'html'    => View::make('elements.feed.post-comment')->with(['comment' => $reply])->render(),
+                        'replies' => fetchRepliesHtml($reply->replies),
+                    ];
+                } catch (\Exception $e) {
+                    return [
+                        'id'      => $reply->id,
+                        'post_id' => $reply->post->id,
+                        'html'    => "Error rendering reply: " . $e->getMessage(),
+                        'replies' => [],
+                    ];
+                }
             });
-            $data['comments'] = $commentsData;
-        } else {
-            $data = $comments;
         }
 
-        return $data;
+        // Map paginated comments to HTML using the recursive structure
+        $commentsData = $comments->map(function ($comment) {
+            try {
+                return [
+                    'id'        => $comment->id,
+                    'post_id'   => $comment->post->id,
+                    'html'      => View::make('elements.feed.post-comment')->with(['comment' => $comment])->render(),
+                    'replies'   => fetchRepliesHtml($comment->replies),
+                ];
+            } catch (\Exception $e) {
+                return [
+                    'id'        => $comment->id,
+                    'post_id'   => $comment->post->id,
+                    'html'      => "Error rendering comment: " . $e->getMessage(),
+                    'replies'   => [],
+                ];
+            }
+        });
+        
+        $data = [
+            'total' => $paginatedComments->total(),
+            'currentPage' => $paginatedComments->currentPage(),
+            'last_page' => $paginatedComments->lastPage(),
+            'prev_page_url' => $paginatedComments->previousPageUrl(),
+            'next_page_url' => $paginatedComments->nextPageUrl(),
+            'first_page_url' => $paginatedComments->url(1),
+            'last_page_url' => $paginatedComments->url($paginatedComments->lastPage()),
+            'hasMore' => $paginatedComments->hasMorePages(),
+            'comments' => $commentsData,
+        ];
+    } else {
+        $data = $comments;
     }
+
+    return $data;
+}
+
+    
+
 
     /**
      * Check if user has unlocked a post.

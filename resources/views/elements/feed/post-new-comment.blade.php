@@ -2,7 +2,17 @@
     <div class="d-flex justify-content-center align-items-center">
         <img class="rounded-circle" src="{{Auth::user()->avatar}}">
         <div class="input-group">
-            <textarea name="message" class="form-control comment-textarea mx-3 comment-text" placeholder="{{__('Write a message..')}}"  onkeyup="textAreaAdjust(this)"></textarea>
+            <textarea name="message" class="form-control comment-textarea mx-3 comment-text text-editor-input" placeholder="{{__('Write a message..')}}"  onkeyup="textAreaAdjust(this)"></textarea>
+            {{-- <script>
+                ClassicEditor
+                        .create( document.querySelector( '.text-editor-input' ) )
+                        .then( editor => {
+                                console.log( editor );
+                        } )
+                        .catch( error => {
+                                console.error( error );
+                        } );
+        </script> --}}
             <div class="input-group-append z-index-3 d-flex align-items-center justify-content-center">
                 <span class="h-pill h-pill-primary rounded mr-3 trigger" data-toggle="tooltip" data-placement="top" title="Like" >😊</span>
             </div>

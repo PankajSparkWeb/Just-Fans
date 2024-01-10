@@ -11,9 +11,9 @@ $(function () {
         Post.create();
     });
     /* replace the default browser scrollbar in the sidebar, in case the sidebar menu has a height that is bigger than the viewport */
-    $('.emoji-picker__emojis').mCustomScrollbar({
-        theme: "minimal-dark"
-    });
+   // $('.emoji-picker__emojis').mCustomScrollbar({
+     //   theme: "minimal-dark"
+    //});
 
     
 

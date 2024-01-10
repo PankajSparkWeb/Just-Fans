@@ -1,4 +1,4 @@
-@extends('layouts.user-no-nav')
+@extends('layouts.NewHomeLayout')
 
 @section('page_title', __(":username post",['username'=>$post->user->name]))
 
@@ -37,16 +37,14 @@
 @stop
 
 @section('content')
-    <div class="row">
-        <div class="min-vh-100 col-12 col-md-8 border-right  pr-md-0">
+    <div class="container">
+        <div class="min-vh-100 col-12 border-right  pr-md-0">
             <div class="feed-box mt-0 pt-4 mb-3 posts-wrapper">
                 @include('elements.message-alert',['classes'=>'pt-0 pb-4 px-2'])
                 @include('elements.feed.post-box')
             </div>
         </div>
-        <div class="col-12 col-md-4 d-none d-md-block pt-3">
-            @include('elements.profile.widgets')
-        </div>
+        
     </div>
     @include('elements.photoswipe-container')
     @include('elements.feed.post-delete-dialog')

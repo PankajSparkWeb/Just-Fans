@@ -675,3 +675,4 @@ document.getElementById('comunity_theameClick').addEventListener('click', functi
         }
     });
 });
+
