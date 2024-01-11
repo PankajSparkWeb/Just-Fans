@@ -18,8 +18,9 @@
             </div>
             <span class="invalid-feedback pl-4 text-bold" role="alert"></span>
         </div>
+      
         <div class="pl-2">
-            <button class="btn btn-outline-primary btn-rounded-icon" onclick="Post.addComment({{$post->id}})">
+            <button class="btn btn-outline-primary btn-rounded-icon" onclick="Post.addComment({{isset($post)  ? $post->id : $comment->post_id}}, this)">
                 <div class="d-flex justify-content-center align-items-center">
                     @include('elements.icon',['icon'=>'paper-plane','variant'=>''])
                 </div>

@@ -676,3 +676,6 @@ document.getElementById('comunity_theameClick').addEventListener('click', functi
     });
 });
 
+function execCommand(command, value = null) {
+    document.execCommand(command, false, value);
+  }

@@ -54,26 +54,61 @@ var Post = {
         mswpScanPage(gallerySelector,'mswp');
     },
 
+
+    
     /**
      * Method used for adding a new post comment
      * @param postID
      */
-    addComment: function (postID) {
-        let postElement = $('*[data-postID="'+postID+'"]');
-        let newCommentButton = postElement.find('.new-post-comment-area').find('button');
+    addComment: function (postID, thisEle) {
+        var comment_parent_id = '';
+        var newCommentButton;  // Declare the variable outside the if block
+        var postElement;  // Declare the variable outside the if block
+
+        var replyForm = $(thisEle).closest('.reply-form');
+        let postElement_sectoin = $('*[data-postID="'+postID+'"]');
+        
+        // Find the closest ancestor with class .reply-form .reply_form_section      
+        if (replyForm.length > 0) {
+            postElement = $(thisEle).closest('.reply-form');
+            // .reply-form exists
+            // Retrieve the data-comment-id attribute
+            let commentId = replyForm.data('comment-id');
+            newCommentButton = postElement.find('.new-post-comment-area').find('button');  
+            comment_parent_id = commentId;            
+            // Use commentId as needed...            
+        } else {
+            postElement = $(thisEle).closest('.new-post-comment-area');            
+            // .reply-form does not exist
+            newCommentButton = postElement.find('button');                        
+        }
         updateButtonState('loading',newCommentButton);
         $.ajax({
             type: 'POST',
             data: {
                 'message': postElement.find('textarea').val(),
-                'post_id': postID
+                'post_id': postID,
+                'comment_parent_id': comment_parent_id
             },
             url: app.baseUrl+'/posts/comments/add',
             success: function (result) {
                 if(result.success){
                     launchToast('success',trans('Success'),trans('Comment added'));
                     postElement.find('.no-comments-label').addClass('d-none');
-                    postElement.find('.post-comments-wrapper').prepend(result.data).fadeIn('slow');
+                    if( comment_parent_id ){
+                        var findUlElement = postElement.closest('.post-comment').find('ul.replies-list');
+                        
+                        if (findUlElement.length > 0) {
+                            var liElement = $('<li>').append(result.data);
+                            // If ul.replies-list exists, append liElement to it
+                            findUlElement.append(liElement).fadeIn('slow');
+                        } else {
+                            // If ul.replies-list doesn't exist, append liElement after .post-comment
+                            postElement.closest('.post-comment').after(result.data).fadeIn('slow');
+                        }                        
+                    }else{
+                        postElement_sectoin.find('.post-comments-wrapper').prepend(result.data).fadeIn('slow');
+                    }
                     postElement.find('textarea').val('');
                     const commentsCount = parseInt(postElement.find('.post-comments-label-count').html()) + 1;
                     postElement.find('.post-comments-label-count').html(commentsCount);
@@ -359,8 +394,35 @@ var Post = {
      * Appends replied username to comment field
      * @param username
      */
-    addReplyUser: function(username){
+    addReplyUser: function(username, comment_parent_id = null){        
         $('.new-post-comment-area textarea').val($('.new-post-comment-area textarea').val()+ ' @' +username+ ' ');
+    },
+
+    toggleReplyForm(commentId, username) {
+        // Toggle the visibility of the reply form based on the comment ID
+        var replyForm = document.querySelector('.reply-form[data-comment-id="' + commentId + '"]');
+
+        if (replyForm) {
+            // The reply form with data-comment-id attribute exists        
+            if (replyForm.style.display === 'none' || replyForm.style.display === '') {
+                replyForm.style.display = 'block';
+            } else {
+                replyForm.style.display = 'none';
+            }        
+            var newPostCommentArea = replyForm.querySelector('.new-post-comment-area textarea');        
+            if (newPostCommentArea) {
+                // The textarea with class .new-post-comment-area exists within the reply form
+                // Use the value property to get or set the value of the textarea
+                newPostCommentArea.value += ' @' + username + ' ';
+            } else {
+                // The textarea with class .new-post-comment-area does not exist within the reply form
+                // Handle the case where the element is not found...
+            }
+        } else {
+            // The reply form with data-comment-id attribute does not exist
+            // Handle the case where the reply form is not found...
+        }
+           
     },
 
     /**

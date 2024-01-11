@@ -301,8 +301,10 @@ class PostsController extends Controller
     public function addNewComment(SavePostCommentRequest $request)
     {
         try {
-            $comment = $request->get('message');
-            $postID = $request->get('post_id');
+            $comment            = $request->get('message');
+            $postID             = $request->get('post_id');
+            $comment_parent_id  = $request->get('comment_parent_id');            
+
 
             // Checking authorization & post existence
             $post = Post::where('id', $postID)->first();
@@ -318,6 +320,7 @@ class PostsController extends Controller
                 $comment = PostComment::create([
                     'message' => $comment,
                     'post_id' => $postID,
+                    'comment_parent_id' => $comment_parent_id,
                     'user_id' => Auth::user()->id,
                 ]);
 
