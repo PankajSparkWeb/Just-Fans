@@ -568,12 +568,20 @@ class PostsController extends Controller
     public function deleteComment(Request $request){
         $commentID = $request->get('id');
         $comment = PostComment::where('id', $commentID)->where('user_id', Auth::user()->id)->first();
-        if(!$comment){
+    
+        if (!$comment) {
             return response()->json(['success' => false, 'errors' => [__('Not authorized')], 'message' => __('Comment not found')], 403);
         }
+    
+        // Delete child comments with the same parent_id
+        PostComment::where('comment_parent_id', $commentID)->delete();
+    
+        // Delete the parent comment
         $comment->delete();
+    
         return response()->json(['success' => true, 'message' => __('Comment deleted successfully.')]);
     }
+    
 
     /**
      * Validates post access

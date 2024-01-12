@@ -54,8 +54,6 @@ var Post = {
         mswpScanPage(gallerySelector,'mswp');
     },
 
-
-    
     /**
      * Method used for adding a new post comment
      * @param postID
@@ -95,17 +93,20 @@ var Post = {
                 if(result.success){
                     launchToast('success',trans('Success'),trans('Comment added'));
                     postElement.find('.no-comments-label').addClass('d-none');
-                    if( comment_parent_id ){
-                        var findUlElement = postElement.closest('.post-comment').find('ul.replies-list');
-                        
+                    if( comment_parent_id ){                                                
+                        //start
+                        var findUlElement_c = $(thisEle).closest('.post-comment');
+                        var findUlElement = findUlElement_c.next('.replies-list');                        
                         if (findUlElement.length > 0) {
+                            // If ul.replies-list exists, prepend result.data to it
                             var liElement = $('<li>').append(result.data);
-                            // If ul.replies-list exists, append liElement to it
-                            findUlElement.append(liElement).fadeIn('slow');
+                            findUlElement.prepend(liElement).fadeIn('slow');
                         } else {
-                            // If ul.replies-list doesn't exist, append liElement after .post-comment
-                            postElement.closest('.post-comment').after(result.data).fadeIn('slow');
-                        }                        
+                            // If ul.replies-list doesn't exist, create a new ul.replies-list and prepend result.data to it
+                            var ulElement = $('<ul>', { class: 'replies-list' }).append($('<li>').append(result.data));
+                            findUlElement_c.after(ulElement).fadeIn('slow');
+                        }                       
+                                     
                     }else{
                         postElement_sectoin.find('.post-comments-wrapper').prepend(result.data).fadeIn('slow');
                     }
@@ -114,6 +115,8 @@ var Post = {
                     postElement.find('.post-comments-label-count').html(commentsCount);
                     postElement.find('.post-comments-label').html(trans_choice('comments',commentsCount));
                     updateButtonState('loaded',newCommentButton);
+
+                    $(thisEle).closest('.reply-form').hide();
                 }
                 else{
                     launchToast('danger',trans('Error'),result.errors[0]);
@@ -212,7 +215,7 @@ var Post = {
         const isHidden = postElement.hasClass('d-none');
         if(isHidden){
             if(!postElement.hasClass('latest-comments-loaded')){
-                CommentsPaginator.loadResults(post_id,9);
+                CommentsPaginator.loadResults(post_id,1000000000000000);
             }
             postElement.removeClass('d-none');
             postElement.addClass('latest-comments-loaded');
