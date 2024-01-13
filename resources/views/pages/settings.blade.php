@@ -1,4 +1,4 @@
-@extends('layouts.user-no-nav')
+@extends('layouts.NewHomeLayout')
 
 @section('page_title',  ucfirst(__($activeSettingsTab)))
 
@@ -35,7 +35,7 @@
 @stop
 
 @section('content')
-    <div class="">
+    <div class="container">
         <div class="row">
             <div class="col-12 col-md-4 col-lg-3 mb-3 pr-0 settings-menu">
                 <div class="settings-menu-wrapper">

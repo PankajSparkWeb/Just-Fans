@@ -49,14 +49,10 @@
                 @endif
                 <div class="d-flex flex-column-reverse">
                     <div class="w-100">
-                        <textarea id="dropzone-uploader" name="input-text" class="form-control border dropzone w-100 editor-for-txt" rows="1"
-                            spellcheck="false" placeholder="{{ __('Title') }}" value="{{ isset($post) ? $post->text : '' }}"></textarea>
-                            
-                            <script>
-                                tinymce.init({
-                                  selector: 'textarea.editor-for-txt',
-                                });
-                              </script>
+                        <div id="dropzone-uploader" name="input-text"
+                            class="form-control border dropzone w-100 editor-for-txt ql-container ql-snow ql-editor ql-blank"
+                            rows="1" spellcheck="false" placeholder="Title"></div>
+                        @include('elements.post-textarea.script')
                         <br>
                         <input type='url' id="external_post_link" name="external_post_link"
                             class="form-control border w-100" value="{{ isset($post) ? $post->external_post_link : '' }}"
