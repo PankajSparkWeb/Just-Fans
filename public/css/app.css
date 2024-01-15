@@ -11,6 +11,96 @@ body {
 
 
 /* css  pankaj*/
+
+
+
+
+
+
+
+
+.intrest-on-signup {
+    z-index: 999999999;
+    position: absolute;
+}
+
+
+
+.dialog-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    align-items: center;
+    justify-content: center;
+}
+.dialog-box {
+    background: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    position: relative;
+    max-width: 550px;
+}
+.close-btn {
+    cursor: pointer;
+    color: #333;
+    font-size: 20px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.selectedIntrest {
+    background-color: red;
+}
+
+#mySelectBox .intrest{
+  cursor: pointer !important;
+  height: 100px;
+  width: 200px;
+  text-align: center;
+}
+
+#mySelectBox{
+    width: 500px;
+}
+
+
+div#mySelectBoxPost .interest-post {
+    cursor: pointer !important;
+}
+div#mySelectBox .interest {
+    cursor: pointer !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 .dropDownFor-content{
     display: none !important;
 }

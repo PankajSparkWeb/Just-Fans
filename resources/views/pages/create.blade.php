@@ -57,7 +57,7 @@
                         <input type='url' id="external_post_link" name="external_post_link"
                             class="form-control border w-100" value="{{ isset($post) ? $post->external_post_link : '' }}"
                             placeholder="URL">
-
+                        @include('elements.post-textarea.select-intrest')
                         <span class="invalid-feedback" role="alert">
                             <strong
                                 class="post-invalid-feedback">{{ __('Your post must contain more than 10 characters.') }}</strong>

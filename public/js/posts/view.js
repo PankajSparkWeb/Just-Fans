@@ -37,3 +37,11 @@ $(window).scroll(function(){
         $(".profile-widgets-area").removeClass("sticky-profile-widgets");
     }
 });
+var selectBox = document.getElementById('mySelectBoxPost');
+
+selectBox.addEventListener('click', function (event) {
+    var div = event.target;
+    if (div.tagName === 'DIV') {
+        div.classList.toggle('selectedIntrest');
+    }
+});

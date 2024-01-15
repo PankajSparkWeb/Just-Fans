@@ -659,6 +659,8 @@ function showContent(contentType) {
 //   js for wiki and post tabs end
 
 
+
+// js for intrest popup sign up
 document.getElementById('comunity_theameClick').addEventListener('click', function() {
     // Get references to all elements with the 'side-bar-heading' class
     var addThereDivs = document.querySelectorAll('.side-bar-heading');
@@ -680,3 +682,24 @@ function execCommand(command, value = null) {
     document.execCommand(command, false, value);
   }
   
+
+
+  function openDialog() {
+    document.getElementById("dialog-container").style.display = "flex";
+}
+
+function closeDialog() {
+    document.getElementById("dialog-container").style.display = "none";
+}
+
+
+var selectBox = document.getElementById('mySelectBox');
+
+selectBox.addEventListener('click', function (event) {
+    var div = event.target;
+    if (div.tagName === 'DIV') {
+        div.classList.toggle('selectedIntrest');
+    }
+});
+
+
