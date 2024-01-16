@@ -31,18 +31,18 @@
         "silviolleite/laravelpwa": "^2.0",
         "spatie/schema-org": "^3.9",
         "stripe/stripe-php": "^7.77",
-        "tcg/voyager": "^1.5",
+        "tcg/voyager": "^1.7",
         "yabacon/paystack-php": "^2.2",
         "zanysoft/laravel-zip": "^1.0"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.5",
-        "friendsofphp/php-cs-fixer": "^3.0",
-        "orangehill/iseed": "^3.0",
+        "barryvdh/laravel-debugbar": "*",
         "facade/ignition": "^2.3.6",
         "fakerphp/faker": "^1.9.1",
+        "friendsofphp/php-cs-fixer": "^3.0",
         "mockery/mockery": "^1.0",
         "nunomaduro/collision": "^5.0",
+        "orangehill/iseed": "^3.0",
         "phpunit/phpunit": "^9.0"
     },
     "config": {

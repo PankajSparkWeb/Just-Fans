@@ -28,6 +28,13 @@ Route::group(['prefix' => 'admin', 'middleware' => 'jsVars'], function () {
 
     Route::get('/users/{id}/impersonate', 'UserController@impersonate')->name('admin.impersonate');
     Route::get('/leave-impersonation', 'UserController@leaveImpersonation')->name('admin.leaveImpersonation');
+
+    //interest routes
+    //Route::get('/interest', 'InterestController@index')->name('admin.interest');
+    Route::resource('interests', 'InterestController');
+
+    
+
 });
 
 
@@ -57,7 +64,7 @@ Route::get('socialAuth/{provider}/callback', ['uses' => 'Auth\LoginController@ha
 Route::group(['middleware' => ['auth','verified','2fa']], function () {
     // Settings panel routes
     
-    Route::get('/new-home', ['uses' => 'NewHome@ShowHome', 'as'   => 'NewHome']);
+    // Route::get('/new-home', ['uses' => 'NewHome@ShowHome', 'as'   => 'NewHome']);
     
     Route::group(['prefix' => 'my', 'as' => 'my.'], function () {
         

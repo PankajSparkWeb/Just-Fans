@@ -136,7 +136,7 @@
         <div class="post-text-area-main" onclick="window.location.href = '{{ Route::currentRouteName() != 'posts.get' ? route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) : '#comments' }}';">
             <p 
                 class="text-break post-content-data {{ getSetting('feed.enable_post_description_excerpts') && (strlen($post->text) >= 85 || substr_count($post->text, "\r\n") > 1) ? 'line-clamp-1 pb-0 mb-0' : '' }}">
-                {{ $post->text }}</p>
+                {!! $post->text !!}</p>
             @if (getSetting('feed.enable_post_description_excerpts') &&
                     (strlen($post->text) >= 85 || substr_count($post->text, "\r\n") > 1))
                 <span class="text-primary pointer-cursor" onclick="Post.toggleFullDescription({{ $post->id }})">

@@ -172,7 +172,7 @@ var PostCreate = {
         let route = app.baseUrl + '/posts/save';
         let data = {
             'attachments': FileUpload.attachaments,
-            'text': $('#dropzone-uploader').text(),
+            'text': quill.root.innerHTML,
             'external_post_link': $('#external_post_link').val(),
             'price': PostCreate.postPrice,
             'postNotifications' : PostCreate.postNotifications,

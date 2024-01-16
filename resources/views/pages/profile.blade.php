@@ -1,4 +1,4 @@
-@extends('layouts.user-no-nav')
+@extends('layouts.NewHomeLayout')
 
 @section('page_title',  __("user_profile_title_label",['user' => $user->name]))
 @section('share_url', route('home'))
@@ -58,16 +58,17 @@
 @stop
 
 @section('content')
+<div class="container">
     <div class="row">
         <div class="min-vh-100 col-12 col-md-8 border-right pr-md-0">
 
-            <div class="">
+            {{-- <div class="">
                 <div class="profile-cover-bg">
                     <img class="card-img-top centered-and-cropped" src="{{$user->cover}}">
-                </div>
-            </div>
+                </div> 
+            </div> --}}
 
-            <div class="container d-flex justify-content-between align-items-center">
+            {{-- <div class="container d-flex justify-content-between align-items-center">
                 <div class="z-index-3 avatar-holder">
                     <img src="{{$user->avatar}}" class="rounded-circle">
                 </div>
@@ -156,11 +157,11 @@
                         </div>
                     @endif
                 </div>
-            </div>
+            </div> --}}
 
             <div class="container pt-2 pl-0 pr-0">
 
-                <div class="pt-2 pl-4 pr-4">
+                {{-- <div class="pt-2 pl-4 pr-4">
                     <h5 class="text-bold d-flex align-items-center">
                         <span>{{$user->name}}</span>
                         @if($user->email_verified_at && $user->birthdate && ($user->verification && $user->verification->status == 'verified'))
@@ -173,11 +174,11 @@
                             <div class="blob red ml-3"></div>
                             </span>
                         @endif
-                    </h5>
-                    <h6 class="text-muted"><span class="text-bold"><span>@</span>{{$user->username}}</span> {{--- Last seen X time ago--}}</h6>
-                </div>
+                    </h5> --}}
+                    {{-- <h6 class="text-muted"><span class="text-bold"><span>@</span>{{$user->username}}</span> - Last seen X time ago</h6> --}}
+                {{-- </div> --}}
 
-                <div class="pt-2 pb-2 pl-4 pr-4 profile-description-holder">
+                {{-- <div class="pt-2 pb-2 pl-4 pr-4 profile-description-holder">
                     <div class="description-content {{$user->bio && (strlen(trim(strip_tags(GenericHelper::parseProfileMarkdownBio($user->bio)))) >= 85 || substr_count($user->bio,"\r\n") > 1) &&  !getSetting('profiles.disable_profile_bio_excerpt') ? 'line-clamp-1' : ''}}">
                         @if($user->bio)
                             @if(getSetting('profiles.allow_profile_bio_markdown'))
@@ -195,9 +196,9 @@
                             <span class="label-less d-none">{{__('Show less')}}</span>
                         </span>
                     @endif
-                </div>
+                </div> --}}
 
-                <div class="d-flex flex-column flex-md-row justify-content-md-between pb-2 pl-4 pr-4 mb-3 mt-1">
+                {{-- <div class="d-flex flex-column flex-md-row justify-content-md-between pb-2 pl-4 pr-4 mb-3 mt-1">
 
                     <div class="d-flex align-items-center mr-2 text-truncate mb-0 mb-md-0">
                         @include('elements.icon',['icon'=>'calendar-clear-outline','centered'=>false,'classes'=>'mr-1'])
@@ -236,8 +237,8 @@
                         @endif
                     @endif
 
-                </div>
-
+                </div> --}}
+{{-- 
                 <div class="bg-separator border-top border-bottom"></div>
 
                 @include('elements.message-alert',['classes'=>'px-2 pt-4'])
@@ -316,11 +317,19 @@
                         @endif
                     </div>
                     <div class="bg-separator border-top border-bottom"></div>
-                @endif
+                @endif --}}
                 <div class="mt-3 inline-border-tabs">
-                    <nav class="nav nav-pills nav-justified text-bold">
-                        <a class="nav-item nav-link {{$activeFilter == false ? 'active' : ''}}" href="{{route('profile',['username'=> $user->username])}}">{{trans_choice('posts', $posts->total(), ['number'=>$posts->total()])}} </a>
-
+                    <ul class="nav nav-pills nav-justified text-bold">
+                        <li class="nav-item">
+                            <a href="#overview" class="nav-link">Overview</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('profile', ['username' => $user->username]) }}" class="nav-link {{ $activeFilter == false ? 'active' : '' }}">
+                                {{ trans_choice('posts', $posts->total(), ['number' => $posts->total()]) }}
+                            </a>
+                        </li>
+                    </ul>
+                    
                         @if($filterTypeCounts['image'] > 0)
                             <a class="nav-item nav-link {{$activeFilter == 'image' ? 'active' : ''}}" href="{{route('profile',['username'=> $user->username]) . '?filter=image'}}">{{trans_choice('images', $filterTypeCounts['image'], ['number'=>$filterTypeCounts['image']])}}</a>
                         @endif
@@ -360,7 +369,7 @@
         <div class="col-12 col-md-4 d-none d-md-block pt-3">
             @include('elements.profile.widgets')
         </div>
-    </div>
+    </div></div>
 
     <div class="d-none">
         <ion-icon name="heart"></ion-icon>
