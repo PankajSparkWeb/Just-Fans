@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Post extends Model
 {
 
@@ -153,5 +153,12 @@ class Post extends Model
             $query->orWhere('expire_date', null);
         });
     }
+
+    public function interests(): BelongsToMany
+    {
+        return $this->belongsToMany(Newinterest::class, 'post_interest', 'post_id', 'newinterest_id');
+    }
+
+    
 
 }

@@ -394,6 +394,13 @@
         </div>
     </div>
 
+    <!-- interst -->
+    @if($post->interests->isNotEmpty())        
+            @foreach($post->interests as $interest)
+                {{ $interest->name }} , 
+            @endforeach        
+    @endif
+
     @if (
         $post->isSubbed ||
             (Auth::check() && getSetting('profiles.allow_users_enabling_open_profiles') && $post->user->open_profile))

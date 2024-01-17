@@ -5,12 +5,14 @@ namespace App;
 use App\Model\Post;
 use App\Model\Subscription;
 use App\Model\UserList;
+use App\Model\Newinterest;
 use App\Providers\GenericHelperServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
 {
@@ -189,5 +191,10 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
     {
         return $this->hasOne('App\Model\CreatorOffer');
     }
+
+    public function interests(): BelongsToMany
+{
+    return $this->belongsToMany(Newinterest::class, 'user_interest', 'user_id', 'newinterest_id');
+}
 
 }

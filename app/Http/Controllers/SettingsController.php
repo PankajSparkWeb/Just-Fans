@@ -11,6 +11,7 @@ use App\Http\Requests\VerifyProfileAssetsRequest;
 use App\Model\Attachment;
 use App\Model\Country;
 use App\Model\CreatorOffer;
+use App\Model\Newinterest;
 use App\Model\ReferralCodeUsage;
 use App\Model\Subscription;
 use App\Model\Transaction;
@@ -164,7 +165,8 @@ class SettingsController extends Controller
                 $data['payments'] = $payments;
                 break;
             case null:
-            case 'profile':
+            case 'profile':                
+                $data['interests'] = Newinterest::orderBy('name', 'asc')->get();
                 JavaScript::put([
                     'bioConfig' => [
                         'allow_profile_bio_markdown' => getSetting('profiles.allow_profile_bio_markdown'),
@@ -241,6 +243,11 @@ class SettingsController extends Controller
             'gender_id' => $request->get('gender'),
             'gender_pronoun' => $request->get('pronoun'),
         ]);
+
+       // $userList = UserList::find(auth()->user()->id);
+        // Sync user interests based on the submitted form data
+        $user->interests()->sync($request->input('interests', []));
+    
 
         return back()->with('success', __('Settings saved.'));
     }

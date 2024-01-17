@@ -167,6 +167,9 @@ var PostCreate = {
             $('#confirm-post-save').modal('show');
             return false;
         }
+        var interestsArray = $('input[name="interests[]"]:checked').map(function() {
+            return this.value;
+        }).get();
         updateButtonState('loading',$('.post-create-button'));
         PostCreate.savePostScheduleSettings();
         let route = app.baseUrl + '/posts/save';
@@ -174,6 +177,7 @@ var PostCreate = {
             'attachments': FileUpload.attachaments,
             'text': quill.root.innerHTML,
             'external_post_link': $('#external_post_link').val(),
+            'interests':interestsArray,
             'price': PostCreate.postPrice,
             'postNotifications' : PostCreate.postNotifications,
             'postReleaseDate': PostCreate.postReleaseDate,

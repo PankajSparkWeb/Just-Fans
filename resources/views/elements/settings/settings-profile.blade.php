@@ -103,6 +103,31 @@
             </span>
         @endif
     </div>
+
+    <div class="form-group">
+
+        <div class="d-flex justify-content-between">
+            <label for="interest">
+                {{__('Interest')}}
+            </label>            
+        </div>
+        @php
+        $userInterests = Auth::user()->interests->pluck('id')->toArray();
+        @endphp        
+        @foreach ($interests as $interest)
+            <label>              
+                <input type="checkbox" name="interests[]" value="{{ $interest->id }}" {{ in_array($interest->id, $userInterests) ? 'checked' : '' }}>
+                {{ $interest->name }}
+    
+            </label><br>
+        @endforeach
+
+        @if($errors->has('interests'))
+            <span class="invalid-feedback" role="alert">
+                <strong>{{$errors->first('interests')}}</strong>
+            </span>
+        @endif
+    </div>
     <div class="form-group">
         <label for="birthdate">{{__('Birthdate')}}</label>
         <input type="date" class="form-control {{ $errors->has('location') ? 'is-invalid' : '' }}" id="birthdate" name="birthdate" aria-describedby="emailHelp"  value="{{Auth::user()->birthdate}}" max="{{$minBirthDate}}">

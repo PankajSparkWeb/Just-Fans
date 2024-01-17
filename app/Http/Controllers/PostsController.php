@@ -10,6 +10,7 @@ use App\Http\Requests\UpdateReactionRequest;
 use App\Model\Attachment;
 use App\Model\Post;
 use App\Model\PostComment;
+use App\Model\Newinterest;
 use App\Model\Reaction;
 use App\Model\UserBookmark;
 use App\Providers\AttachmentServiceProvider;
@@ -105,6 +106,7 @@ class PostsController extends Controller
      */
     public function create()
     {
+        $interests = Newinterest::orderBy('name', 'asc')->get();
         $canPost = true;
         if(getSetting('site.enforce_user_identity_checks')){
             if(!GenericHelperServiceProvider::isUserVerified()){
@@ -121,8 +123,7 @@ class PostsController extends Controller
                 'max_post_description_size' => (int)getSetting('feed.min_post_description')
             ],
         ]);
-
-        return view('pages.create', []);
+        return view('pages.create', ['interests' => $interests]);
     }
 
     /**
@@ -133,6 +134,7 @@ class PostsController extends Controller
      */
     public function edit(Request $request)
     {
+        $interests = Newinterest::orderBy('name', 'asc')->get();
         $postID = $request->route('post_id');
         $post = Post::where('id', $postID)->where('user_id', Auth::user()->id)->with(['attachments'])->first();
         if (! $post) {
@@ -157,6 +159,7 @@ class PostsController extends Controller
 
         return view('pages.create', [
             'post' => $post,
+            'interests' => $interests
         ]);
     }
 
@@ -188,16 +191,22 @@ class PostsController extends Controller
                     'price' => $request->get('price'),
                     'status' => $postStatus,
                 ], $postSchedulingData))->id;
+                $post = Post::find($postID);
+                $post->interests()->sync($request->input('interests', []));
             } elseif ($type == 'update') {
                 $postID = $request->get('id');
                 $post = Post::where('id', $postID)->where('user_id', Auth::user()->id)->first();
                 if ($post) {
+                    $validatedData = $request->validate([
+                        'interests' => 'array|exists:newinterests,id',
+                    ]);
                     $post->update(array_merge([
                         'text' => $request->get('text'),
                         'external_post_link' => $request->get('external_post_link'),
                         'price' => $request->get('price'),
-                    ], $postSchedulingData));
+                    ], $postSchedulingData));                   
                     $postID = $post->id;
+                    $post->interests()->sync($request->input('interests', []));
                 } else {
                     return response()->json(['success' => false, 'errors' => [__('Not authorized')], 'message' => __('Post not found')], 403);
                 }
