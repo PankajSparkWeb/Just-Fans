@@ -394,12 +394,14 @@
         </div>
     </div>
 
-    <!-- interst -->
+    <!-- Start interst Need to remove code-->
+    {{$post->id}}
     @if($post->interests->isNotEmpty())        
             @foreach($post->interests as $interest)
                 {{ $interest->name }} , 
             @endforeach        
     @endif
+    <!-- END interst Need to remove code-->
 
     @if (
         $post->isSubbed ||

@@ -15,7 +15,7 @@
                     <div class="actions-holder d-none">
 
                         <div class="d-flex">
-                        <span class="h-pill h-pill-accent pointer-cursor mr-1 upload-button" data-toggle="tooltip" data-placement="top" title="{{__('Upload cover image')}}">
+                        <span class="h-pill h-pill-accent pointer-cursor mr-1 upload-button test" data-toggle="tooltip" data-placement="top" title="{{__('Upload cover image')}}">
                              @include('elements.icon',['icon'=>'image','variant'=>'medium'])
                         </span>
                             <span class="h-pill h-pill-accent pointer-cursor" onclick="ProfileSettings.removeUserAsset('cover')" data-toggle="tooltip" data-placement="top" title="{{__('Remove cover image')}}">

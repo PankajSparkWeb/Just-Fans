@@ -1,3 +1,8 @@
+<style>
+    a.posts_top_nav.active {
+    background: green;
+}
+</style>
 <div class="feed-top-container">
     <div class="feed-top-container-inner">
     <div class="create-post-area d-flex d-flex feed-top-dfrt-sec bg-white">
@@ -14,10 +19,10 @@
     <div class="tabs-and-layout d-flex justify-content-between bg-white align-items-center feed-top-dfrt-sec">
         <div class="option-categery d-flex justify-content-between">
         <div class="hot-posts">
-            <a href="">Hot</a>
+            <a class="posts_top_nav {{ Route::currentRouteName() == 'feed.hotFeed' ? 'active' : '' }}" href="{{route('feed.hotFeed')}}">Hot</a>
         </div>
         <div class="new-posts">
-            <a href="">New</a>
+            <a class="posts_top_nav {{ Route::currentRouteName() == 'feed' ? 'active' : '' }}" href="{{route('feed')}}">New</a>            
         </div>
         <div class="top-posts">
             <a href="">Top</a>

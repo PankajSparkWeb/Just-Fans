@@ -178,6 +178,12 @@ class PostsHelperServiceProvider extends ServiceProvider
         return self::getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, false, false, false, $sortOrder, $searchTerm);
     }
 
+    //get hot posts
+    public static function getFeedPostsHot($userID, $encodePostsToHtml = false, $pageNumber = false, $mediaType = false, $sortOrder = false, $searchTerm = '')
+    {
+        return self::getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, false, false, false, 'hot', $searchTerm);
+    }
+
     /**
      * Gets list of posts for profile.
      * @param $userID
@@ -203,6 +209,8 @@ class PostsHelperServiceProvider extends ServiceProvider
     {
         return self::getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, false, $hasSub, true);
     }
+
+    
 
     /**
      * Returns lists of posts, conditioned by different filters.
@@ -329,11 +337,19 @@ class PostsHelperServiceProvider extends ServiceProvider
     {
         if ($filterType == 'following' || $filterType == 'all') {
             // Followers only
-            $posts->join('user_list_members as following', function ($join) use ($userID) {
+            /*$posts->join('user_list_members as following', function ($join) use ($userID) {
                 $join->on('following.user_id', '=', 'posts.user_id');
                 $join->on('following.list_id', '=', DB::raw(Auth::user()->lists->firstWhere('type', 'following')->id));
-            });
+            });*/    
+            $user = Auth::user();
+            $userInterests = $user->interests;
+            if ($userInterests && !$userInterests->isEmpty()) {
+                $posts->whereHas('interests', function ($query) use ($userInterests) {
+                    $query->whereIn('newinterests.id', $userInterests->pluck('id'));
+                });
+            }
         }
+
 
         if ($filterType == 'blocked' || $filterType == 'all') {
             // Blocked users
@@ -393,9 +409,23 @@ class PostsHelperServiceProvider extends ServiceProvider
                 }
                 elseif($sortOrder =='latest'){
                     $posts->orderBy('created_at','DESC');
-                }
-            }
-            else{
+                }    
+                elseif($sortOrder =='hot'){
+                     //HOT POST SORTING                
+                    $now = Carbon::now();                
+                    $twentyFourHoursAgo = $now->subHours(24);                
+                    $relationsCount = ['reactions', 'comments'];
+                    // Count the relations
+                    $posts->withCount($relationsCount);
+                    // Order by the sum of reactions and comments count within the last 24 hours in descending order
+                    $posts->orderByRaw('(SELECT COUNT(*) FROM reactions WHERE reactions.post_id = posts.id AND reactions.created_at >= ?) + 
+                                        (SELECT COUNT(*) FROM post_comments WHERE post_comments.post_id = posts.id AND post_comments.created_at >= ?) DESC', 
+                                        [$twentyFourHoursAgo, $twentyFourHoursAgo]);
+                    // If there are no posts within the last 24 hours, order by the total count from the beginning
+                    $posts->orderByDesc(DB::raw('(SELECT COUNT(*) FROM reactions WHERE reactions.post_id = posts.id) + 
+                    (SELECT COUNT(*) FROM post_comments WHERE post_comments.post_id = posts.id)'));
+                }                      
+            }else{
                 $posts->orderBy('created_at','DESC');
             }
         }

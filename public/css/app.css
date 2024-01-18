@@ -12,7 +12,12 @@ body {
 
 /* css  pankaj*/
 
-
+#New-Header {
+    position: fixed;
+    width: 100%;
+    top: 0px;
+    z-index:9999999;
+}
 
 .nav.nav-pills.nav-justified.notifications-nav a:nth-child(3),
 .nav.nav-pills.nav-justified.notifications-nav a:nth-child(4),
@@ -195,6 +200,10 @@ div#mySelectBox .interest {
 .container, .container-lg, .container-md, .container-sm, .container-xl{
     max-width: 1000px !important;
 }
+
+.profile-container{
+    margin-top: 45px;
+}
 .new-side-bar .side-bar-heading {
     background-color: #0079d3;
 }
@@ -347,6 +356,7 @@ div#mySelectBox .interest {
     height: 80px;
     width: 100%;
     cursor: pointer;
+    margin-top: 48px;
 }
 
 .container .inner .wrapper .inner-content {

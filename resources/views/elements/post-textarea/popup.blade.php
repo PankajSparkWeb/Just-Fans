@@ -1,17 +1,28 @@
-<div class="intrest-on-signup">
-    <button onclick="openDialog()">Open Dialog</button>
-    
-    <div id="dialog-container" class="dialog-container">
+<div class="interest-on-signup">
+    <!-- Add style="display:none;" to hide the dialog initially -->
+    <div id="dialog-container" class="dialog-container" style="display:block;">
         <div class="dialog-box">
-            <span class="close-btn" onclick="closeDialog()">X</span>
-            
-        <div id="mySelectBox" class="d-flex justify-content-between">
-          <div class="interest" value="option1">Option 1</div>
-          <div class="interest" value="option2">Option 2</div>
-          <div class="interest" value="option3">Option 3</div>
-          <div class="interest" value="option4">Option 4</div>
-          <div class="interest" value="option5">Option 5</div>
-      </div>
+            <span class="close-btn" onclick="closeDialog()">X</span>          
+            <form method="POST" action="{{route('my.settings.profile.saveInterest')}}">              
+                @csrf
+                <div class="checkbox-container justify-content-between">
+
+                    @php
+                    $userInterests = Auth::user()->interests->pluck('id')->toArray();
+                    @endphp
+
+                    @foreach ($interests as $interest)
+                        <label>              
+                            <input type="checkbox" name="interests[]" value="{{ $interest->id }}" {{ in_array($interest->id, $userInterests) ? 'checked' : '' }}>
+                            {{ $interest->name }}
+                        </label><br>
+                    @endforeach
+                    <!-- Add other checkbox elements as needed -->
+
+                </div>
+
+                <input type="submit" value="Submit">
+            </form>
         </div>
     </div>
-    </div>
+</div>

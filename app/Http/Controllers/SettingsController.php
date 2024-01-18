@@ -245,10 +245,17 @@ class SettingsController extends Controller
         ]);
 
        // $userList = UserList::find(auth()->user()->id);
-        // Sync user interests based on the submitted form data
+        // Sync user interests based on the submitted form data        
         $user->interests()->sync($request->input('interests', []));
     
 
+        return back()->with('success', __('Settings saved.'));
+    }
+
+    //Save intaerest on load
+    public function saveInterest(Request $request){        
+        $user = Auth::user();         
+        $user->interests()->sync($request->input('interests', []));
         return back()->with('success', __('Settings saved.'));
     }
 

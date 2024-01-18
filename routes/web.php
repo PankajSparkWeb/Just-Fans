@@ -83,6 +83,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
         ]);
         Route::post('/settings/flags/save', ['uses' => 'SettingsController@updateFlagSettings', 'as'   => 'settings.flags.save']);
         Route::post('/settings/profile/save', ['uses' => 'SettingsController@saveProfile', 'as'   => 'settings.profile.save']);
+        Route::post('/settings/profile/saveInterest', ['uses' => 'SettingsController@saveInterest', 'as'   => 'settings.profile.saveInterest']);
         Route::post('/settings/rates/save', ['uses' => 'SettingsController@saveRates', 'as'   => 'settings.rates.save']);
         Route::post('/settings/profile/upload/{uploadType}', ['uses' => 'SettingsController@uploadProfileAsset', 'as'   => 'settings.profile.upload']);
         Route::post('/settings/profile/remove/{assetType}', ['uses' => 'SettingsController@removeProfileAsset', 'as'   => 'settings.profile.remove']);
@@ -166,6 +167,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
 
     // Feed routes
     Route::get('/feed', ['uses' => 'FeedController@index', 'as'   => 'feed']);
+    Route::get('/feed/hot', ['uses' => 'FeedController@hotFeed', 'as'   => 'feed.hotFeed']);
     Route::get('/feed/posts', ['uses' => 'FeedController@getFeedPosts', 'as'   => 'feed.posts']);
 
     // File uploader routes

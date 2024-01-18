@@ -1,13 +1,10 @@
 <!doctype html>
 <html class="h-100" dir="{{ GenericHelper::getSiteDirection() }}" lang="{{ session('locale') }}">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 <head>
-    <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
-    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
     @include('template.head', ['additionalCss' => []])
 </head>
-
 <body class="">
+
     @include('template.NewHeader')
 
     <div class="wrapper">

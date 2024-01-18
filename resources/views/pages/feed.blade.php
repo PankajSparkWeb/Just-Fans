@@ -45,7 +45,15 @@
     <div class="content-post">
         <div class="container">
 
-            @include('elements.post-textarea.popup')
+            <!-- Interest popup -->
+            @php
+            // Use the optional() function to handle null safely
+            $userInterests = optional(Auth::user())->interests;            
+            @endphp            
+            @if ($userInterests->isEmpty())                
+                @include('elements.post-textarea.popup');
+            @endif
+         
             
             <div class="row">
                 <div class="col-12 col-sm-12 col-lg-8 col-md-7 second p-0">
