@@ -9,6 +9,7 @@ use App\Http\Requests\UpdatePostBookmarkRequest;
 use App\Http\Requests\UpdateReactionRequest;
 use App\Model\Attachment;
 use App\Model\Post;
+use App\Model\History;
 use App\Model\PostComment;
 use App\Model\Newinterest;
 use App\Model\Reaction;
@@ -96,9 +97,43 @@ class PostsController extends Controller
             $data['recentMedia'] = PostsHelperServiceProvider::getLatestUserAttachments($user->id, 'image');
         }
 
+        //ADD HISTORY LOG
+        if(Auth::check() && $post->user_id != Auth::user()->id){      
+            $create_history = $this->create_history_on_visit_share_post( $post->id , 'view');
+        }
+
+
         return view('pages.post', $data);
     }
 
+    private function create_history_on_visit_share_post( $post_id, $action = 'view' ){
+        // Delete old history entries for the same user and post
+        //action = 'comment', 'view', 'share'
+        History::where('user_id', Auth::user()->id)
+        ->where('post_id', $post_id)
+        ->where('action', $action)
+        ->delete();
+        // Create a new history entry
+        History::create([
+            'user_id' => Auth::user()->id,
+            'post_id' => $post_id,                
+            'action' => $action,
+        ]);
+        return true;
+    }
+
+    public function sharePost($postId){
+        $user = Auth::user();
+        // Check if the user has already shared the post
+        if (!$user->sharedPosts()->where('post_id', $postId)->exists()) {
+            $create_history = $this->create_history_on_visit_share_post( $postId , 'share');
+            // Share the post
+            $user->sharedPosts()->create(['post_id' => $postId]);
+            // Additional logic (e.g., update post share count)
+            return redirect()->back()->with('success', 'Post shared successfully');
+        }
+        return redirect()->back()->with('error', 'Post already shared');
+    }
     /**
      * Renders the post create page.
      *

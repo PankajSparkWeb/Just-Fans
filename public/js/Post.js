@@ -416,7 +416,8 @@ var Post = {
             if (newPostCommentArea) {
                 // The textarea with class .new-post-comment-area exists within the reply form
                 // Use the value property to get or set the value of the textarea
-                newPostCommentArea.value += ' @' + username + ' ';
+                //newPostCommentArea.value += ' @' + username + ' ';
+                newPostCommentArea.value += ' ';
             } else {
                 // The textarea with class .new-post-comment-area does not exist within the reply form
                 // Handle the case where the element is not found...

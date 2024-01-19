@@ -95,14 +95,14 @@
                                 class="comment-reactions-label">{{ trans_choice('likes', count($comment->reactions)) }}</span>
                         </div>
                         --}}
-                        <div class="ml-2">
-                            <!--a href="javascript:void(0)"
-                                onclick="Post.addReplyUser('{{ $comment->author->username }}', '{{ $comment->id }}')"
-                                class="text-muted">{{ __('Reply') }}</a></div-->
+                        {{-- <div class="ml-2"> --}}
+                           {{-- a href="javascript:void(0)" --}}
+                                {{-- onclick="Post.addReplyUser('{{ $comment->author->username }}', '{{ $comment->id }}')" --}}
+                                {{-- class="text-muted">{{ __('Reply') }}</a></div> --}}
 
                                 <div class="ml-2">
                                     <a href="javascript:void(0)"
-                                        onclick="Post.toggleReplyForm('{{ $comment->id }}', '{{ $comment->author->username }}')"
+                                        onclick="Post.toggleReplyForm('{{ $comment->id }}', '')"
                                         class="text-muted reply-link"
                                     >
                                         {{ __('Reply') }}

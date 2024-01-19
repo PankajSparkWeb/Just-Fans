@@ -190,6 +190,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
         Route::post('/bookmark', ['uses' => 'PostsController@updatePostBookmark', 'as'   => 'bookmark']);
         Route::post('/pin', ['uses' => 'PostsController@updatePostPin', 'as'   => 'pin']);
         Route::delete('/delete', ['uses' => 'PostsController@deletePost', 'as'   => 'delete']);
+        Route::post('/{postId}/share', ['uses' => 'PostsController@sharePost', 'as'   => 'share']);
     });
 
 

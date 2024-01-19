@@ -6,6 +6,7 @@ use App\Model\Post;
 use App\Model\Subscription;
 use App\Model\UserList;
 use App\Model\Newinterest;
+use App\Model\UserSharedPost;
 use App\Providers\GenericHelperServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -13,6 +14,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
 {
@@ -197,4 +199,18 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
     return $this->belongsToMany(Newinterest::class, 'user_interest', 'user_id', 'newinterest_id');
 }
 
+ /**
+     * Get all history entries for the user.
+     *
+     * @return HasMany
+     */
+    public function history()
+    {
+        return $this->hasMany('App\Model\History');
+    }
+
+    public function sharedPosts()
+    {
+        return $this->hasMany(UserSharedPost::class);
+    }
 }

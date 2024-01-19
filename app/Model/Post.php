@@ -160,5 +160,13 @@ class Post extends Model
     }
 
     
+    public function sharedByUsers()
+    {
+        return $this->hasMany(UserSharedPost::class);
+    }
 
+    public function getShareCountAttribute()
+    {
+        return $this->sharedByUsers()->count();
+    }
 }

@@ -133,7 +133,8 @@
                 </div>
             </div>
         @endif
-        <div class="post-text-area-main" onclick="window.location.href = '{{ Route::currentRouteName() != 'posts.get' ? route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) : '#comments' }}';">
+        <div class="post-text-area-main">
+            <div class="post-visit" onclick="window.location.href = '{{ Route::currentRouteName() != 'posts.get' ? route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) : '#comments' }}';">
             <p 
                 class="text-break post-content-data {{ getSetting('feed.enable_post_description_excerpts') && (strlen($post->text) >= 85 || substr_count($post->text, "\r\n") > 1) ? 'line-clamp-1 pb-0 mb-0' : '' }}">
                 {!! $post->text !!}</p>
@@ -144,7 +145,7 @@
                     <span class="label-less d-none">{{ __('Show less') }}</span>
                 </span>
             @endif
-
+        </div>
             @if ($post->external_post_link)
                 <a href="{{ $post->external_post_link }}" target="_blank"
                     class='view_ext_link'>{{ $post->external_post_link }}</a>
@@ -432,6 +433,13 @@
             @endif
         </div>
     @endif
+
+    <!-- Example in a Blade view -->
+    <form action="{{ route('posts.share', ['postId' => $post->id]) }}" method="post">
+        @csrf
+        <button type="submit">Share</button>
+    </form>
+
 
 
 </div>

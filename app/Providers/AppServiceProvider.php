@@ -6,6 +6,7 @@ use App\Model\Attachment;
 use App\Model\PaymentRequest;
 use App\Model\Post;
 use App\Model\Subscription;
+use App\Model\PostComment;
 use App\Model\Transaction;
 use App\Model\UserMessage;
 use App\Model\UserVerify;
@@ -13,6 +14,7 @@ use App\Model\Withdrawal;
 use App\Observers\AttachmentsObserver;
 use App\Observers\PaymentRequestsObserver;
 use App\Observers\PostApprovalObserver;
+use App\Observers\CommentHistoryObserver;
 use App\Observers\SubscriptionsObserver;
 use App\Observers\TransactionsObserver;
 use App\Observers\UserMessagesObserver;
@@ -47,6 +49,7 @@ class AppServiceProvider extends ServiceProvider
             return false;
         }
         UserVerify::observe(UserVerifyObserver::class);
+        PostComment::observe(CommentHistoryObserver::class);
         Withdrawal::observe(WithdrawalsObserver::class);
         PaymentRequest::observe(PaymentRequestsObserver::class);
         UserMessage::observe(UserMessagesObserver::class);
