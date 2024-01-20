@@ -135,14 +135,8 @@
                 <a class="dropdown-item" href="{{ '#' }}">
                     {{ __('Online Status') }}
                 </a>
-                <a class="dropdown-item" href="{{ '#' }}">
-                    {{ __('Reddit Recap') }}
-                </a>
                 <a class="dropdown-item" href="{{ route('profile', ['username' => Auth::user()->username]) }}">
                     {{ __('Profile') }}
-                </a>
-                <a class="dropdown-item" href="{{ '#' }}">
-                    {{ __('Create Avtar') }}
                 </a>
                 <a class="dropdown-item" href="{{ route('my.settings') }}">
                     {{ __('User Settings') }}
@@ -196,7 +190,7 @@
                                 <li><a href="/pages/privacy">Privacy Policy</a></li>
                                 <li><a href="/pages/content-policy">Content Policy</a></li>
                                 <li><a href="/pages/about-us">About Us</a></li>
-                                <li><a href="">Help Center</a></li>
+                                <li><a href="/pages/help">Help Center</a></li>
                             </div>
                         </div>
                         {{-- First Accordian --}}

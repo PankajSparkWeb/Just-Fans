@@ -67,8 +67,15 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto:400,300" rel="preload" as="style">
 <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,700italic,400,300,500,600,700" rel="preload" as="style">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+{{-- quill editor --}}
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+
+{{-- Ck Editor --}}
+<script src="https://cdn.ckeditor.com/ckeditor5/41.0.0/classic/ckeditor.js"></script>
+
+
 {{-- Global CSS Assets --}}
 {!!
     Minify::stylesheet(

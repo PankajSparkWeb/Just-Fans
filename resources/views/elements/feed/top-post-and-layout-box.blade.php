@@ -38,7 +38,7 @@
                 </button>
                 
                 <!-- The dropdown content/options -->
-                <div class="dropDownFor-content" id="myDropdown">
+                <div class="dropDownFor-lay-content" id="DropdownForLay">
                     <a href="#" onclick="selectOption('view_agenda')">
                         <span class="material-symbols-outlined">view_agenda</span>
                     </a>

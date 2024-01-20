@@ -54,11 +54,11 @@ var Post = {
         mswpScanPage(gallerySelector,'mswp');
     },
 
-    /**
+     /**
      * Method used for adding a new post comment
      * @param postID
      */
-    addComment: function (postID, thisEle) {
+     addComment: function (postID, thisEle) {
         var comment_parent_id = '';
         var newCommentButton;  // Declare the variable outside the if block
         var postElement;  // Declare the variable outside the if block
@@ -72,25 +72,27 @@ var Post = {
             // .reply-form exists
             // Retrieve the data-comment-id attribute
             let commentId = replyForm.data('comment-id');
-            newCommentButton = postElement.find('.new-post-comment-area').find('button');  
+            newCommentButton = postElement.find('.new-post-comment-area').find('button.addNewCommentBtn');  
             comment_parent_id = commentId;            
             // Use commentId as needed...            
         } else {
             postElement = $(thisEle).closest('.new-post-comment-area');            
             // .reply-form does not exist
-            newCommentButton = postElement.find('button');                        
+            newCommentButton = postElement.find('button.addNewCommentBtn');                        
         }
         updateButtonState('loading',newCommentButton);
         $.ajax({
             type: 'POST',
             data: {
-                'message': postElement.find('textarea').val(),
+                'message': postElement.find('.textarea-comment-area .ql-editor').html(),
                 'post_id': postID,
                 'comment_parent_id': comment_parent_id
             },
             url: app.baseUrl+'/posts/comments/add',
             success: function (result) {
                 if(result.success){
+                    postElement.find('.textarea-comment-area .ql-editor').empty();
+
                     launchToast('success',trans('Success'),trans('Comment added'));
                     postElement.find('.no-comments-label').addClass('d-none');
                     if( comment_parent_id ){                                                
@@ -110,7 +112,7 @@ var Post = {
                     }else{
                         postElement_sectoin.find('.post-comments-wrapper').prepend(result.data).fadeIn('slow');
                     }
-                    postElement.find('textarea').val('');
+                    postElement.find('.textarea-comment-area').text()
                     const commentsCount = parseInt(postElement.find('.post-comments-label-count').html()) + 1;
                     postElement.find('.post-comments-label-count').html(commentsCount);
                     postElement.find('.post-comments-label').html(trans_choice('comments',commentsCount));
@@ -125,11 +127,11 @@ var Post = {
                 newCommentButton.blur();
             },
             error: function (result) {
-                postElement.find('textarea').addClass('is-invalid');
+                postElement.find('.textarea-comment-area').addClass('is-invalid');  
                 if(result.status === 422) {
                     $.each(result.responseJSON.errors,function (field,error) {
                         if(field === 'message'){
-                            postElement.find('textarea').parent().find('.invalid-feedback').html(error);
+                            postElement.find('.textarea-comment-area').parent().find('.invalid-feedback').html(error);
                         }
                     });
                     updateButtonState('loaded',newCommentButton);
@@ -141,7 +143,6 @@ var Post = {
             }
         });
     },
-
     /**
      * Shows up post comment delete dialog confirmation dialog
      * @param postID

@@ -703,3 +703,5 @@ selectBox.addEventListener('click', function (event) {
 });
 
 
+
+// js for open layout type 

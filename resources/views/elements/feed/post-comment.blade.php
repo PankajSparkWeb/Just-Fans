@@ -1,4 +1,4 @@
-<div class="post-comment d-flex flex-row mb-3" data-commentID="{{ $comment->id }}">
+<div class="post-comment d-flex flex-row mb-3 test" data-commentID="{{ $comment->id }}">
     <div class="">
         <img class="rounded-circle" src="{{ $comment->author->avatar }}">
     </div>
@@ -85,7 +85,7 @@
                 @endif
                 {{-- END Upvote/downvote section --}}
                 <div class="comment-text-area">
-                    <div class="text-break">{{ $comment->message }}</div>
+                    <div class="text-break">{!! $comment->message !!}</div>
                     <div class="d-flex text-muted">
                         <div>{{ $comment->created_at->format('g:i A') }}</div>
                        {{-- 

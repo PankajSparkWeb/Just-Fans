@@ -45,17 +45,7 @@
                         @include('elements.icon',['icon'=>'cash-outline'])
                        </span>
                        </div>
-                       <div class="">
-                           @if($hasSub || $viewerHasChatAccess)
-                               <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('Send a message')}}" onclick="messenger.showNewMessageDialog()">
-                                   @include('elements.icon',['icon'=>'chatbubbles-outline'])
-                               </span>
-                           @else
-                               <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('DMs unavailable without subscription')}}">
-                               @include('elements.icon',['icon'=>'chatbubbles-outline'])
-                           </span>
-                           @endif
-                       </div>
+                       
                        <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('Add to your lists')}}" onclick="Lists.showListAddModal();">
                         @include('elements.icon',['icon'=>'list-outline'])
                    </span>
@@ -108,11 +98,14 @@
            </h5> 
           <h6 class="text-muted">{{$user->username}}</h6>
        </div> 
-       <div class="mr-2">
-                       <a href="{{route('my.settings')}}" class="p-pill p-pill-text ml-2 pointer-cursor">
-                           @include('elements.icon',['icon'=>'settings-outline', 'variant'=>'medium'])
-                        </a>
-                   </div>
+       @if(Auth::check() && Auth::user()->id === $user->id)
+    <div class="mr-2">
+        <a href="{{route('my.settings')}}" class="p-pill p-pill-text ml-2 pointer-cursor">
+            @include('elements.icon',['icon'=>'settings-outline', 'variant'=>'medium'])
+        </a>
+    </div>
+@endif
+        <div class="profile-bio-and-create d-flex">
        <div class="pt-2 pb-2 pl-4 pr-4 profile-description-holder">
            <div class="description-content {{$user->bio && (strlen(trim(strip_tags(GenericHelper::parseProfileMarkdownBio($user->bio)))) >= 85 || substr_count($user->bio,"\r\n") > 1) &&  !getSetting('profiles.disable_profile_bio_excerpt') ? 'line-clamp-1' : ''}}">
                @if($user->bio)
@@ -132,8 +125,8 @@
                </span>
            @endif
        </div> 
-       <a class="dropdown-items menu-option" href="{{ route('posts.create') }}">Create Post</a>
-      <div class="d-flex flex-column flex-md-row justify-content-md-between pb-2 pl-4 pr-4 mb-3 mt-1">
+      
+       <div class="d-flex flex-column flex-md-row justify-content-md-between pb-2 pl-4 pr-4 mb-3 mt-1">
 
            <div class="d-flex align-items-center mr-2 text-truncate mb-0 mb-md-0">
                @include('elements.icon',['icon'=>'calendar-clear-outline','centered'=>false,'classes'=>'mr-1'])
@@ -171,9 +164,13 @@
                    </div>
                @endif
            @endif
-
+        </div>
        </div>
-
+       @if(Auth::check() && Auth::user()->id === $user->id)
+       <div class="new-post-profile-side">
+       <a class="" href="{{ route('posts.create') }}">New Post</a>
+    </div>
+      @endif
        <div class="bg-separator border-top border-bottom"></div>
 
        @include('elements.message-alert',['classes'=>'px-2 pt-4'])
@@ -235,9 +232,10 @@
                </div>
                <div class="bg-separator border-top border-bottom"></div>
            @endif
+           
        @elseif(!Auth::check() || (Auth::check() && Auth::user()->id !== $user->id))
-           <div class=" p-4 subscription-holder">
-               <h6 class="font-weight-bold text-uppercase mb-3">{{__('Follow this creator')}}</h6>
+       <div class="follow-chat d-flex">
+           <div class="subscription-holder">
                @if(Auth::check())
                    <button class="btn btn-round btn-lg btn-primary btn-block mt-3 mb-0 manage-follow-button" onclick="Lists.manageFollowsAction('{{$user->id}}')">
                        <span class="manage-follows-text">{{\App\Providers\ListsHelperServiceProvider::getUserFollowingType($user->id, true)}}</span>
@@ -251,6 +249,18 @@
                    </button>
                @endif
            </div>
+           <div class="">
+            @if($hasSub || $viewerHasChatAccess)
+                <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('Send a message')}}" onclick="messenger.showNewMessageDialog()">
+                    @include('elements.icon',['icon'=>'chatbubbles-outline'])
+                </span>
+            @else
+                <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('DMs unavailable without subscription')}}">
+                @include('elements.icon',['icon'=>'chatbubbles-outline'])
+            </span>
+            @endif
+        </div>
+    </div>
            <div class="bg-separator border-top border-bottom"></div>
        @endif 
        

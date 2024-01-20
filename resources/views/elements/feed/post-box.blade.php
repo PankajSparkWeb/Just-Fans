@@ -316,10 +316,12 @@
                         <a class="dropdown-item" href="javascript:void(0)"
                             onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a>
 
-                        <a href="" class="dropdown-item">Share on Profile</a>
+                        <!-- Example in a Blade view -->
+                        <form action="{{ route('posts.share', ['postId' => $post->id]) }}" method="post">
+                            @csrf
+                            <button type="submit">Share</button>
+                        </form>
 
-                        <a href="{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}"
-                            class="dropdown-item">Share</a>
                     </div>
                 </div>
                 <div
@@ -434,12 +436,7 @@
         </div>
     @endif
 
-    <!-- Example in a Blade view -->
-    <form action="{{ route('posts.share', ['postId' => $post->id]) }}" method="post">
-        @csrf
-        <button type="submit">Share</button>
-    </form>
-
+    
 
 
 </div>

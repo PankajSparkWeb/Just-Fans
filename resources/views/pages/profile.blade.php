@@ -68,7 +68,10 @@
                     <div class="mt-3 inline-border-tabs">
                         <ul class="nav nav-pills nav-justified text-bold">
                             <li class="nav-item">
-                                <a href="#overview" class="nav-link">Overview</a>
+                                <a href="#"
+                                    class="nav-link {{ $activeFilter == false ? 'active' : '' }}">
+                                    {{ trans_choice('posts', $posts->total(), ['number' => $posts->total()]) }}
+                                </a>
                             </li>
                             <li class="nav-item">
                                 <a href="{{ route('profile', ['username' => $user->username]) }}"
@@ -77,10 +80,16 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#overview" class="nav-link">History</a>
+                                <a href="#"
+                                    class="nav-link {{ $activeFilter == false ? 'active' : '' }}">
+                                    {{ trans_choice('posts', $posts->total(), ['number' => $posts->total()]) }}
+                                </a>
                             </li>
                             <li class="nav-item">
-                                <a href="#overview" class="nav-link">Comments</a>
+                                <a href="#"
+                                    class="nav-link {{ $activeFilter == false ? 'active' : '' }}">
+                                    {{ trans_choice('posts', $posts->total(), ['number' => $posts->total()]) }}
+                                </a>
                             </li>
                         </ul>
 
