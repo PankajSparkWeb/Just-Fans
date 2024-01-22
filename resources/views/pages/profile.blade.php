@@ -66,30 +66,22 @@
             <div class="min-vh-100 col-12 col-md-8 border-right pr-md-0">
                 <div class="container pt-2 pl-0 pr-0">
                     <div class="mt-3 inline-border-tabs">
+                        <nav class="profile-history-nav-bar">
                         <ul class="nav nav-pills nav-justified text-bold">
                             <li class="nav-item">
+                                <a href="#" class="nav-link active-tab-history" onclick="showTab('overview-history')">Overview</a>
+                            </li>
+                            <li class="nav-item ">
                                 <a href="#"
-                                    class="nav-link {{ $activeFilter == false ? 'active' : '' }}">
+                                    class="nav-link" onclick="showTab('post-history')">
                                     {{ trans_choice('posts', $posts->total(), ['number' => $posts->total()]) }}
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="{{ route('profile', ['username' => $user->username]) }}"
-                                    class="nav-link {{ $activeFilter == false ? 'active' : '' }}">
-                                    {{ trans_choice('posts', $posts->total(), ['number' => $posts->total()]) }}
-                                </a>
+                                <a href="#" onclick="showTab('comments-history')">Comments</a>
                             </li>
                             <li class="nav-item">
-                                <a href="#"
-                                    class="nav-link {{ $activeFilter == false ? 'active' : '' }}">
-                                    {{ trans_choice('posts', $posts->total(), ['number' => $posts->total()]) }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#"
-                                    class="nav-link {{ $activeFilter == false ? 'active' : '' }}">
-                                    {{ trans_choice('posts', $posts->total(), ['number' => $posts->total()]) }}
-                                </a>
+                                <a href="#" onclick="showTab('profile-history')">History</a>
                             </li>
                         </ul>
 
@@ -116,26 +108,36 @@
                                     {{ trans_choice('streams', $filterTypeCounts['streams'], ['number' => $filterTypeCounts['streams']]) }}</a>
                             @endif
                         @endif
-
                         </nav>
                     </div>
-                    <div
-                        class="justify-content-center align-items-center {{ Cookie::get('app_feed_prev_page') &&PostsHelper::isComingFromPostPage(request()->session()->get('_previous'))? 'mt-3': 'mt-4' }}">
-                        @if ($activeFilter !== 'streams')
-                            @include('elements.feed.posts-load-more', ['classes' => 'mb-2'])
-                            <div class="feed-box mt-0 posts-wrapper">
-                                @include('elements.feed.posts-wrapper', ['posts' => $posts])
-                            </div>
-                        @else
-                            <div class="streams-box mt-4 streams-wrapper mb-4">
-                                @include('elements.search.streams-wrapper', [
-                                    'streams' => $streams,
-                                    'showLiveIndicators' => true,
-                                    'showUsername' => false,
-                                ])
-                            </div>
-                        @endif
-                        @include('elements.feed.posts-loading-spinner')
+                        <div class="profile-history-container">
+                        <div id="overview-history" class="profile-history-content">
+                            @include('elements.profile.overview')
+                        </div>
+                        <div id="post-history" class="profile-history-content justify-content-center align-items-center {{ Cookie::get('app_feed_prev_page') &&PostsHelper::isComingFromPostPage(request()->session()->get('_previous'))? 'mt-3': 'mt-4' }}">
+                            @if ($activeFilter !== 'streams')
+                                @include('elements.feed.posts-load-more', ['classes' => 'mb-2'])
+                                <div class="feed-box mt-0 posts-wrapper posts-history">
+                                    @include('elements.feed.posts-wrapper', ['posts' => $posts])
+                                </div>
+                            @else
+                                <div class="streams-box mt-4 streams-wrapper mb-4">
+                                    @include('elements.search.streams-wrapper', [
+                                        'streams' => $streams,
+                                        'showLiveIndicators' => true,
+                                        'showUsername' => false,
+                                    ])
+                                </div>
+                            @endif
+                            @include('elements.feed.posts-loading-spinner')
+                        </div>
+                        <div id="comments-history" class="profile-history-content">
+                            @include('elements.profile.comments')
+                        </div>
+                        <div id="profile-history" class="profile-history-content">
+                            @include('elements.profile.history')
+                        </div>
+
                     </div>
                 </div>
             </div>

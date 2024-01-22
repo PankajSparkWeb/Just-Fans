@@ -69,9 +69,6 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
     // Route::get('/new-home', ['uses' => 'NewHome@ShowHome', 'as'   => 'NewHome']);
     
     Route::group(['prefix' => 'my', 'as' => 'my.'], function () {
-        
-        
-        
        
         /*
          * (My) Settings
@@ -82,6 +79,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
             'as'   => 'settings.deposit.generateStripeSession',
         ]);
         Route::post('/settings/flags/save', ['uses' => 'SettingsController@updateFlagSettings', 'as'   => 'settings.flags.save']);
+        Route::post('/settings/history', ['uses' => 'SettingsController@history', 'as'   => 'settings.history']);
         Route::post('/settings/profile/save', ['uses' => 'SettingsController@saveProfile', 'as'   => 'settings.profile.save']);
         Route::post('/settings/profile/saveInterest', ['uses' => 'SettingsController@saveInterest', 'as'   => 'settings.profile.saveInterest']);
         Route::post('/settings/rates/save', ['uses' => 'SettingsController@saveRates', 'as'   => 'settings.rates.save']);

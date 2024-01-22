@@ -86,6 +86,321 @@ div#mySelectBoxPost .interest-post {
 div#mySelectBox .interest {
     cursor: pointer !important;
 }
+.profile-history-content {
+    display: none;
+}
+
+
+.active-tab-history {
+    display: block;
+  }
+/*raaj css chnages starts here*/
+
+
+
+
+
+input#search-input-box {
+    background: #f6f7f8;
+    border-radius: 22px;
+}
+.searching-input-box {
+    background-color: #f6f7f8;
+    border: 1px solid #edeff1;
+    border-radius: 1.25em!important;
+}
+.searching-input-box input {
+    background: unset;
+} 
+.searching-input-box:hover {
+    border: 1px solid #0079d3;
+}
+.searching-input-box:focus-visible {
+    outline: none!important;
+}
+.header-mini-icons .ion-icon-inner svg {
+    height: 20px;
+    width: 20px;
+    color: #1a1a1b;
+}
+.header-mini-icons .ion-icon-inner {
+    display: flex;
+    align-items: center;
+}
+.header-mini-icons .icon-wrapper span {
+    color: #1a1a1b;
+}
+.header-mini-icons {
+    display: grid;
+    grid-template-columns: repeat(6,1fr);
+    column-gap: 10px;
+    align-items: center;
+}
+
+.top-header-wrapper {
+    margin: 0px;
+    display: grid;
+    grid-template-columns: 70% 1fr;
+}
+.search-box-header {
+    flex-grow: 1;
+    margin: 0px 16px;
+}
+.dropdown-menu-header:hover {
+    border: 1px solid #edeff1;
+}
+.top-header-left-section {
+    display: flex;
+    align-items: center;
+}
+.top-header-right-section {
+    display: flex;
+    align-items: center;
+}
+.today_i_learnd_Join\&Bell {
+    border: 1px solid #0079d3;
+    display: flex;
+    padding: 4px 16px;
+    border-radius: 22px;
+}
+.today_i_learnd_Join\&Bell a {
+    color: #0079d3;
+    font-size: 14px;
+    font-weight: 600;
+    display: flex;
+    justify-content: space-around;
+    text-transform: capitalize;
+}
+
+.today_i_learnd_logo {
+    margin-top: -14px;
+    background: #fff;
+    padding: 4px;
+    border-radius: 40px;
+}
+.today_i_learnd_logo img {
+    height: 72px;
+    width: 72px;
+}
+.top-bar-area {
+    display: flex;
+    flex-direction: column;
+}
+.today_i_learnd_text h2 {
+    font-size: 28px;
+    font-weight: 700;
+    margin: 0px;
+    color: #1c1c1c;
+}
+.today_i_learnd_text {
+    padding-top: 10px;
+}
+.today_i_learnd_text p {
+    color: #7c7c7c;
+    margin: 0px 0px 8px 0px;
+}
+
+.tabs-and-layout {
+    border: 1px solid #898989;
+    border-radius: 2px;
+    padding: 14px!important;
+}
+.create-post-input input:hover {
+    border: 1px solid #0079d3;
+}
+.add-class {
+    border-bottom: 3px solid #0079d3;
+    color: #1c1c1c!important;
+}
+.top-white-bar-btns {
+    display: flex;
+    column-gap: 16px;
+}
+.top-white-bar-btns a {
+    font-size: 14px;
+    font-weight: 500;
+    color: #7c7c7c;
+}
+.create-post-input input:focus-visible {
+    outline: unset!important;
+}
+.create-post-area {
+    padding: 12px!important;
+    border: 1px solid #898989;
+    border-radius: 2px;
+    padding: 10px !important;
+    align-items: center;
+}
+.create-post-input input {
+    background: #f6f7f8;
+    border: 1px solid #edeff1;
+    padding: 6px 12px;
+}
+.create-post-link-icon {
+    display: flex;
+    transform: rotate(36deg);
+    color: #878a8c;
+}
+.tabs-and-layout a{
+     font-size: 16px;
+    font-weight: 600;
+    color: #878a8c;
+}
+a.posts_top_nav.active {
+    color: #0079d3;
+    background: unset!important;
+}
+.acc-eight-header {
+    border: unset!important;
+}
+.acc-eight-header:after {
+    content: unset!important;
+}
+ 
+.side-bar-wiki-discription p {
+    font-size: 12px;
+    color: #1c1c1c;
+}
+.accr-second-body .accordion-header {
+    padding: 12px 0px;
+    border-bottom: 1px solid #cccccc59;
+    display: flex;
+    column-gap: 14px;
+    justify-content: space-between;
+    align-items: self-start;
+}
+.accr-header-top:hover {
+    background: #cccccc2b;
+    padding:  6px 14px;
+    border-radius: 22px;
+}
+.accr-header-top {
+    padding:  6px 14px!important;
+    border-radius: 22px!important;
+}
+.post-visit {
+    padding: 0px 12px;
+}
+.post-bottom-footer {
+    margin: 0px!important;
+    padding: 0px 12px!important;
+}
+.post-url-image a {
+    font-size: 18px;
+    color: #202020;
+}
+.post-url-next-page a {
+    font-size: 14px;
+    color: #202020;
+}
+a.view_ext_link {
+    color: #202020;
+    font-size: 16px;
+    font-weight: 500;
+    width: 100%;
+    padding: 0px 12px;
+}
+ 
+.footer-actions {
+    align-items: center;
+}
+.footer-icon-flex-wrap {
+    align-items: center;
+    column-gap: 16px;
+}
+a.view_ext_link:hover {
+    color: #202020;
+    font-weight:600;
+    text-decoration: underline;
+}
+.post-header-top {
+    padding-top: 14px;
+}
+.upvote_downvote_section {
+    padding: 0px!important;
+    margin: 0px!important;
+}
+.post-visit h2 {
+    font-size: 22px;
+    font-weight: 500;
+    line-height: 22px;
+    color: #222222;
+}
+.post-box-container-section {
+    border: 1px solid #898989;
+    border-radius: 2px;
+}
+.upvote-downvote {
+    background: #cccccc2b;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: top;
+    flex-direction: column;
+}
+.vote_counter span {
+    margin: 0px;
+}
+.upvote-downvote span {
+    color: #878a8c;
+}
+.new-side-bar-card {
+    background: #fff;
+}
+.about-comunity-member-area {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    column-gap: 10px;
+    align-items: center;
+    padding: 12px 0px;
+    border-top: 1px solid #8080802e;
+    border-bottom: 1px solid #8080802e;
+}
+p.show-dated {
+    color: #808080;
+    font-size: 14px;
+}
+.about-comunity-createPost a {
+    background: #0079d3;
+    width: 100%;
+    padding: 6px;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+    font-weight: 600;
+    border-radius: 100%;
+}
+.about-comunity-createPost {
+    width: 100%;
+    background: #0079d3;
+    display: flex;
+    align-items: center;
+    border-radius: 22px;
+    margin: 16px 0px;
+}
+.about-community-card {
+    display: flex;
+    flex-direction: column;
+    row-gap: 20px;
+}
+.about-comunity-member-area h1 {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 20px;
+    margin-bottom: 8px;
+    color: #202020;
+}
+.about-comunity-member-area p {
+    font-size: 12px;
+    line-height: 16px;
+    margin: 0px;
+}
+
+
+
+
+
+/*css ends here*/
 
 
 
@@ -175,7 +490,7 @@ div#mySelectBox .interest {
 }
 
 .new-side-bar .card-lower-body {
-    padding: 5px 15px;
+    padding: 4px 16px 16px 16px;
 }
 
 .bg-white{
@@ -186,9 +501,6 @@ div#mySelectBox .interest {
     color: black !important;
 }
 
-.new-side-bar .new-side-bar-card {
-    background-color: white !important;
-}
 
 
 .feed-box.mt-0.pt-4.posts-wrapper .post-box {
@@ -217,20 +529,16 @@ div#mySelectBox .interest {
 
 
 
-.top-white-bar-content .today_i_learnd_logo img {
-    width: 65px;
-}
+ 
 
 .top-bar-area .top-white-bar-content {
     display: flex;
+    column-gap: 15px;
 }
 
 
 
-.top-bar-area .top-white-bar-content .today_i_learnd_text h2 {
-    font-size: 26px;
-    font-weight: 600;
-}
+ 
 
 .top-bar-area .top-white-bar-content .today_i_learnd_text p {
     font-size: 14px;
@@ -250,21 +558,21 @@ div#mySelectBox .interest {
 
 .top-bar-area .top-white-bar-content .today_i_learnd_text_JoinBtn {
     display: flex;
+    align-items: baseline;
+    column-gap: 18px;
 }
 
 /* header second dropdown accordian css start */
 
-  .accordion-item {
-    margin-left: 15px;
-    margin-bottom: 10px;
-    overflow: hidden;
-  }
+  
 
-  .accordion-header {
-   
-   
+.accordion-header {
     cursor: pointer;
-  }
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: .5px;
+    padding: 2px 0px;
+}
 
   .accordion-header::after {
     content: '\005E';  /* Text for down arrow */
@@ -315,10 +623,7 @@ div#mySelectBox .interest {
 /* header dropdown css for both dropdown end */
 
 
-.new-navbar .new-header .search-box-header {
-    max-width: 1000px !important;
-    width: 100%;
-}
+ 
 .menu-option{
      cursor: pointer !important;
 }
@@ -329,9 +634,20 @@ div#mySelectBox .interest {
 }
 
 .dropdown-menu-header {
-    border: 1px solid black;
-    padding: 5px 85px;
+   
+   
     cursor: pointer !important;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    box-sizing: border-box;
+    height: 36px;
+    position: relative;
+    min-width: 72px;
+    width: 270px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 0px 10px;
 }
 
 .new-header .popular-btn-header .ion-icon-inner svg {
@@ -346,9 +662,7 @@ div#mySelectBox .interest {
     align-items: center;
 }
 
-.search-box-header {
-   
-}
+ 
 .blank-first-blue-block {
     background-color: #33a8ff !important;
     height: 80px;

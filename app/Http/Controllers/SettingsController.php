@@ -11,6 +11,7 @@ use App\Http\Requests\VerifyProfileAssetsRequest;
 use App\Model\Attachment;
 use App\Model\Country;
 use App\Model\CreatorOffer;
+use App\Model\History;
 use App\Model\Newinterest;
 use App\Model\ReferralCodeUsage;
 use App\Model\Subscription;
@@ -52,6 +53,8 @@ class SettingsController extends Controller
         'notifications' => ['heading' => 'Your email notifications settings', 'icon' => 'notifications'],
         'privacy' => ['heading' => 'Your privacy and safety matters', 'icon' => 'shield'],
         'verify' => ['heading' => 'Get verified and start earning now', 'icon' => 'checkmark'],
+        'history' => ['heading' => 'History', 'icon' => 'checkmark'],
+        'commentsHistory' => ['heading' => 'Comment History', 'icon' => 'checkmark'],
     ];
 
     public function __construct()
@@ -181,6 +184,14 @@ class SettingsController extends Controller
                     $data['referrals'] = ReferralCodeUsage::with(['usedBy'])->where('referral_code', $user->referral_code)->orderBy('id', 'desc')->paginate(6);
                 }
                 break;
+            case 'history': 
+                //get current user history                
+                $data['postsHistory'] = History::where(['user_id' => $user->id, 'action' => 'view'])->orderBy('created_at', 'desc')->paginate(10);                
+                break;
+            case 'commentsHistory': 
+                    //get current user history                
+                    $data['postscommentsHistory'] = History::where(['user_id' => $user->id, 'action' => 'comment'])->orderBy('created_at', 'desc')->paginate(10);                
+                    break;
         }
 
         return $this->renderSettingView($request->route('type'), $data);

@@ -702,6 +702,24 @@ selectBox.addEventListener('click', function (event) {
     }
 });
 
+// js for profile nav
 
+// js for profile nav
+function showTab(tabId) {
+    // Hide all tab content
+    var tabContents = document.getElementsByClassName('profile-history-content');
+    for (var i = 0; i < tabContents.length; i++) {
+      tabContents[i].style.display = 'none';
+    }
+  
+    // Display the selected tab content
+    document.getElementById(tabId).style.display = 'block';
+  }
+  
+  // Call the showTab function with the default tab ID at page load
+  document.addEventListener('DOMContentLoaded', function () {
+    // Assuming 'defaultTab' is the ID of the tab you want to be active by default
+    showTab('overview-history');
+  });
 
 // js for open layout type 

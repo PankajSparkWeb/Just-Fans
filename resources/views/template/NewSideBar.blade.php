@@ -3,30 +3,33 @@
     <div class="new-side-bar">
 
         {{-- first card --}}
-        <div class="about-community-card new-side-bar-card">
-            <div class="about-comunity-text-area">
+        <div class="about-community-card  " >
+            <div class="about-comunity-text-area new-side-bar-card">
                 <div class="side-bar-heading">
                     <h3>About Community</h3>
                 </div>
                 <div class="card-lower-body">
                 <div class="discription">
-                    <p>You learn something new every day; what did you learn today? Submit interesting and specific
+                    <p class='show-description'>You learn something new every day; what did you learn today? Submit interesting and specific
                         facts about something that you just found out here.</p>
-                    <p>Created Dec 28, 2008</p>
+                    <p class='show-dated'>Created Dec 28, 2008</p>
                 </div>
             
             <div class="about-comunity-member-area">
                 <div class="mambers">
-                    <h4>Members</h4>
-                    <p>200M</p>
+                    <h1>200M</h1>
+                    <p>Members</p>
+                    
                 </div>
                 <div class="Online">
-                    <h4>Online</h4>
-                    <p>200</p>
+                    <h1>200</h1>
+                    <p>Online</p>
+                    
                 </div> 
                 <div class="ranked-by-size">
-                    <h4>Ranked by Size</h4>
-                    <p>#6</p>
+                    
+                    <h1>#6</h1>
+                    <p>Ranked by Size</p>
                 </div>
             </div>
 
@@ -34,7 +37,7 @@
             <div class="about-community-options">
                 <div class="accordion side-bar-accordian">
                     <div class="accordion-item">
-                        <div class="accordion-header">Community Options</div>
+                        <div class="accordion-header accr-header-top">Community Options</div>
                         <div class="accordion-content">
                             <li><a href="#" id="comunity_theameClick">Comunity Theame</a></li>
                         </div>
@@ -47,13 +50,13 @@
 
 
         {{-- Second Card --}}
-        <div class="rules-card new-side-bar-card">
+        <div class="rules-card new-side-bar-card new-side-bar-card">
             <div class="side-bar-heading">
                 <h3>Rules</h3>
             </div>
 
             <div class="card-lower-body">
-            <div class="accordion side-bar-accordian">
+            <div class="accordion side-bar-accordian accr-second-body">
                 <div class="accordion-item">
                     <div class="accordion-header">1. Inaccurate/unverifiable/not supported by source</div>
                     <div class="accordion-content">
@@ -65,7 +68,7 @@
             </div>
 
 
-            <div class="accordion side-bar-accordian">
+            <div class="accordion side-bar-accordian accr-second-body">
                 <div class="accordion-item">
                     <div class="accordion-header">2. No personal opinions/anecdotes/subjective posts</div>
                     <div class="accordion-content">
@@ -75,7 +78,7 @@
             </div>
 
 
-            <div class="accordion side-bar-accordian">
+            <div class="accordion side-bar-accordian accr-second-body">
                 <div class="accordion-item">
                     <div class="accordion-header">3. No recent sources </div>
                     <div class="accordion-content">
@@ -85,7 +88,7 @@
                 </div>
             </div>
 
-            <div class="accordion side-bar-accordian">
+            <div class="accordion side-bar-accordian accr-second-body">
                 <div class="accordion-item">
                     <div class="accordion-header">4. No politics/agenda pushing</div>
                     <div class="accordion-content">
@@ -97,7 +100,7 @@
             </div>
 
 
-            <div class="accordion side-bar-accordian">
+            <div class="accordion side-bar-accordian accr-second-body">
                 <div class="accordion-item">
                     <div class="accordion-header">5. No misleading claims</div>
                     <div class="accordion-content">
@@ -107,7 +110,7 @@
                 </div>
             </div>
 
-            <div class="accordion side-bar-accordian">
+            <div class="accordion side-bar-accordian accr-second-body">
                 <div class="accordion-item">
                     <div class="accordion-header">6. Too general/can't stand on its own/how to</div>
                     <div class="accordion-content">
@@ -121,7 +124,7 @@
             </div>
 
 
-            <div class="accordion side-bar-accordian">
+            <div class="accordion side-bar-accordian accr-second-body">
                 <div class="accordion-item">
                     <div class="accordion-header">7. No submissions about software/websites</div>
                     <div class="accordion-content">
@@ -130,16 +133,18 @@
                     </div>
                 </div>
             </div>
-
-            <div>
-                <p>All NSFW links must be tagged.
-                </p>
+            <div class="accordion side-bar-accordian accr-second-body">
+                <div class="accordion-item acc-eight">
+                    <div class="accordion-header acc-eight-header">8 All NSFW links must be tagged.</div>
+                </div>
             </div>
+
+            
         </div>
         </div>
 
         {{-- third card --}}
-        <div class="wikipeadia-card new-side-bar-card">
+        <div class="wikipeadia-card new-side-bar-card new-side-bar-card">
             <div class="side-bar-wiki-heading side-bar-heading">
                 <h3>Wiki</h3>
                 </div>
@@ -150,7 +155,7 @@
         </div>
 
         {{-- fourth card --}}
-        <div class="moderators-card new-side-bar-card">
+        {{-- <div class="moderators-card new-side-bar-card new-side-bar-card">
             <div class="side-bar-moderators-heading side-bar-heading">
                 <h3>Moderators</h3>
                 </div>
@@ -173,6 +178,6 @@
                 </div>
             </div>
         </div>
-        </div>
+        </div> --}}
     </div>
 </div>

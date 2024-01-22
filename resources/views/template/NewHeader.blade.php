@@ -6,8 +6,8 @@
 <nav id="New-Header"
     class="new-navbar navbar-expand-md {{ Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-white') : (Cookie::get('app_theme') == 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-white') }} ">
 
-    <div class="row container-fluid new-header justify-content-between">
-
+    <div class="row container-fluid new-header justify-content-between top-header-wrapper">
+<div class='top-header-left-section'>
         <a class="navbar-brand" href="{{ route('home') }}">
             <img src="{{ asset(Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? getSetting('site.dark_logo') : getSetting('site.light_logo')) : (Cookie::get('app_theme') == 'dark' ? getSetting('site.dark_logo') : getSetting('site.light_logo'))) }}"
                 class="d-inline-block align-top mr-1 ml-3" alt="{{ __('Site logo') }}">
@@ -37,8 +37,10 @@
         <div class="search-box-header">
             @include('elements.search-box')
         </div>
+</div>
 
-
+<div class='top-header-right-section'>
+    <div class='header-mini-icons'>
         <div class="popular-btn-header">
             <a href="{{ '#' }}">
                 <div class="d-flex justify-content-center align-items-center">
@@ -118,9 +120,11 @@
                 </div>
             </a>
         </div>
+    </div>
 
 
         {{-- Header Second Dropdown Menu --}}
+        <div class='header-user-profile'>
         <div class="dropdown-menu-header-second" aria-labelledby="dropdownMenuButton">
             <a id="navbarDropdown" class="nav-link dropdown-toggle text-right text-truncate d-flex align-items-center"
                 href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -333,6 +337,8 @@
                 </form>
             </div>
         </div>
+        </div>
+</div>
 
     </div>
 </nav>

@@ -1,6 +1,6 @@
 <form action="{{ route('search.get')}}" class="search-box-wrapper w-100" method="GET">
-    <div class="input-group input-group-seamless-append">
-        <input type="text" class="form-control shadow-none" aria-label="Text input with dropdown button" placeholder="{{__("Search")}}" name="query" value="{{isset($searchTerm) && $searchTerm ? $searchTerm : ''}}">
+    <div class="input-group input-group-seamless-append searching-input-box">
+        <input type="text" class="form-control shadow-none" id='search-input-box' aria-label="Text input with dropdown button" placeholder="{{__("Search")}}" name="query" value="{{isset($searchTerm) && $searchTerm ? $searchTerm : ''}}">
         <div class="input-group-append">
             <span class="input-group-text">
                 <span class="h-pill h-pill-primary rounded file-upload-button" onclick="submitSearch();">
