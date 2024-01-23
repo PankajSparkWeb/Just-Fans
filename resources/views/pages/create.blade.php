@@ -47,7 +47,7 @@
                         </button>
                     </div>
                 @endif
-                <div class="d-flex flex-column-reverse">
+                <div class="d-flex flex-column-reverse ql-editor-section">
                     <div class="w-100">
                         <div id="dropzone-uploader" name="input-text"
                             class="form-control border dropzone w-100 editor-for-txt ql-container ql-snow ql-editor ql-blank"
@@ -68,15 +68,15 @@
                             <div class="d-flex align-items-center justify-content-center">
                                 @if (Route::currentRouteName() == 'posts.create')
                                     <div class="">
-                                        <a href="#"
-                                            class="draft-clear-button mr-3 mr-md-3">{{ __('Clear draft') }}</a>
+                                        {{-- <a href="#"
+                                            class="draft-clear-button mr-3 mr-md-3">{{ __('Clear draft') }}</a> --}}
                                     </div>
                                 @endif
                                 @if (!GenericHelper::isUserVerified() && getSetting('site.enforce_user_identity_checks'))
-                                    <button class="btn btn-outline-primary disabled mb-0">{{ __('Save') }}</button>
+                                    <button class="btn btn-outline-primary disabled mb-0 ">{{ __('Save') }}</button>
                                 @else
                                     <button
-                                        class="btn btn-outline-primary post-create-button mb-0">{{ __('Save') }}</button>
+                                        class="btn btn-outline-primary post-create-button mb-0 save-button-draft">{{ __('Save') }}</button>
                                 @endif
                             </div>
                         </div>

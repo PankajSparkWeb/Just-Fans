@@ -1,5 +1,10 @@
-<!-- Add these CDN links in your HTML file -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap" rel="stylesheet">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Noto+Sans:wght@200;400&display=swap" rel="stylesheet">
 
 
 {{-- Header Section start --}}
@@ -19,11 +24,11 @@
             Menu
             <div class="dropdown-menu" id="myDropdown">
                 <input type="text" id="searchInput" placeholder="Filter" onclick="event.stopPropagation();">
-                <li>FEEDS</li>
+                <li class='names-list'>FEEDS</li>
                 <li><a class="dropdown-items menu-option" href="{{ route('home') }}">Home</a></li>
                 <li><a class="dropdown-items menu-option" href="#">Popular</a></li>
                 <li><a class="dropdown-items menu-option" href="#">All</a></li>
-                <li>OTHER</li>
+                <li class='names-list'>OTHER</li>
                 <li><a class="dropdown-items menu-option" href="{{ route('my.settings') }}">User Settings</a></li>
                 <li><a class="dropdown-items menu-option" href="{{ route('my.messenger.get') }}">Messages</a></li>
                 <li><a class="dropdown-items menu-option" href="{{ route('posts.create') }}">Create Post</a></li>

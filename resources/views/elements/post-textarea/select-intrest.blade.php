@@ -1,10 +1,14 @@
 @php
 $postInterest = isset($post) ? $post->interests->pluck('id')->toArray() : [];
-@endphp        
+@endphp  
+<div class="checkboxes-outer">      
 @foreach ($interests as $interest)
-    <label>              
-        <input type="checkbox" name="interests[]" value="{{ $interest->id }}" {{ in_array($interest->id, $postInterest) ? 'checked' : '' }}>
+<div class='select-checkboxes'>
+    <label class='cehckboxes-label'>              
+        <input type="checkbox" class='input-checkboxes' name="interests[]" value="{{ $interest->id }}" {{ in_array($interest->id, $postInterest) ? 'checked' : '' }}>
         {{ $interest->name }}
 
-    </label><br>
+    </label>
+</div>
 @endforeach
+</div>
