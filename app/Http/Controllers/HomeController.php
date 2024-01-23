@@ -6,6 +6,8 @@ use App\Providers\InstallerServiceProvider;
 use App\Providers\MembersHelperServiceProvider;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use App\Providers\PostsHelperServiceProvider;
+use App\Model\Post;
 use JavaScript;
 use Session;
 
@@ -29,6 +31,23 @@ class HomeController extends Controller
             return redirect()->to(getSetting('site.homepage_redirect'), 301)->header('Cache-Control', 'no-store, no-cache, must-revalidate');
         }
         else{
+            if (Auth::check()) {
+                return redirect(route('feed'));
+            }
+
+            //Get Posts
+            $relations = ['user', 'reactions', 'attachments', 'bookmarks', 'postPurchases'];
+            // Fetching basic posts information
+            $posts = Post::withCount('tips')->with($relations)->orderBy("id", "desc")->paginate(6);
+            // dd($posts);
+            return view('pages.home-posts', [
+                'featuredMembers'   => [],
+                'posts'             => $posts,
+                //'featuredMembers' => MembersHelperServiceProvider::getFeaturedMembers(9),
+            ]);
+
+            /*
+
             if (getSetting('site.homepage_type') == 'landing') {
                 return view('pages.home', [
                     'featuredMembers' => MembersHelperServiceProvider::getFeaturedMembers(9),
@@ -39,6 +58,7 @@ class HomeController extends Controller
                 }
                 return view('auth.login');
             }
+            */
         }
     }
 }

@@ -1,5 +1,5 @@
 
-<div class="new-side-bar-container">
+<div class="new-side-bar-container sidebar-outer">
     <div class="new-side-bar">
 
         {{-- first card --}}

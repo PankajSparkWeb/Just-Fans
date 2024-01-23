@@ -68,7 +68,7 @@
                         @include('elements.feed.posts-loading-spinner')
                     </div>
                 </div>
-                <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block">
+                <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block sidebar-wraper">
                     <div class="feed-widgets">
                         <div class="mb-4">
                             @include('template.NewSideBar')
@@ -93,11 +93,11 @@
     </div>
 </div>
     <div class="content-wiki">
-        <div class="container d-flex">
-            <div class="wikipeadia-area">
+        <div class="container d-flex feed-container-outer">
+            <div class="wikipeadia-area wiki-inner">
                 @include('elements.feed.wiki-text-area')
             </div>
-            <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block">
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block sidebar-wraper">
                 <div class="feed-widgets">
                     <div class="mb-4">
                         @include('template.NewSideBar')

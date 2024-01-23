@@ -105,6 +105,36 @@ div#myDropdown {
     border: 1px solid #f6f7f8;
     border-top: 0px;
 }
+.feed-container-outer {
+    padding: 0px;
+   column-gap: 15px;
+    margin-top: 20px;
+}
+ul.wiki-ul-li li {
+    margin-bottom: 8px;
+}
+.wiki-lists ul {
+    padding: 0px;
+    list-style: none;
+   
+    padding: 12px;
+}
+.sidebar-wraper {
+    padding: 0px!important;
+    top: 0;
+}
+.wiki-ul-li{
+    border: 1px solid #edeff1;
+    padding: 12px; 
+}
+.wiki-lists ul li a {
+    color: #0079d3;
+    text-decoration: underline;
+}
+.wiki-inner {
+    background: #fff;
+    padding: 12px;
+}
 li.names-list {
     font-size: 10px;
     font-weight: 500;

@@ -86,7 +86,7 @@ class PostsController extends Controller
                 'post_id' => $post->id,
             ],
         ]);
-
+        
         $data = [
             'post' => $post,
             'user' => $user,
@@ -101,8 +101,7 @@ class PostsController extends Controller
         if(Auth::check() && $post->user_id != Auth::user()->id){      
             $create_history = $this->create_history_on_visit_share_post( $post->id , 'view');
         }
-
-
+        
         return view('pages.post', $data);
     }
 

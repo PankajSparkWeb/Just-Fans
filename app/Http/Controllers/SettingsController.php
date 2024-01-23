@@ -55,6 +55,7 @@ class SettingsController extends Controller
         'verify' => ['heading' => 'Get verified and start earning now', 'icon' => 'checkmark'],
         'history' => ['heading' => 'History', 'icon' => 'checkmark'],
         'commentsHistory' => ['heading' => 'Comment History', 'icon' => 'checkmark'],
+        'shareHistory' => ['heading' => 'Share History', 'icon' => 'checkmark'],
     ];
 
     public function __construct()
@@ -192,6 +193,10 @@ class SettingsController extends Controller
                     //get current user history                
                     $data['postscommentsHistory'] = History::where(['user_id' => $user->id, 'action' => 'comment'])->orderBy('created_at', 'desc')->paginate(10);                
                     break;
+            case 'shareHistory': 
+                //get current user history                
+                $data['shareHistory'] = History::where(['user_id' => $user->id, 'action' => 'share'])->orderBy('created_at', 'desc')->paginate(10);                
+                break;
         }
 
         return $this->renderSettingView($request->route('type'), $data);

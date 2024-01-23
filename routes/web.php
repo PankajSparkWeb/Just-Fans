@@ -42,6 +42,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'jsVars'], function () {
 
 // Home & contact page
 Route::get('/', ['uses' => 'HomeController@index', 'as'   => 'home']);
+
 Route::get('/contact', ['uses' => 'GenericController@contact', 'as'   => 'contact']);
 Route::post('/contact/send', ['uses' => 'GenericController@sendContactMessage', 'as'   => 'contact.send']);
 Route::get('/about-us', ['uses' => 'GenericController@showAboutUs', 'as'   => 'about-us']);

@@ -8,6 +8,8 @@ use App\Providers\ListsHelperServiceProvider;
 use App\Providers\PostsHelperServiceProvider;
 use App\Providers\StreamsServiceProvider;
 use Carbon\Carbon;
+use App\Model\History;
+use App\Model\ReferralCodeUsage;
 use Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +30,7 @@ class ProfileController extends Controller
     {
         $username = $request->route('username');
         $this->user = PostsHelperServiceProvider::getUserByUsername($username);
-        if (! $this->user) {
+        if (! $this->user) {            
             abort(404);
         }
     }
@@ -150,6 +152,17 @@ class ProfileController extends Controller
             'showLoginDialog' => $data['showLoginDialog'],
             'postsFilter' => $postsFilter
         ]);
+
+      // history in profile
+
+$data['referrals'] = ReferralCodeUsage::with(['usedBy'])->where('referral_code', $this->user->referral_code)->orderBy('id', 'desc')->paginate(6);
+
+$data['postsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'view'])->orderBy('created_at', 'desc')->paginate(10);  
+
+$data['postscommentsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'comment'])->orderBy('created_at', 'desc')->paginate(10);
+
+// ...
+
 
         return view('pages.profile', $data);
     }

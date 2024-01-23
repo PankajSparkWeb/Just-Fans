@@ -7,11 +7,7 @@
 
 
 <div class="post-box post-box-container-section" data-postID="{{ $post->id }}">
-
-
-
     <div class="post-content mt-3  pl-3 pr-3 upvote_downvote_section">
-
         @if (
             $post->isSubbed ||
                 (Auth::check() && getSetting('profiles.allow_users_enabling_open_profiles') && $post->user->open_profile))
