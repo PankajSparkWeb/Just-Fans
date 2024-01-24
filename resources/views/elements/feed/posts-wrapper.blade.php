@@ -1,6 +1,6 @@
 @if(count($posts))
-    @foreach($posts as $post)
-        @include('elements.feed.post-box')
+    @foreach($posts as $post)          
+        @include('elements.feed.post-box', ['is_visited' => $post->is_visited_post ? true : false])
         <br><br>
     @endforeach
     @include('elements.report-user-or-post',['reportStatuses' => ListsHelper::getReportTypes()])

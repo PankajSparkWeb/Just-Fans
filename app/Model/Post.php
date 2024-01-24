@@ -169,4 +169,9 @@ class Post extends Model
     {
         return $this->sharedByUsers()->count();
     }
+    public function is_visited_post(){
+        // Assuming you have access to the current user's ID (replace 'auth()->id()' with the actual way you get the user's ID)
+        $currentUserId = auth()->id();    
+        return $this->hasOne(History::class, 'post_id')->where('user_id', $currentUserId);
+    }
 }

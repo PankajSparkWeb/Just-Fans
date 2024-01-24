@@ -1,4 +1,4 @@
-<div class="post-comment d-flex flex-row mb-3 test" data-commentID="{{ $comment->id }}">
+<div class="post-comment d-flex flex-row mb-3" data-commentID="{{ $comment->id }}">
     <div class="">
         <img class="rounded-circle" src="{{ $comment->author->avatar }}">
     </div>
@@ -6,7 +6,7 @@
         <div class="d-flex flex-row justify-content-between">
             <div class="text-bold d-flex align-items-center"><a
                     href="{{ route('profile', ['username' => $comment->author->username]) }}"
-                    class="text-dark-r">{{ $comment->author->username }}</a>
+                    class="text-dark-r">{{ $comment->author->name}}</a>
                 @if (
                     $comment->author->email_verified_at &&
                         $comment->author->birthdate &&

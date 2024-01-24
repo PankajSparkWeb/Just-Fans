@@ -1,13 +1,13 @@
 <div class="form-group ">    
     <div class="card py-3 px-3">
         <div class="container">
-            <h1>Visited Posts History</h1>
+            <h1>Share History</h1>
 
-            @if($postsHistory->isEmpty())
+            @if($shareHistory->isEmpty())
                 <p>No history records found.</p>
             @else
                 <ul>
-                    @foreach($postsHistory as $history)
+                    @foreach($shareHistory as $history)
                         @php 
                         $post = $history->post;
                         @endphp
@@ -21,7 +21,8 @@
                        </div>          
                     @endforeach
                 </ul>    
-                {{ $postsHistory->links() }} <!-- Pagination links -->
+                 <!-- Pagination links -->
+                {{ $shareHistory->appends(['tab' => $activeTab])->links() }}
             @endif
         </div>
     </div>

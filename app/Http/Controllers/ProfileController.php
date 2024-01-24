@@ -9,7 +9,6 @@ use App\Providers\PostsHelperServiceProvider;
 use App\Providers\StreamsServiceProvider;
 use Carbon\Carbon;
 use App\Model\History;
-use App\Model\ReferralCodeUsage;
 use Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -42,37 +41,38 @@ class ProfileController extends Controller
      * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
      * @throws \Exception
      */
-    public function index(Request $request)
+    public function index(Request $request, $username)
     {
         // Forcing no cache, in order to be able to return from post over
         // profile w/o saving state, and be able to paginate from where we left of
         header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
         header('Pragma: no-cache'); // HTTP 1.0.
         header('Expires: 0 '); // Proxies.
-
+        
+        
         // General access rules
         $this->setAccessRules();
         if (!$this->user->public_profile && !Auth::check()) {
             abort(403,__('Profile access is denied.'));
         }
-
+        
         // Geoblocking rule
         if($this->isGeoLocationBlocked()){
             abort(403,__('Profile access is denied.'));
         }
-
+        
         $data['showLoginDialog'] = false;
         $errors = session()->get('errors', app(ViewErrorBag::class));
         if ($errors->getBag('default')->has('email') || $errors->getBag('default')->has('name') || $errors->getBag('default')->has('password')) {
             $data['showLoginDialog'] = true;
         }
-
+        
         $postsFilter = $request->get('filter') ? $request->get('filter') : false;
         $startPage = PostsHelperServiceProvider::getFeedStartPage(PostsHelperServiceProvider::getPrevPage($request));
         $posts = PostsHelperServiceProvider::getUserPosts($this->user->id, false, $startPage, $postsFilter, $this->hasSub);
         PostsHelperServiceProvider::shouldDeletePaginationCookie($request);
         $posts = $posts->appends($_GET);
-
+        
         $offer = [];
         if ($this->user->offer) {
             $discount = 100 - (($this->user->profile_access_price * 100) / $this->user->offer->old_profile_access_price);
@@ -86,7 +86,7 @@ class ProfileController extends Controller
                 ];
             }
         }
-
+        
         $data = array_merge($data,[
             'user' => $this->user,
             'hasSub' => $this->hasSub,
@@ -96,24 +96,24 @@ class ProfileController extends Controller
             'offer'=> $offer,
             'viewerHasChatAccess'=> $this->viewerHasChatAccess,
         ]);
-
+        
         if($postsFilter == 'streams'){
             $streams = StreamsServiceProvider::getPublicStreams(['userId' => $this->user->id, 'status' => 'all']);
             $data['streams'] = $streams;
         }
         $data['hasActiveStream'] = StreamsServiceProvider::getUserInProgressStream(true, $this->user->id) ? true : false;
-
+        
         $data['recentMedia'] = false;
         if ($this->hasSub || (Auth::check() && Auth::user()->id == $this->user->id) || (getSetting('profiles.allow_users_enabling_open_profiles') && $this->user->open_profile)) {
             $data['recentMedia'] = PostsHelperServiceProvider::getLatestUserAttachments($this->user->id, 'image');
         }
-
+        
         $additionalAssets = [];
         if(getSetting('profiles.allow_profile_qr_code')){
             $additionalAssets[] = '/libs/easyqrcodejs/dist/easy.qrcode.min.js';
         }
         $data['additionalAssets'] = $additionalAssets;
-
+        
         $paginatorConfig = [
             'next_page_url' => str_replace(['?page=', '?filter='], ['/posts?page=', '/posts?filter='], $posts->nextPageUrl()),
             'prev_page_url' => str_replace(['?page=', '?filter='], ['/posts?page=', '/posts?filter='], $posts->previousPageUrl()),
@@ -122,7 +122,7 @@ class ProfileController extends Controller
             'per_page' => $posts->perPage(),
             'hasMore' => $posts->hasMorePages(),
         ];
-
+        
         if($postsFilter == 'streams') {
             $paginatorConfig = [
                 'next_page_url' => str_replace(['?page=', '?filter='], ['/streams?page=', '/streams?filter='], $streams->nextPageUrl()),
@@ -133,13 +133,13 @@ class ProfileController extends Controller
                 'hasMore' => $streams->hasMorePages(),
             ];
         }
-
+        
         // Seo description for share urls
         $rawDescription = getSetting('profiles.allow_profile_bio_markdown') && $this->user->bio ? strip_tags(GenericHelperServiceProvider::parseProfileMarkdownBio($this->user->bio)) : $this->user->bio;
         $data['seo_description'] = $rawDescription ? str_replace(array("\n", "\r"), ' ', substr($rawDescription,0, 90)) . (strlen($rawDescription) > 90 ? '...' : '') : null;
-
+        
         Session::put('lastProfileUrl', route('profile',['username'=> $this->user->username]));
-
+        
         JavaScript::put([
             'paginatorConfig' => $paginatorConfig,
             'messengerVars' => [
@@ -151,21 +151,39 @@ class ProfileController extends Controller
             ],
             'showLoginDialog' => $data['showLoginDialog'],
             'postsFilter' => $postsFilter
-        ]);
+        ]); 
+        
+        $data['activeTab'] = $request->get('tab', 'posts');
 
-      // history in profile
+        if($data['activeTab'] == 'history'){
+            $data['postsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'view'])->orderBy('created_at', 'desc')->paginate(2);              
+        }
+        elseif($data['activeTab'] == 'comments'){
+            $data['postscommentsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'comment'])->orderBy('created_at', 'desc')->paginate(1);              
+        }
+        elseif($data['activeTab'] == 'share'){
+             $data['shareHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'share'])->orderBy('created_at', 'desc')->paginate(1);
+        }       
+        
 
-$data['referrals'] = ReferralCodeUsage::with(['usedBy'])->where('referral_code', $this->user->referral_code)->orderBy('id', 'desc')->paginate(6);
+        //       $postsFilter = $request->get('filter') ? $request->get('filter') : false;
+        //       $startPage = PostsHelperServiceProvider::getFeedStartPage(PostsHelperServiceProvider::getPrevPage($request));
+        //       $posts = PostsHelperServiceProvider::getUserPosts($this->user->id, false, $startPage, $postsFilter, $this->hasSub);
+        //       PostsHelperServiceProvider::shouldDeletePaginationCookie($request);
+        //       $posts = $posts->appends($_GET);
 
-$data['postsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'view'])->orderBy('created_at', 'desc')->paginate(10);  
+        // // history in profile
+        
+        // $data['postsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'view'])->orderBy('created_at', 'desc')->paginate(10);  
+        
+        // $data['postscommentsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'comment'])->orderBy('created_at', 'desc')->paginate(10);
 
-$data['postscommentsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'comment'])->orderBy('created_at', 'desc')->paginate(10);
-
-// ...
-
+        // $data['shareHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'share'])->orderBy('created_at', 'desc')->paginate(10);
 
         return view('pages.profile', $data);
     }
+
+
 
     /**
      * Fetches user posts, to be paginated into the profile page.

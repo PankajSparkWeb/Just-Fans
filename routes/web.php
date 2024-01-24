@@ -287,6 +287,8 @@ Route::get('/{username}/streams', ['uses' => 'ProfileController@getUserStreams',
 
 
 
+
+
 Route::fallback(function () {
     return view('errors.404'); // template should exists
 });

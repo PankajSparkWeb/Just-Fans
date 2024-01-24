@@ -2,11 +2,12 @@
     .react-button.active {
         color: red;
     }
+    .visited_post{
+        background-color: red !important; 
+    }
 </style>
 {{-- on click event for open full div in  --}}
-
-
-<div class="post-box post-box-container-section" data-postID="{{ $post->id }}">
+<div class="post-box post-box-container-section {{isset($is_visited) && $is_visited ? 'visited_post' : '' }}" data-postID="{{ $post->id }}"  >
     <div class="post-content mt-3  pl-3 pr-3 upvote_downvote_section">
         @if (
             $post->isSubbed ||
