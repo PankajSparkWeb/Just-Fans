@@ -1,4 +1,4 @@
-@extends('layouts.user-no-nav')
+@extends('layouts.NewHomeLayout')
 
 @section('page_title', __('Messenger'))
 
@@ -48,9 +48,9 @@
     @include('elements.messenger.locked-message-no-attachments-dialog')
     <div class="row">
         <div class="min-vh-100 col-12">
-            <div class="container messenger min-vh-100">
-                <div class="row min-vh-100">
-                    <div class="col-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-2 border border-right-0 border-left-0 rounded-left conversations-wrapper min-vh-100 overflow-hidden border-top ">
+            <div class="container messenger min-vh-100 message-layout-inner">
+                <div class="row min-vh-100 message-layout-flex">
+                    <div class="col-3 col-xl-3 col-lg-3 col-md-3 col-sm-3 col-xs-2 border border-right-0 border-left-0 rounded-left conversations-wrapper min-vh-100 overflow-hidden border-top messanger-left-section" >
                         <div class="d-flex justify-content-center justify-content-md-between pt-3 pr-1 pb-2">
                             <h5 class="d-none d-md-block text-truncate pl-3 pl-md-0 text-bold {{(Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? '' : 'text-dark-r') : (Cookie::get('app_theme') == 'dark' ? '' : 'text-dark-r'))}}">{{__('Contacts')}}</h5>
                             <span data-toggle="tooltip" title="" class="pointer-cursor"
@@ -71,7 +71,7 @@
                             @endif
                         </div>
                     </div>
-                    <div class="col-9 col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-10 border conversation-wrapper rounded-right p-0 d-flex flex-column min-vh-100">
+                    <div class="col-9 col-xl-9 col-lg-9 col-md-9 col-sm-9 col-xs-10 border conversation-wrapper rounded-right p-0 d-flex flex-column min-vh-100 message-section-right">
                         @include('elements.message-alert')
                         @include('elements.messenger.messenger-conversation-header')
                         @include('elements.messenger.messenger-new-conversation-header')

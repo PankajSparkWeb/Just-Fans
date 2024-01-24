@@ -1,10 +1,11 @@
-<div class="post-comment d-flex flex-row mb-3 test" data-commentID="{{ $comment->id }}">
+<div class="post-comment d-flex flex-row mb-3 post-infinite-commment" data-commentID="{{ $comment->id }}">
     <div class="">
         <img class="rounded-circle" src="{{ $comment->author->avatar }}">
     </div>
     <div class="pl-3 w-100">
-        <div class="d-flex flex-row justify-content-between">
-            <div class="text-bold d-flex align-items-center"><a
+        <div class="d-flex flex-row justify-content-between comment-top-bar">
+            <div class='unser-name-time'>
+            <div class="text-bold d-flex align-items-center comment-user-name"><a
                     href="{{ route('profile', ['username' => $comment->author->username]) }}"
                     class="text-dark-r">{{ $comment->author->username }}</a>
                 @if (
@@ -20,7 +21,33 @@
                     </span>
                 @endif
             </div>
-            <div class="position-absolute separator">
+            <div class="d-flex text-muted comment-username-show">
+                <div class="comment-user-name">{{ $comment->created_at->format('g:i A') }}</div>
+               {{-- 
+                <div class="ml-2">
+                    <span class="comment-reactions-label-count">{{ count($comment->reactions) }}</span>
+                    <span
+                        class="comment-reactions-label">{{ trans_choice('likes', count($comment->reactions)) }}</span>
+                </div>
+                --}}
+                {{-- <div class="ml-2"> --}}
+                   {{-- a href="javascript:void(0)" --}}
+                        {{-- onclick="Post.addReplyUser('{{ $comment->author->username }}', '{{ $comment->id }}')" --}}
+                        {{-- class="text-muted">{{ __('Reply') }}</a></div> --}}
+
+                     
+
+                        <div class="d-flex reply_form_section">
+                            <div class="reply-form" style="display: none;" data-comment-id="{{ $comment->id }}">
+                                @if (Auth::check())
+                                    <hr>
+                                    @include('elements.feed.post-new-comment', ['comment'=> $comment])                                            
+                                @endif
+                            </div>
+                        </div>
+            </div>
+            </div>
+            <div class="position-absolute separator delete-button">
                 <div class="d-flex">
 
                     @if (Auth::user()->id == $comment->author->id)
@@ -42,8 +69,15 @@
                 </div>
 
             </div>
+           
         </div>
-        <div>
+        <div class='user-input-message'>
+            <div class="comment-text-area">
+                <div class="text-break">{!! $comment->message !!}</div>
+              
+            </div>
+        </div>
+        <div>  
             @php
                 $is_react_type = PostsHelper::didUserReact($comment->reactions, true);
             @endphp		
@@ -84,40 +118,14 @@
                 </div>
                 @endif
                 {{-- END Upvote/downvote section --}}
-                <div class="comment-text-area">
-                    <div class="text-break">{!! $comment->message !!}</div>
-                    <div class="d-flex text-muted">
-                        <div>{{ $comment->created_at->format('g:i A') }}</div>
-                       {{-- 
-                        <div class="ml-2">
-                            <span class="comment-reactions-label-count">{{ count($comment->reactions) }}</span>
-                            <span
-                                class="comment-reactions-label">{{ trans_choice('likes', count($comment->reactions)) }}</span>
-                        </div>
-                        --}}
-                        {{-- <div class="ml-2"> --}}
-                           {{-- a href="javascript:void(0)" --}}
-                                {{-- onclick="Post.addReplyUser('{{ $comment->author->username }}', '{{ $comment->id }}')" --}}
-                                {{-- class="text-muted">{{ __('Reply') }}</a></div> --}}
-
-                                <div class="ml-2">
-                                    <a href="javascript:void(0)"
-                                        onclick="Post.toggleReplyForm('{{ $comment->id }}', '')"
-                                        class="text-muted reply-link"
-                                    >
-                                        {{ __('Reply') }}
-                                    </a>
-                                </div>
-
-                                <div class="d-flex reply_form_section">
-                                    <div class="reply-form" style="display: none;" data-comment-id="{{ $comment->id }}">
-                                        @if (Auth::check())
-                                            <hr>
-                                            @include('elements.feed.post-new-comment', ['comment'=> $comment])                                            
-                                        @endif
-                                    </div>
-                                </div>
-                    </div>
+               
+                <div class="ml-2">
+                    <a href="javascript:void(0)"
+                        onclick="Post.toggleReplyForm('{{ $comment->id }}', '')"
+                        class="text-muted reply-link"
+                    >
+                        {{ __('Reply') }}
+                    </a>
                 </div>
             </div>
         </div>

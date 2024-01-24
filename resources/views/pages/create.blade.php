@@ -37,7 +37,7 @@
                     @include('elements.pending-posts-warning-box')
                 </div>
             @endif
-            <div class="pl-3 pr-3 pt-2">
+            <div class="pl-3 pr-3 pt-2 ql-editor-section-wrapper">
                 @if (!GenericHelper::isUserVerified() && getSetting('site.enforce_user_identity_checks'))
                     <div class="alert alert-warning text-white font-weight-bold mt-2 mb-0" role="alert">
                         {{ __('Before being able to publish an item, you need to complete your') }} <a class="text-white"
@@ -48,7 +48,7 @@
                     </div>
                 @endif
                 <div class="d-flex flex-column-reverse ql-editor-section">
-                    <div class="w-100">
+                    <div class="w-100 editor-wrapper-flex">
                         <div id="dropzone-uploader" name="input-text"
                             class="form-control border dropzone w-100 editor-for-txt ql-container ql-snow ql-editor ql-blank"
                             rows="1" spellcheck="false" placeholder="Title"></div>
@@ -63,7 +63,7 @@
                                 class="post-invalid-feedback">{{ __('Your post must contain more than 10 characters.') }}</strong>
                         </span>
 
-                        <div class="d-flex justify-content-between w-100 mb-3 mt-3">
+                        <div class="d-flex justify-content-between w-100 mb-3 mt-3 post-create-wrapper">
                             {{-- @include('elements.post-create-actions') --}}
                             <div class="d-flex align-items-center justify-content-center">
                                 @if (Route::currentRouteName() == 'posts.create')
