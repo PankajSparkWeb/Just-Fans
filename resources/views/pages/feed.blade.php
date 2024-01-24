@@ -44,7 +44,7 @@
     {{-- Post Section Start --}}
     <div class="content-post">
         <div class="container">
-            <h1>this is header</h1>
+           
 
             <!-- Interest popup -->
             @php
