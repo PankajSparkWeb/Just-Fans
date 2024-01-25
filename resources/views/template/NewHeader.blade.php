@@ -13,8 +13,8 @@
 <nav id="New-Header"
     class="new-navbar navbar-expand-md {{ Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-white') : (Cookie::get('app_theme') == 'dark' ? 'navbar-dark bg-dark' : 'navbar-light bg-white') }} ">
 
-    <div class="row container-fluid new-header justify-content-between top-header-wrapper">
-        <div class='top-header-left-section'>
+    <div class="row container-fluid new-header justify-content-between top-header-wrapper top-header-without-login">
+        <div class='top-header-left-section header-left-without-login'>
             <a class="navbar-brand" href="{{ route('home') }}">
                 <img src="{{ asset(Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? getSetting('site.dark_logo') : getSetting('site.light_logo')) : (Cookie::get('app_theme') == 'dark' ? getSetting('site.dark_logo') : getSetting('site.light_logo'))) }}"
                     class="d-inline-block align-top mr-1 ml-3" alt="{{ __('Site logo') }}">
@@ -49,7 +49,7 @@
 
             {{-- search box --}}
 
-            <div class="search-box-header">
+            <div class="search-box-header search-box-without-login">
                 @include('elements.search-box')
             </div>
         </div>
@@ -375,17 +375,17 @@
                 </div>
             </div>
         @else
-            <div class="">
-                <ul class="navbar-nav ml-auto">
+            <div class="login-sign-up">
+                <ul class="navbar-nav ml-auto top-header-buttons">
                     <!-- Authentication Links -->
-                 
-                        <li class="nav-item">
+                    <li class="nav-item list-item-two">
+                        <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
+                    </li>
+                        <li class="nav-item list-item-one">
                             <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                         </li>
                         
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                            </li>
+                            
                         
                     </ul>
             </div>

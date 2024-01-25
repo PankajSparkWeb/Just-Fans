@@ -42,13 +42,14 @@
     @include('elements.feed.two-top-bars')
     {{-- Post Section Start --}}
 
-    <div class="row feed-top-wrapper">
+    <div class="row feed-top-wrapper feed-without-login">
         <div class="content-post">
-            <div class="container">
+            <div class="container posts-flex-without-login">
+                <div class="post-pagination-wrapper">
                 @include('elements.feed.posts-wrapper', ['posts' => $posts])
-                {{ $posts->links() }}
-                  
-            <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block sidebar-wraper">
+                {{-- {{ $posts->links() }}  --}}
+                </div>
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block sidebar-wraper sidebar-wrapper-without-login">
                 <div class="feed-widgets">
                     <div class="mb-4">
                         @include('template.NewSideBar')

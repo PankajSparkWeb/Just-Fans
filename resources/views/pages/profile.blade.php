@@ -58,10 +58,10 @@
 @stop
 
 @section('content')
-    <div class="row">
-        <div class="min-vh-100 col-12 col-md-8 border-right pr-md-0">
+    <div class="row all-posts-visited">
+        <div class="min-vh-100 col-12 col-md-8 border-right pr-md-0 post-container-left-section">
 
-            <div class="container d-flex justify-content-between align-items-center">
+            {{-- <div class="container d-flex justify-content-between align-items-center">
                 
                 <div>
                     @if(!Auth::check() || Auth::user()->id !== $user->id)
@@ -148,9 +148,9 @@
                         </div>
                     @endif
                 </div>
-            </div>
+            </div> --}}
 
-            <div class="container pt-2 pl-0 pr-0">
+            <div class="container pt-2 pl-0 pr-0 post-container-div">
                 <div class="bg-separator border-top border-bottom"></div>
 
             
@@ -206,7 +206,7 @@
             </div>
         </div>
         
-        <div class="col-12 col-md-4 d-none d-md-block pt-3">
+        <div class="col-12 col-md-4 d-none d-md-block pt-3 post-container-profile-right">
             @include('elements.profile.side-bar')
         </div>
     

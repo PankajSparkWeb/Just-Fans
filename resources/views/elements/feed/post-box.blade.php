@@ -50,19 +50,19 @@
         <div class="post-text-area-main">
             <div class="post-header pl-3 pr-3 post-header-top">
                 <div class="d-flex post-header-flex-area">
-                    <div class="avatar-wrapper post-icon-img">
+                    {{-- <div class="avatar-wrapper post-icon-img">
                         <img class="avatar rounded-circle" src="{{ $post->user->avatar }}">
-                    </div>
-                    <div class="post-details pl-2 w-100{{ $post->is_pinned ? '' : '' }}">
-                        <div class="d-flex justify-content-between post-header-justify">
+                    </div> --}}
+                    <div class="post-details pl-2 w-100 post-details-heading-wrapper{{ $post->is_pinned ? '' : '' }}">
+                        <div class="d-flex justify-content-between post-header-justify top-header-post-justify">
                             <div>
                                 <div class="text-bold post-url-image"><a
                                         href="{{ route('profile', ['username' => $post->user->username]) }}"
                                         class="text-dark-r">{{ $post->user->name }}</a></div>
-                                <div class='post-url-next-page'><a
+                                {{-- <div class='post-url-next-page'><a
                                         href="{{ route('profile', ['username' => $post->user->username]) }}"
                                         class="text-dark-r text-hover"><span>@</span>{{ $post->user->username }}</a>
-                                </div>
+                                </div> --}}
                             </div>
 
                             <div class="d-flex">
@@ -117,7 +117,7 @@
                                 @endif
 
                                 <div class="pr-3 pr-md-3">
-                                    <a class="text-dark-r text-hover d-flex"
+                                    <a class="text-dark-r text-hover d-flex top-minutes-show"
                                         onclick="PostsPaginator.goToPostPageKeepingNav({{ $post->id }},{{ $post->postPage }},'{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')"
                                         href="javascript:void(0)">
                                         {{ $post->created_at->diffForHumans(null, false, true) }}
@@ -130,10 +130,10 @@
                     </div>
                 </div>
             </div>
-            <div class="post-visit"
+            <div class="post-visit post-para"
                 onclick="window.location.href = '{{ Route::currentRouteName() != 'posts.get' ? route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) : '#comments' }}';">
                 <p
-                    class="text-break post-content-data {{ getSetting('feed.enable_post_description_excerpts') && (strlen($post->text) >= 85 || substr_count($post->text, "\r\n") > 1) ? 'line-clamp-1 pb-0 mb-0' : '' }}">
+                    class="text-break post-content-data  {{ getSetting('feed.enable_post_description_excerpts') && (strlen($post->text) >= 85 || substr_count($post->text, "\r\n") > 1) ? 'line-clamp-1 pb-0 mb-0' : '' }}">
                     {!! $post->text !!}</p>
                 @if (getSetting('feed.enable_post_description_excerpts') &&
                         (strlen($post->text) >= 85 || substr_count($post->text, "\r\n") > 1))
@@ -144,7 +144,10 @@
                     </span>
                 @endif
             </div>
-
+            @if ($post->external_post_link)
+            <a href="{{ $post->external_post_link }}" target="_blank"
+                class='view_ext_link'>{{ $post->external_post_link }}</a>
+        @endif
             <div class="post-footer mt-3 pl-3 pr-3 post-bottom-footer">
                 <div class="footer-actions d-flex justify-content-between">
                     <div class="d-flex footer-icon-flex-wrap">
@@ -176,6 +179,7 @@
                             @if (
                                 $post->isSubbed ||
                                     (Auth::check() && getSetting('profiles.allow_users_enabling_open_profiles') && $post->user->open_profile))
+                                <div class='comment-wrapper'>
                                 <div class="h-pill h-pill-primary mr-1 rounded" data-toggle="tooltip"
                                     data-placement="top" title="{{ __('Show comments') }}"
                                     onclick="window.location.href = '{{ Route::currentRouteName() != 'posts.get' ? route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) : '#comments' }}';">
@@ -185,15 +189,17 @@
                                     ])
 
                                 </div>
-                                <span class="ml-2-h d-none d-lg-block">
+                               
+                                <span class="ml-2-h d-none d-lg-block padding-remover">
                                     <a onclick="window.location.href = '{{ Route::currentRouteName() != 'posts.get' ? route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) : '#comments' }}';"
                                         class="text-dark-r text-hover">
-                                        <strong class="post-comments-label-count">{{ count($post->comments) }}</strong>
-                                        <span class="post-comments-label">
+                                        <strong class="post-comments-label-count post-span-tag">{{ count($post->comments) }}</strong>
+                                        <span class="post-comments-label post-span-tag">
                                             {{ trans_choice('comments', count($post->comments)) }}
                                         </span>
                                     </a>
                                 </span>
+                            </div>
                             @else
                                 <div class="h-pill h-pill-primary mr-1 rounded">
                                     <a href="{{route('login')}}">  
@@ -254,7 +260,7 @@
 
                         <div
                             class="dropdown exclude-child {{ GenericHelper::getSiteDirection() == 'rtl' ? 'dropright' : 'dropleft' }}">
-                            <a class="btn btn-sm text-dark-r text-hover btn-outline-{{ Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? 'dark' : 'light') : (Cookie::get('app_theme') == 'dark' ? 'dark' : 'light') }} dropdown-toggle px-2 py-1 m-0"
+                            <a class="post-svg-icon btn btn-sm text-dark-r text-hover btn-outline-{{ Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? 'dark' : 'light') : (Cookie::get('app_theme') == 'dark' ? 'dark' : 'light') }} dropdown-toggle px-2 py-1 m-0"
                                 data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                                 aria-expanded="false">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -262,11 +268,14 @@
                                     <path fill-rule="evenodd"
                                         d="M14.854 4.854a.5.5 0 0 0 0-.708l-4-4a.5.5 0 0 0-.708.708L13.293 4H3.5A2.5 2.5 0 0 0 1 6.5v8a.5.5 0 0 0 1 0v-8A1.5 1.5 0 0 1 3.5 5h9.793l-3.147 3.146a.5.5 0 0 0 .708.708z" />
                                 </svg>
+                                <span class='post-span-tag'>share</span>
                             </a>
+                           
                             <div class="dropdown-menu">
                                 <!-- Dropdown menu links -->
                                 <a class="dropdown-item" href="javascript:void(0)"
                                     onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a>
+                                   
 
                                 <!-- Example in a Blade view -->
                                 <form action="{{ route('posts.share', ['postId' => $post->id]) }}" method="post">
@@ -278,7 +287,7 @@
                         </div>
                         <div
                             class="dropdown exclude-child {{ GenericHelper::getSiteDirection() == 'rtl' ? 'dropright' : 'dropleft' }}">
-                            <a class="btn btn-sm text-dark-r text-hover btn-outline-{{ Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? 'dark' : 'light') : (Cookie::get('app_theme') == 'dark' ? 'dark' : 'light') }} dropdown-toggle px-2 py-1 m-0"
+                            <a class="post-top-third-icon btn btn-sm text-dark-r text-hover btn-outline-{{ Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? 'dark' : 'light') : (Cookie::get('app_theme') == 'dark' ? 'dark' : 'light') }} dropdown-toggle px-2 py-1 m-0"
                                 data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                                 aria-expanded="false">
                                 @include('elements.icon', ['icon' => 'ellipsis-horizontal-outline'])
@@ -322,6 +331,7 @@
                                 @endif
                             </div>
                         </div>
+
                     </div>
                     <div class="mt-0 d-flex align-items-center justify-content-center post-count-details">
                         {{--
@@ -330,7 +340,7 @@
                         <span class="post-reactions-label">{{ trans_choice('likes', $post->count_reactions) }}</span>
                     </span>
                 --}}
-                        @if (
+                        {{-- @if (
                             $post->isSubbed ||
                                 (Auth::check() && getSetting('profiles.allow_users_enabling_open_profiles') && $post->user->open_profile))
                         @else
@@ -340,18 +350,15 @@
                                     {{ trans_choice('comments', count($post->comments)) }}
                                 </span>
                             </span>
-                        @endif
-                        <span class="ml-2-h d-none d-lg-block">
+                        @endif --}}
+                        {{-- <span class="ml-2-h d-none d-lg-block">
                             <strong class="post-tips-label-count">{{ $post->tips_count }}</strong>
                             <span class="post-tips-label">{{ trans_choice('tips', $post->tips_count) }}</span>
-                        </span>
+                        </span> --}}
                     </div>
                 </div>
             </div>
-            @if ($post->external_post_link)
-                <a href="{{ $post->external_post_link }}" target="_blank"
-                    class='view_ext_link'>{{ $post->external_post_link }}</a>
-            @endif
+           
 
         </div>
     </div>

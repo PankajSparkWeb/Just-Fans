@@ -16,9 +16,7 @@ body {
 .react-button.active {
     color: red;
 }
-.visited_post{
-    background-color: red !important; 
-}
+ 
 
 
 #New-Header {
@@ -103,8 +101,80 @@ div#mySelectBox .interest {
 .active-tab-history {
     display: block;
   }
+
+  
 /*raaj css chnages starts here*/
 
+.post-text-area-main {
+    flex-grow: 1;
+}
+.top-header-post-justify .pr-3.pr-md-3 {
+padding:0px!important;
+}
+
+.post-container-left-section {
+    max-width: 100%;
+    padding: 0px;
+}
+.post-container-profile-right {
+    max-width: 100%;
+    padding: 0px;
+}
+
+.all-posts-visited {
+    display: grid;
+    grid-template-columns: 60% 1fr;
+    max-width: 1000px;
+    margin: auto;
+    padding: 145px 10px 45px 10px;
+    column-gap: 20px;
+}
+.visited_post p {
+    color: #eaedef;
+}
+ 
+.list-item-two {
+    background: #eaedef;
+}
+.list-item-two a {
+    color: #1c1c1c!important;
+    
+}
+.list-item-one {
+    background: #d93a00;
+}
+.list-item-one a {
+    color: #fff!important;
+    font-weight: 500!important;
+}
+
+ul.top-header-buttons {
+    justify-content: end;
+    column-gap: 10px;
+}
+ul.top-header-buttons li {
+    border-radius: 20px;
+    padding: 0px 10px;
+}
+ul.top-header-buttons li a {
+    font-weight: 500;
+}
+
+.without-login-show.posts {
+    display: grid;
+    row-gap: 20px;
+}
+.posts-flex-without-login {
+    display: grid;
+    grid-template-columns: 70% 1fr;
+    column-gap: 20px;
+}
+.feed-without-login {
+    width: 100%;
+    display: block!important;
+    padding: 45px 10px;
+    margin: 0px!important;
+}
 .message-layout-inner {
     padding: 100px 15px 45px 15px;
 }
@@ -451,6 +521,7 @@ input#search-input-box {
     margin: 0px;
     display: grid;
     grid-template-columns: 70% 1fr;
+    padding: 10px;
 }
 .search-box-header {
     flex-grow: 1;
@@ -460,7 +531,7 @@ input#search-input-box {
     border: 1px solid #edeff1;
 }
 .top-header-left-section {
-    display: flex;
+    display: flex!important;
     align-items: center;
 }
 .top-header-right-section {
@@ -511,7 +582,7 @@ input#search-input-box {
 }
 
 .tabs-and-layout {
-    border: 1px solid #898989;
+    border: 1px solid #ccc;
     border-radius: 2px;
     padding: 14px!important;
 }
@@ -603,9 +674,19 @@ a.posts_top_nav.active {
     font-size: 14px;
     color: #202020;
 }
+.post-para p {
+    color: #222222;
+    font-weight: 500;
+    margin: 0px;
+    font-size: 18px;
+}
+a.top-minutes-show {
+    font-size: 12px;
+    color: #787C7E!important;
+}
 a.view_ext_link {
-    color: #202020;
-    font-size: 16px;
+    color: #3f9ade;
+    font-size: 12px;
     font-weight: 500;
     width: 100%;
     padding: 0px 12px;
@@ -616,15 +697,60 @@ a.view_ext_link {
 }
 .footer-icon-flex-wrap {
     align-items: center;
-    column-gap: 16px;
+ column-gap: 10px;
+   padding: 12px 0px;
+}
+span.padding-remover {
+    margin: 0px;
 }
 a.view_ext_link:hover {
-    color: #202020;
-    font-weight:600;
+    color: #3f9ade;
     text-decoration: underline;
 }
 .post-header-top {
-    padding-top: 14px;
+    padding: 8px 12px!important;
+}
+.footer-icon-flex-wrap .ion-icon-inner svg {
+    height: 20px!important;
+    width: 20px;
+    color:#787C7E;
+}
+.footer-icon-flex-wrap .h-pill.h-pill-primary {
+    padding: 0px;
+    margin: 0px!important;
+}
+.footer-icon-flex-wrap .ion-icon-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+a.post-svg-icon {
+    border: unset;
+  padding: 0px!important;
+}
+a.post-top-third-icon {
+    border: unset;
+    width: 100%;
+    padding: 0px!important;
+    height: 20px;
+    width: 20px;
+}
+.post-svg-icon svg {
+    height: 12px;
+    width: 22px;
+    color: #787C7E;
+}
+.post-span-tag {
+    font-size: 12px;
+    color: #787C7E;
+    font-weight: 500;
+    text-transform: capitalize;
+}
+.post-url-image a {
+    padding: 0px!important;
+}
+.post-details-heading-wrapper {
+    padding: 0px!important;
 }
 .upvote_downvote_section {
     padding: 0px!important;
@@ -637,8 +763,22 @@ a.view_ext_link:hover {
     color: #222222;
 }
 .post-box-container-section {
-    border: 1px solid #898989;
+    border: 1px solid #ccc;
     border-radius: 2px;
+    background-color: #fff;
+}
+.top-header-post-justify {
+    display: flex;
+    align-items: center;
+
+}
+.comment-wrapper .ion-icon-inner {
+    height: 20px;
+    width: 20px;
+}
+.comment-wrapper {
+    display: flex;
+    align-items: center;
 }
 .upvote-downvote {
     background: #cccccc2b;
@@ -1599,7 +1739,7 @@ footer .ion-icon-wrapper{
     }
 }
 
-/*raaj media enda here*/
+/*raaj media ends here*/
 
 
 
