@@ -1,8 +1,10 @@
 @if(count($posts))
+<div class="without-login-show posts">
     @foreach($posts as $post)          
         @include('elements.feed.post-box', ['is_visited' => $post->is_visited_post ? true : false])
-        <br><br>
+       
     @endforeach
+</div>
     @include('elements.report-user-or-post',['reportStatuses' => ListsHelper::getReportTypes()])
     @include('elements.feed.post-delete-dialog')
     @include('elements.feed.post-list-management')

@@ -45,17 +45,15 @@ class SettingsController extends Controller
     public $availableSettings = [
         'profile' => ['heading' => 'Update your bio, cover and avatar', 'icon' => 'person'],
         'account' => ['heading' => 'Manage your account settings', 'icon' => 'settings'],
-        'wallet' => ['heading' => 'Your payments & wallet', 'icon' => 'wallet'],
-        'payments' => ['heading' => 'Your payments & wallet', 'icon' => 'card'],
-        'rates' => ['heading' => 'Prices & Bundles', 'icon' => 'layers'],
-        'subscriptions' => ['heading' => 'Your active subscriptions', 'icon' => 'people'],
-        'referrals' => ['heading' => 'Invite other people to earn more', 'icon' => 'person-add'],
+        // 'wallet' => ['heading' => 'Your payments & wallet', 'icon' => 'wallet'],
+        // 'payments' => ['heading' => 'Your payments & wallet', 'icon' => 'card'],
+        // 'rates' => ['heading' => 'Prices & Bundles', 'icon' => 'layers'],
+        // 'subscriptions' => ['heading' => 'Your active subscriptions', 'icon' => 'people'],
+        // 'referrals' => ['heading' => 'Invite other people to earn more', 'icon' => 'person-add'],
         'notifications' => ['heading' => 'Your email notifications settings', 'icon' => 'notifications'],
         'privacy' => ['heading' => 'Your privacy and safety matters', 'icon' => 'shield'],
         'verify' => ['heading' => 'Get verified and start earning now', 'icon' => 'checkmark'],
-        'history' => ['heading' => 'History', 'icon' => 'checkmark'],
-        'commentsHistory' => ['heading' => 'Comment History', 'icon' => 'checkmark'],
-        'shareHistory' => ['heading' => 'Share History', 'icon' => 'checkmark'],
+        
     ];
 
     public function __construct()

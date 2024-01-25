@@ -1,4 +1,4 @@
-@extends('layouts.user-no-nav')
+@extends('layouts.NewHomeLayout')
 
 @section('page_title', __('Discover'))
 @section('share_url', route('home'))
@@ -49,8 +49,8 @@
 
 @section('content')
     <div class="container">
-        <div class="row">
-            <div class="col-12 col-sm-12 col-lg-8 col-md-7 second p-0">
+        
+            <div class="col-12 col-sm-12 second p-0">
                 <div class="d-flex neutral-bg fixed-top-m px-3 py-3 feed-mobile-search">
                     <span class="h-pill h-pill-primary rounded search-back-button d-flex justify-content-center align-items-center" onClick="Search.goBack()">
                         @include('elements.icon',['icon'=>'arrow-back-outline','variant'=>'medium','centered'=>true])
@@ -130,8 +130,8 @@
                     @include('elements.feed.posts-loading-spinner')
                 @endif
 
-            </div>
-            <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block">
+            
+            {{-- <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block">
                 <div class="search-widgets">
                     @include('elements.feed.suggestions-box',['profiles'=>$suggestions,'isMobile' => false])
                     @if(getSetting('custom-code-ads.sidebar_ad_spot'))
@@ -140,7 +140,7 @@
                         </div>
                     @endif
                 </div>
-            </div>
+            </div> --}}
         </div>
         @include('elements.checkout.checkout-box')
     </div>

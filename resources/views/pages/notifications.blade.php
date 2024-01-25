@@ -19,8 +19,8 @@
 @stop
 
 @section('content')
-    <div class="row container mx-auto">
-        <div class="col-12 pr-0 min-vh-100 pt-4 border-right">
+    <div class="row container mx-auto show-messages-notifications">
+        <div class="col-12 pr-0 min-vh-100 pt-4 border-right notifications-messages">
             <div class="px-3 pb-4 border-bottom">
                 <h5 class="text-truncate text-bold mb-0 {{(Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? '' : 'text-dark-r') : (Cookie::get('app_theme') == 'dark' ? '' : 'text-dark-r'))}}">{{__('Notifications')}}</h5>
             </div>

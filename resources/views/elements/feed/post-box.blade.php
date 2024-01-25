@@ -1,11 +1,3 @@
-<style>
-    .react-button.active {
-        color: red;
-    }
-    .visited_post{
-        background-color: red !important; 
-    }
-</style>
 {{-- on click event for open full div in  --}}
 <div class="post-box post-box-container-section {{isset($is_visited) && $is_visited ? 'visited_post' : '' }}" data-postID="{{ $post->id }}"  >
     <div class="post-content mt-3  pl-3 pr-3 upvote_downvote_section">
@@ -39,9 +31,9 @@
             </div>
         @else
             {{-- Not login redirect to login page --}}
-            <div class="upvote-downvote disabled_section exclude">
+            <div class="upvote-downvote">
                 <div class="upvote-icon exclude-on">
-                    <a href="" class="upvoteLink_disabled exclude-on">
+                    <a href="{{route('login')}}" class="upvoteLink exclude-on">
                         <span class="material-symbols-outlined exclude-on">shift</span></a>
                 </div>
                 <div class="vote_counter">
@@ -50,7 +42,7 @@
                     </span>
                 </div>
                 <div class="down-vote-icon">
-                    <a href="" class="downvoteLink_disabled">
+                    <a href="{{route('login')}}" class="downvoteLink">
                         <span class="material-symbols-outlined">shift</span></a>
                 </div>
             </div>
@@ -203,11 +195,13 @@
                                     </a>
                                 </span>
                             @else
-                                <div class="h-pill h-pill-primary mr-1 disabled rounded">
+                                <div class="h-pill h-pill-primary mr-1 rounded">
+                                    <a href="{{route('login')}}">  
                                     @include('elements.icon', [
                                         'icon' => 'chatbubble-outline',
                                         'variant' => 'medium',
                                     ])
+                                    </a>
                                 </div>
                             @endif
                         @endif

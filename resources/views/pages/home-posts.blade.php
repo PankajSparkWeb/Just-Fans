@@ -41,20 +41,36 @@
 @section('content')
     @include('elements.feed.two-top-bars')
     {{-- Post Section Start --}}
-    <div class="content-post">
-        <div class="container">
-            @include('elements.feed.posts-wrapper', ['posts' => $posts])
-        </div>     
-        <!-- Display pagination links -->
-        {{ $posts->links() }} 
+
+    <div class="row feed-top-wrapper">
+        <div class="content-post">
+            <div class="container">
+                @include('elements.feed.posts-wrapper', ['posts' => $posts])
+                {{ $posts->links() }}
+                  
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block sidebar-wraper">
+                <div class="feed-widgets">
+                    <div class="mb-4">
+                        @include('template.NewSideBar')
+                    </div>
+                </div>
+
+            </div>
+            </div>
+            <!-- Display pagination links -->
+         
+        </div>
+            
+        
     </div>
-</div>
+    
     <div class="content-wiki">
         <div class="container d-flex feed-container-outer">
             <div class="wikipeadia-area wiki-inner">
                 @include('elements.feed.wiki-text-area')
             </div>
-            <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block sidebar-wraper">
+            <div
+                class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block sidebar-wraper">
                 <div class="feed-widgets">
                     <div class="mb-4">
                         @include('template.NewSideBar')
@@ -64,4 +80,5 @@
             </div>
         </div>
     </div>
+
 @stop

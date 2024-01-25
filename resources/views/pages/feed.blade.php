@@ -55,9 +55,9 @@
             @endif
          
             
-            <div class="row">
-                <div class="col-12 col-sm-12 col-lg-8 col-md-7 second p-0">
-                    <div class="top-post-and-layout">
+            <div class="row feed-top-wrapper">
+                <div class="col-12 col-sm-12 col-lg-8 col-md-7 second p-0 feed-inner-erapper-first">
+                    <div class="top-post-and-layout post-layout-wrapper">
                         @include('elements.feed.top-post-and-layout-box')</div>
                     <div class="">
                         @include('elements.message-alert', ['classes' => 'pt-4 pb-4 px-2'])
