@@ -25,7 +25,7 @@
             @if (Auth::check())
                 <div class="dropdown-menu-header" aria-labelledby="dropdownMenuButton">
                     Menu
-                    <div class="dropdown-menu" id="myDropdown">
+                    <div class="dropdown-menu " id="myDropdown">
                         <input type="text" id="searchInput" placeholder="Filter" onclick="event.stopPropagation();">
                         <li class='names-list'>FEEDS</li>
                         <li><a class="dropdown-items menu-option" href="{{ route('home') }}">Home</a></li>
@@ -93,7 +93,7 @@
                                         'variant' => 'medium',
                                     ])
                                     <div
-                                        class="menu-notification-badge chat-menu-count {{ NotificationsHelper::getUnreadMessages() > 0 ? '' : 'd-none' }}">
+                                        class="menu-notification-badge chat-menu-count notifications-icon{{ NotificationsHelper::getUnreadMessages() > 0 ? '' : 'd-none' }}">
                                         {{ NotificationsHelper::getUnreadMessages() }}
                                     </div>
                                 </div>
@@ -157,15 +157,17 @@
                 <div class='header-user-profile'>
                     <div class="dropdown-menu-header-second" aria-labelledby="dropdownMenuButton">
                         <a id="navbarDropdown"
-                            class="nav-link dropdown-toggle text-right text-truncate d-flex align-items-center"
+                            class="nav-link dropdown-toggle text-right text-truncate d-flex align-items-center avtar-after"
                             href="#" role="button" data-toggle="dropdown" aria-haspopup="true"
                             aria-expanded="false">
+                            <div class='wrapper-avtar-header'>
                             <img src="{{ Auth::user()->avatar }}" class="home-user-avatar">
                             <div class="text-truncate max-width-150">{{ Auth::user()->name }}</div>
+                            </div>
                         </a>
-                        <div class="dropdown-menu" id="myDropdown" onclick="event.stopPropagation();">
+                        <div class="dropdown-menu header-dropdown-top-right" id="myDropdown" onclick="event.stopPropagation();">
 
-                            <div class="same-pd">
+                            <div class="same-pd" id='top-right-header-section'>
                                 My Stuff
 
                                 <a class="dropdown-item" href="{{ '#' }}">
@@ -179,7 +181,8 @@
                                     {{ __('User Settings') }}
                                 </a>
                             </div>
-                            <a class="scroll-link d-flex align-items-center dark-mode-switcher same-pd"
+                       
+                            <a class="scroll-link d-flex align-items-center dark-mode-switcher same-pd dropdown-border-wrapper"
                                 href="#">
                                 @if (Cookie::get('app_theme') == 'dark')
                                     @include('elements.icon', [
@@ -199,6 +202,7 @@
                                     {{ __('Dark mode') }}
                                 @endif
                             </a>
+                           
 
 
 
@@ -219,12 +223,13 @@
 
 
                             {{-- Accordian Start --}}
-                            <div class="accordion">
+                      
+                            <div class="accordion top-header-border-sec">
                                 {{-- <div class="accordion-item"> --}}
                                 <div class="accordion-item">
-                                    <div class="accordion-header" onclick="event.stopPropagation();">Terms & Policies
+                                    <div class="accordion-header accr-header-second-right" onclick="event.stopPropagation();">Terms & Policies
                                     </div>
-                                    <div class="accordion-content">
+                                    <div class="accordion-content accr-content-second">
                                         <li><a href="/pages/terms-and-conditions">Terms & Condition</a></li>
                                         <li><a href="/pages/privacy">Privacy Policy</a></li>
                                         <li><a href="/pages/content-policy">Content Policy</a></li>
@@ -362,7 +367,7 @@
 
                             </div>
 
-                            <a class="dropdown-item" href="{{ route('logout') }}"
+                            <a class="dropdown-item logout-button" href="{{ route('logout') }}"
                                 onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
                                 {{ __('Logout') }}

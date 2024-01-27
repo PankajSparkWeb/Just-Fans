@@ -156,7 +156,7 @@ class ProfileController extends Controller
         $data['activeTab'] = $request->get('tab', 'posts');
 
         if($data['activeTab'] == 'history'){
-            $data['postsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'view'])->orderBy('created_at', 'desc')->paginate(2);              
+            $data['postsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'view'])->orderBy('created_at', 'desc')->paginate(1);              
         }
         elseif($data['activeTab'] == 'comments'){
             $data['postscommentsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'comment'])->orderBy('created_at', 'desc')->paginate(1);              

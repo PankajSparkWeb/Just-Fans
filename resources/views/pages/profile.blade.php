@@ -58,6 +58,31 @@
 @stop
 
 @section('content')
+<div class='post-tab-outer'>
+<div class="mt-3 inline-border-tabs top-tab-header">
+    <div class="border-wrapper">
+    <nav class="nav nav-pills nav-justified text-bold post-top-navbar">
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <a class="nav-link {{ $activeTab == 'posts' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username]) }}">Posts</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link {{ $activeTab == 'history' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username, 'tab' => 'history']) }}">History</a>
+            </li>
+            @if(Auth::check())
+            <li>
+                <a class="nav-item nav-link {{ $activeTab == 'comments' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username, 'tab' => 'comments']) }}">Comments</a></li>
+            <li><a class="nav-item nav-link {{ $activeTab == 'share' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username, 'tab' => 'share']) }}">Share</a>
+            </li>
+            @else
+                
+            @endif
+        </ul>
+        
+    </nav>
+    </div>
+</div>
+</div>
     <div class="row all-posts-visited">
         <div class="min-vh-100 col-12 col-md-8 border-right pr-md-0 post-container-left-section">
 
@@ -151,31 +176,11 @@
             </div> --}}
 
             <div class="container pt-2 pl-0 pr-0 post-container-div">
-                <div class="bg-separator border-top border-bottom"></div>
+                {{-- <div class="bg-separator border-top border-bottom"></div> --}}
 
             
-                <div class="mt-3 inline-border-tabs">
-                    <nav class="nav nav-pills nav-justified text-bold">
-                        <ul class="nav nav-tabs">
-                            <li class="nav-item">
-                                <a class="nav-link {{ $activeTab == 'posts' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username]) }}">Posts</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ $activeTab == 'history' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username, 'tab' => 'history']) }}">History</a>
-                            </li>
-                            @if(Auth::check())
-                            <li>
-                                <a class="nav-item nav-link {{ $activeTab == 'comments' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username, 'tab' => 'comments']) }}">Comments</a></li>
-                            <li><a class="nav-item nav-link {{ $activeTab == 'share' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username, 'tab' => 'share']) }}">Share</a>
-                            </li>
-                            @else
-                                
-                            @endif
-                        </ul>
-                        
-                    </nav>
-                </div>
-                <div class="justify-content-center align-items-center {{(Cookie::get('app_feed_prev_page') && PostsHelper::isComingFromPostPage(request()->session()->get('_previous'))) ? 'mt-3' : 'mt-4'}}">
+               
+                <div class="justify-content-center align-items-center {{(Cookie::get('app_feed_prev_page') && PostsHelper::isComingFromPostPage(request()->session()->get('_previous'))) ? 'mt-3' : ''}}">
                     @if($activeTab == 'posts')
                     <!-- Display posts content -->
                     @include('elements.feed.posts-load-more', ['classes' => 'mb-2'])
@@ -203,8 +208,11 @@
 
                 @include('elements.feed.posts-loading-spinner')
                 </div>
+
             </div>
+
         </div>
+        
         
         <div class="col-12 col-md-4 d-none d-md-block pt-3 post-container-profile-right">
             @include('elements.profile.side-bar')

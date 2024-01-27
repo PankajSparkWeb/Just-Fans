@@ -1,13 +1,13 @@
 <div class="min-vh-100 col-12 border-right pr-md-0 profile-side-bar">
-
-    <div class="">
+<div class="pofile-wrapper">
+    <div class="side-bar-avtar-wraper">
        <div class="profile-cover-bg">
            <img class="card-img-top centered-and-cropped" src="{{$user->cover}}">
        </div> 
    </div>
 
   <div class="container justify-content-between align-items-center">
-       <div class="z-index-3 avatar-holder">
+       <div class="z-index-3 avatar-holder profile-avtar-holder">
            <img src="{{$user->avatar}}" class="rounded-circle">
        </div>
        <div>
@@ -79,10 +79,11 @@
            @endif
        </div>
    </div>
+</div>
 
-   <div class="container pt-2 pl-0 pr-0">
+   <div class="container pt-2 pl-0 pr-0 profile-bottom-section">
 
-       <div class="pt-2 pl-4 pr-4">
+       <div class="pt-2 pl-4 pr-4 profile-avtar-name">
            <h5 class="text-bold d-flex align-items-center">
                <span>{{$user->name}}</span>
                @if($user->email_verified_at && $user->birthdate && ($user->verification && $user->verification->status == 'verified'))
@@ -99,13 +100,13 @@
           <h6 class="text-muted">{{$user->username}}</h6>
        </div> 
        @if(Auth::check() && Auth::user()->id === $user->id)
-    <div class="mr-2">
+    <div class="mr-2 go-to-profile">
         <a href="{{route('my.settings')}}" class="p-pill p-pill-text ml-2 pointer-cursor">
             @include('elements.icon',['icon'=>'settings-outline', 'variant'=>'medium'])
         </a>
     </div>
 @endif
-        <div class="profile-bio-and-create d-flex">
+        <div class="profile-bio-and-create d-flex my-profile-setting">
        <div class="pt-2 pb-2 pl-4 pr-4 profile-description-holder">
            <div class="description-content {{$user->bio && (strlen(trim(strip_tags(GenericHelper::parseProfileMarkdownBio($user->bio)))) >= 85 || substr_count($user->bio,"\r\n") > 1) &&  !getSetting('profiles.disable_profile_bio_excerpt') ? 'line-clamp-1' : ''}}">
                @if($user->bio)
@@ -126,7 +127,7 @@
            @endif
        </div> 
       
-       <div class="d-flex flex-column flex-md-row justify-content-md-between pb-2 pl-4 pr-4 mb-3 mt-1">
+       <div class="d-flex flex-column flex-md-row justify-content-md-between pb-2 pl-4 pr-4 mb-3 mt-1 porfile-second-description">
 
            <div class="d-flex align-items-center mr-2 text-truncate mb-0 mb-md-0">
                @include('elements.icon',['icon'=>'calendar-clear-outline','centered'=>false,'classes'=>'mr-1'])
@@ -171,7 +172,7 @@
        <a class="" href="{{ route('posts.create') }}">New Post</a>
     </div>
       @endif
-       <div class="bg-separator border-top border-bottom"></div>
+       {{-- <div class="bg-separator border-top border-bottom"></div> --}}
 
        @include('elements.message-alert',['classes'=>'px-2 pt-4'])
        @if($user->paid_profile && (!getSetting('profiles.allow_users_enabling_open_profiles') || (getSetting('profiles.allow_users_enabling_open_profiles') && !$user->open_profile)))
