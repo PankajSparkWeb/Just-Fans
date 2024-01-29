@@ -43,7 +43,7 @@
     @include('elements.feed.two-top-bars')
     {{-- Post Section Start --}}
     <div class="content-post">
-        <div class="container">
+        <div class="container" id='top-wrapper-section'>
 
             <!-- Interest popup -->
             @php

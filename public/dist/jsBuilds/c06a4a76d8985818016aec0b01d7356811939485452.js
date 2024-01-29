@@ -75,7 +75,7 @@ else{buttonElement.html(`<div class="d-flex justify-content-center align-items-c
 
             </div>
 
-            ${(buttonContent !== false ? '<div class="ml-2">'+buttonContent+'</div>' : '')}
+            ${(buttonContent !== false ? '<div class="ml-2">' + buttonContent + '</div>' : '')}
 
             </div>`);buttonElement.addClass('disabled');}}
 function sendEmailConfirmation(callback=function(){}){$('.unverified-email-box').attr('onClick','');$.ajax({url:app.baseUrl+'/resendVerification',type:'POST',success:function(){$('.unverified-email-box').fadeOut();launchToast('success',trans('Success'),trans('Confirmation email sent. Please check your inbox and spam folder.'),'now');callback();},error:function(){}});}
@@ -100,4 +100,6 @@ function openDialog(){document.getElementById("dialog-container").style.display=
 function closeDialog(){document.getElementById("dialog-container").style.display="none";}
 var selectBox=document.getElementById('mySelectBox');selectBox.addEventListener('click',function(event){var div=event.target;if(div.tagName==='DIV'){div.classList.toggle('selectedIntrest');}});function showTab(tabId){var tabContents=document.getElementsByClassName('profile-history-content');for(var i=0;i<tabContents.length;i++){tabContents[i].style.display='none';}
 document.getElementById(tabId).style.display='block';}
-document.addEventListener('DOMContentLoaded',function(){showTab('overview-history');});
+document.addEventListener('DOMContentLoaded',function(){showTab('overview-history');});function toggleDropdownLayout(){var dropdown=document.querySelector('.dropdown');dropdown.classList.toggle('active');}
+function selectOption(iconName,clickedAnchor){var defaultOption=document.getElementById('defaultOption');defaultOption.innerHTML='<span class="material-symbols-outlined">'+iconName+'</span>';var allAnchors=document.querySelectorAll('.dropdown-content a');allAnchors.forEach(function(anchor){anchor.classList.remove('active');});clickedAnchor.classList.add('active');let section=document.querySelector('#top-wrapper-section');section.classList.remove('card-layout','classic-layout','compact-layout');let card;if(iconName==='bottom_sheets'){card='card-layout';}else if(iconName==='density_medium'){card='classic-layout';}else if(iconName==='density_small'){card='compact-layout';}
+section.classList.add(card);var dropdown=document.querySelector('.dropdown');dropdown.classList.remove('active');document.querySelector('.dropdown-content').addEventListener('click',function(event){event.stopPropagation();});}

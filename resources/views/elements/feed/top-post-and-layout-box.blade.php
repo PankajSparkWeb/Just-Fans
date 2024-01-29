@@ -1,8 +1,3 @@
-<style>
-    a.posts_top_nav.active {
-    background: green;
-}
-</style>
 <div class="feed-top-container">
     <div class="feed-top-container-inner">
     <div class="create-post-area d-flex d-flex feed-top-dfrt-sec bg-white">
@@ -31,25 +26,26 @@
     </div>
 
         <div class="post-layout">
-            <div class="dropDownFor-layout">
-                <!-- The dropdown button -->
-                <button class="dropDownFor-btn" onclick="toggleDropdown()">
-                    <span class="material-symbols-outlined">view_agenda</span>
+            <div class="dropdown" onclick="toggleDropdownLayout()">
+                <button class="dropbtn" id="defaultOption">
+                    <span class="material-symbols-outlined">bottom_sheets</span>
                 </button>
-                
-                <!-- The dropdown content/options -->
-                <div class="dropDownFor-lay-content" id="DropdownForLay">
-                    <a href="#" onclick="selectOption('view_agenda')">
-                        <span class="material-symbols-outlined">view_agenda</span>
+                <div class="dropdown-content">
+                    <a href="#" onclick="selectOption('bottom_sheets', this)" class="layout">
+                        <span class="material-symbols-outlined">bottom_sheets</span> Card
                     </a>
-                    <a href="#" onclick="selectOption('table_rows')">
-                        <span class="material-symbols-outlined">table_rows</span>
+                    <a href="#" onclick="selectOption('density_medium', this)" class="layout">
+                        <span class="material-symbols-outlined">density_medium</span> Classic
                     </a>
-                    <a href="#" onclick="selectOption('view_headline')">
-                        <span class="material-symbols-outlined">view_headline</span>
+                    <a href="#" onclick="selectOption('density_small', this)" class="layout">
+                        <span class="material-symbols-outlined">density_small</span> Compact    
                     </a>
+                    
                 </div>
             </div>
+
+         
+             
         </div>
     </div>
     </div>

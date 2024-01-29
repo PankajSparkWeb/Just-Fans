@@ -26,7 +26,7 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'role_id', 'password', 'username', 'bio', 'birthdate', 'location', 'website', 'avatar', 'cover', 'postcode', 'settings',
+        'name', 'email', 'role_id', 'password', 'username', 'bio', 'birthdate', 'location', 'website', 'avatar', 'cover', 'postcode', 'settings', 'status',
         'billing_address', 'first_name', 'last_name', 'profile_access_price',
         'gender_id', 'gender_pronoun',
         'profile_access_price_6_months',

@@ -11,10 +11,10 @@ $(function () {
 
     log('🚀 © JustFans Loaded © 🚀');
 
-    if(app.showCookiesBox !== null){
+    if (app.showCookiesBox !== null) {
         var br = bootstrapDetectBreakpoint();
-        if(br === null){
-            br = {name : 'lg'};
+        if (br === null) {
+            br = { name: 'lg' };
         }
         let cookiesConsetOptions = {
             "theme": "classic",
@@ -32,20 +32,20 @@ $(function () {
                 }
             },
             content: {
-                message: trans( `🍪 ${trans('This website uses cookies to improve your experience.')}`),
+                message: trans(`🍪 ${trans('This website uses cookies to improve your experience.')}`),
                 dismiss: trans(`Got it!`),
                 link: trans('Learn more'),
             },
         };
-        if(br.name === 'xs'){
+        if (br.name === 'xs') {
             cookiesConsetOptions.dismissOnScroll = 100;
         }
         window.cookieconsent.initialise(cookiesConsetOptions);
     }
 
 
-    if(app.enable_age_verification_dialog){
-        if(!getCookie('site_entry_approval')){
+    if (app.enable_age_verification_dialog) {
+        if (!getCookie('site_entry_approval')) {
             $('#site-entry-approval-dialog').modal('show');
             $('body .flex-fill').addClass('blurred');
         }
@@ -117,7 +117,7 @@ $(function () {
         let params = {
             cluster: pusher.cluster
         };
-        if(socketsDriver === 'soketi'){
+        if (socketsDriver === 'soketi') {
             params = {
                 wsHost: soketi.host,
                 wsPort: soketi.port,
@@ -130,7 +130,7 @@ $(function () {
         // Binding the new notifications
         channel.bind('new-notification', function (data) {
             let toastTitle = trans('Notification');
-            if(data.type === 'new-message'){
+            if (data.type === 'new-message') {
                 toastTitle = 'New message';
                 incrementNotificationsCount('.menu-notification-badge.chat-menu-count');
             }
@@ -140,7 +140,7 @@ $(function () {
             if (window.location.href !== null && window.location.href.indexOf('/my/notifications') >= 0) {
                 notifications.updateUserNotificationsList(this.getNotificationsActiveFilter());
             }
-            if(location.indexOf('my/messenger') >= 0 && data.type === 'new-message') {
+            if (location.indexOf('my/messenger') >= 0 && data.type === 'new-message') {
                 return true;
             }
             launchToast('success', trans(toastTitle), filterXSS(data.message));
@@ -148,7 +148,7 @@ $(function () {
 
         // Binding global messenger events
         channel.bind('messenger-actions', function (data) {
-            if(data.type === 'new-messenger-conversation' && window.location.href.indexOf('my/messenger') >= 0){
+            if (data.type === 'new-messenger-conversation' && window.location.href.indexOf('my/messenger') >= 0) {
                 messenger.fetchContacts();
                 messenger.fetchConversation(data.notification.fromUserID);
                 messenger.hideEmptyChatElements();
@@ -163,9 +163,9 @@ $(function () {
 });
 
 $(window).scroll(function () {
-    if(typeof skipDefaultScrollInits === 'undefined'){
-        if($('.side-menu').length){
-            initStickyComponent('.side-menu','sticky');
+    if (typeof skipDefaultScrollInits === 'undefined') {
+        if ($('.side-menu').length) {
+            initStickyComponent('.side-menu', 'sticky');
         }
     }
 });
@@ -174,8 +174,8 @@ $(window).scroll(function () {
  * Log function sugar syntax
  * @param v
  */
-function log(v,type = 'log') {
-    if(app.debug){
+function log(v, type = 'log') {
+    if (app.debug) {
         switch (type) {
             case 'info':
                 // eslint-disable-next-line no-console
@@ -201,7 +201,7 @@ function log(v,type = 'log') {
 /**
  * Instantiates tooltips
  */
-function initTooltips(){
+function initTooltips() {
     $('[data-toggle="tooltip"]').tooltip();
     $('.to-tooltip').tooltip();
 }
@@ -246,7 +246,7 @@ function copyToClipboard(textToCopy, container = 'body') {
  * @param component
  * @param stickyClass
  */
-function initStickyComponent(component,stickyClass) {
+function initStickyComponent(component, stickyClass) {
     let sticky = false;
     let top = $(window).scrollTop();
     if ($(".main-wrapper").offset().top < top) {
@@ -271,7 +271,7 @@ function goToLogin() {
  */
 // eslint-disable-next-line no-unused-vars
 function acceptSiteEntry() {
-    setCookie('site_entry_approval',true,90);
+    setCookie('site_entry_approval', true, 90);
     $('#site-entry-approval-dialog').modal('hide');
 }
 
@@ -367,7 +367,7 @@ function shareOrCopyLink(url = false) {
             .catch(error => console.log('Error sharing:', error));
     } else {
         copyToClipboard(url);
-        launchToast('success', trans('Success'), trans('Link copied to clipboard')+'.', 'now');
+        launchToast('success', trans('Success'), trans('Link copied to clipboard') + '.', 'now');
     }
 }
 
@@ -410,16 +410,15 @@ function getNotificationsActiveFilter() {
  * @returns {T|*}
  */
 // eslint-disable-next-line no-unused-vars
-function trans(key, replace = {})
-{
+function trans(key, replace = {}) {
     let translation = window.translations[key];
-    if(translation === null || typeof translation === 'undefined'){ // If no translation available, return the ( default - en ) key
+    if (translation === null || typeof translation === 'undefined') { // If no translation available, return the ( default - en ) key
         return key;
     }
     for (var placeholder in replace) {
         translation = translation.replace(`:${placeholder}`, replace[placeholder]);
     }
-    if(typeof translation === 'undefined'){
+    if (typeof translation === 'undefined') {
         return key;
     }
     return translation;
@@ -433,15 +432,14 @@ function trans(key, replace = {})
  * @returns {T|*}
  */
 // eslint-disable-next-line no-unused-vars
-function trans_choice(key, count = 1, replace = {})
-{
+function trans_choice(key, count = 1, replace = {}) {
     let keyValue = window.translations[key];
-    if(typeof keyValue === 'undefined'){
+    if (typeof keyValue === 'undefined') {
         return key;
     }
     const translations = keyValue.split('|');
     let translation = count > 1 || count === 0 ? translations[1] : translations[0];
-    translation = translation.replace('[2,*]','');
+    translation = translation.replace('[2,*]', '');
 
     for (var placeholder in replace) {
         translation = translation.replace(`:${placeholder}`, replace[placeholder]);
@@ -455,22 +453,22 @@ function trans_choice(key, count = 1, replace = {})
  * @param buttonElement
  */
 // eslint-disable-next-line no-unused-vars
-function updateButtonState(state, buttonElement, buttonContent = false, loadingColor = 'primary'){
-    if(state === 'loaded'){
-        if(buttonContent){
+function updateButtonState(state, buttonElement, buttonContent = false, loadingColor = 'primary') {
+    if (state === 'loaded') {
+        if (buttonContent) {
             buttonElement.html(buttonContent);
         }
-        else{
+        else {
             buttonElement.html('<div class="d-flex justify-content-center align-items-center"><ion-icon name="paper-plane"></ion-icon></div>');
         }
         buttonElement.removeClass('disabled');
     }
-    else{
-        buttonElement.html( `<div class="d-flex justify-content-center align-items-center">
+    else {
+        buttonElement.html(`<div class="d-flex justify-content-center align-items-center">
             <div class="spinner-border text-${loadingColor} spinner-border-sm" role="status">
             <span class="sr-only">${trans('Loading...')}</span>
             </div>
-            ${(buttonContent !== false ? '<div class="ml-2">'+buttonContent+'</div>' : '')}
+            ${(buttonContent !== false ? '<div class="ml-2">' + buttonContent + '</div>' : '')}
             </div>`);
         buttonElement.addClass('disabled');
     }
@@ -481,12 +479,12 @@ function updateButtonState(state, buttonElement, buttonContent = false, loadingC
  * @param callback
  */
 // eslint-disable-next-line no-unused-vars
-function sendEmailConfirmation(callback = function(){}){
-    $('.unverified-email-box').attr('onClick','');
+function sendEmailConfirmation(callback = function () { }) {
+    $('.unverified-email-box').attr('onClick', '');
     $.ajax({
-        url:app.baseUrl +'/resendVerification',
-        type:'POST',
-        success : function(){
+        url: app.baseUrl + '/resendVerification',
+        type: 'POST',
+        success: function () {
             $('.unverified-email-box').fadeOut();
             launchToast('success', trans('Success'), trans('Confirmation email sent. Please check your inbox and spam folder.'), 'now');
             callback();
@@ -502,7 +500,7 @@ function sendEmailConfirmation(callback = function(){}){
  * @returns {FormData}
  */
 // eslint-disable-next-line no-unused-vars
-function prepBeaconDataSample(){
+function prepBeaconDataSample() {
     var fd = new FormData();
     fd.append('prevPage', PostsPaginator.currentPage);
     return fd;
@@ -524,7 +522,7 @@ function bootstrapDetectBreakpoint() {
     for (const breakpointName of breakpointNames) {
         i--;
         if (window.matchMedia("(min-width: " + breakpointValues[breakpointName] + ")").matches) {
-            return {name: breakpointName, index: i};
+            return { name: breakpointName, index: i };
         }
     }
     return null;
@@ -534,11 +532,11 @@ function bootstrapDetectBreakpoint() {
  * Increments the notifications badge by 1 or adds it if it doesnt exist
  */
 function incrementNotificationsCount(selector, value = 1) {
-    if(parseInt($(selector).html()) + (value) > 0){
+    if (parseInt($(selector).html()) + (value) > 0) {
         $(selector).removeClass('d-none');
         $(selector).html(parseInt($(selector).html()) + (value));
     }
-    else{
+    else {
         $(selector).addClass('d-none');
     }
 }
@@ -548,27 +546,27 @@ function incrementNotificationsCount(selector, value = 1) {
  */
 function passesMinMaxPPVContentCreationLimits(price) {
     let hasError = false;
-    if(parseInt(price) < app.min_ppv_content_price){
+    if (parseInt(price) < app.min_ppv_content_price) {
         hasError = true;
     }
-    if(parseInt(price) > app.max_ppv_content_price){
+    if (parseInt(price) > app.max_ppv_content_price) {
         hasError = true;
     }
-    if(price.length <= 0){
+    if (price.length <= 0) {
         hasError = true;
     }
     return !hasError;
 }
 
-function showDialog(dialogID){
+function showDialog(dialogID) {
     $('#' + dialogID).modal('show');
 }
 
-function hideDialog(dialogID){
+function hideDialog(dialogID) {
     $('#' + dialogID).modal('hide');
 }
 
-function getWebsiteFormattedAmount(amount){
+function getWebsiteFormattedAmount(amount) {
     let currencyPosition = app.currencyPosition;
     let currency = app.currencySymbol;
 
@@ -581,7 +579,7 @@ function getWebsiteFormattedAmount(amount){
 document.addEventListener('DOMContentLoaded', function () {
     // Toggle dropdown on click
     document.querySelector('.dropdown-menu-header').addEventListener('click', function () {
-        document.getElementById('myDropdown').style.display = 
+        document.getElementById('myDropdown').style.display =
             (document.getElementById('myDropdown').style.display === 'block') ? 'none' : 'block';
     });
 
@@ -590,7 +588,7 @@ document.addEventListener('DOMContentLoaded', function () {
         if (!event.target.matches('.dropdown-menu-header')) {
             var dropdown = document.getElementById('myDropdown');
             if (dropdown.style.display === 'block') {
-                dropdown.style.display = 'none';    
+                dropdown.style.display = 'none';
             }
         }
     });
@@ -598,42 +596,42 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
 // js for dropdown filter
-$(document).ready(function(){
-    $("#searchInput").on("keyup", function() {
+$(document).ready(function () {
+    $("#searchInput").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $("#myDropdown li").filter(function() {
+        $("#myDropdown li").filter(function () {
             $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
         });
     });
 });
- 
+
 
 
 document.addEventListener('DOMContentLoaded', function () {
     const accordionItems = document.querySelectorAll('.accordion-item');
 
     accordionItems.forEach(function (item) {
-      const header = item.querySelector('.accordion-header');
+        const header = item.querySelector('.accordion-header');
 
-      header.addEventListener('click', function () {
-        item.classList.toggle('active');
-        const content = item.querySelector('.accordion-content');
-        if (item.classList.contains('active')) {
-          content.style.display = 'block';
-        } else {
-          content.style.display = 'none';
-        }
-        header.classList.toggle('rotate-arrow'); // Toggle the rotate class
-      });
+        header.addEventListener('click', function () {
+            item.classList.toggle('active');
+            const content = item.querySelector('.accordion-content');
+            if (item.classList.contains('active')) {
+                content.style.display = 'block';
+            } else {
+                content.style.display = 'none';
+            }
+            header.classList.toggle('rotate-arrow'); // Toggle the rotate class
+        });
     });
-  });
+});
 
 
 
 //   js for wiki and post tabs
 
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     var lastSelectedContent = localStorage.getItem('lastSelectedContent');
 
     var defaultContentType = lastSelectedContent || 'post';
@@ -661,12 +659,12 @@ function showContent(contentType) {
 
 
 // js for intrest popup sign up
-document.getElementById('comunity_theameClick').addEventListener('click', function() {
+document.getElementById('comunity_theameClick').addEventListener('click', function () {
     // Get references to all elements with the 'side-bar-heading' class
     var addThereDivs = document.querySelectorAll('.side-bar-heading');
 
     // Loop through each element
-    addThereDivs.forEach(function(addThereDiv) {
+    addThereDivs.forEach(function (addThereDiv) {
         // Check if the div already has the 'bg-white' class
         if (addThereDiv.classList.contains('bg-white')) {
             // If it has, remove the 'bg-white' class
@@ -680,11 +678,11 @@ document.getElementById('comunity_theameClick').addEventListener('click', functi
 
 function execCommand(command, value = null) {
     document.execCommand(command, false, value);
-  }
-  
+}
 
 
-  function openDialog() {
+
+function openDialog() {
     document.getElementById("dialog-container").style.display = "flex";
 }
 
@@ -709,17 +707,64 @@ function showTab(tabId) {
     // Hide all tab content
     var tabContents = document.getElementsByClassName('profile-history-content');
     for (var i = 0; i < tabContents.length; i++) {
-      tabContents[i].style.display = 'none';
+        tabContents[i].style.display = 'none';
     }
-  
+
     // Display the selected tab content
     document.getElementById(tabId).style.display = 'block';
-  }
-  
-  // Call the showTab function with the default tab ID at page load
-  document.addEventListener('DOMContentLoaded', function () {
+}
+
+// Call the showTab function with the default tab ID at page load
+document.addEventListener('DOMContentLoaded', function () {
     // Assuming 'defaultTab' is the ID of the tab you want to be active by default
     showTab('overview-history');
-  });
+});
 
-// js for open layout type 
+function toggleDropdownLayout() {
+    var dropdown = document.querySelector('.dropdown');
+    dropdown.classList.toggle('active');
+}
+
+function selectOption(iconName, clickedAnchor) {
+    var defaultOption = document.getElementById('defaultOption');
+    defaultOption.innerHTML = '<span class="material-symbols-outlined">' + iconName + '</span>';
+
+ 
+    var allAnchors = document.querySelectorAll('.dropdown-content a');
+    allAnchors.forEach(function (anchor) {
+        anchor.classList.remove('active');
+    });
+
+ 
+    clickedAnchor.classList.add('active');
+
+   
+    let section = document.querySelector('#top-wrapper-section');
+
+    
+    section.classList.remove('card-layout', 'classic-layout', 'compact-layout');
+
+ 
+    let card;
+    if (iconName === 'bottom_sheets') {
+        card = 'card-layout';
+    } else if (iconName === 'density_medium') {
+        card = 'classic-layout';
+    } else if (iconName === 'density_small') {
+        card = 'compact-layout';
+    }
+
+   
+    section.classList.add(card);
+
+    var dropdown = document.querySelector('.dropdown');
+    dropdown.classList.remove('active');
+
+    document.querySelector('.dropdown-content').addEventListener('click', function (event) {
+        event.stopPropagation();
+    });
+}
+
+
+
+

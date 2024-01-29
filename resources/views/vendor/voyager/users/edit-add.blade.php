@@ -27,9 +27,9 @@
                 <div class="panel panel-bordered">
                     <!-- form start -->
                     <form role="form"
-                            class="form-edit-add"
-                            action="{{ $edit ? route('voyager.'.$dataType->slug.'.update', $dataTypeContent->getKey()) : route('voyager.'.$dataType->slug.'.store') }}"
-                            method="POST" enctype="multipart/form-data">
+                          class="form-edit-add"
+                          action="{{ $edit ? route('voyager.'.$dataType->slug.'.update', $dataTypeContent->getKey()) : route('voyager.'.$dataType->slug.'.store') }}"
+                          method="POST" enctype="multipart/form-data">
                         <!-- PUT Method if we are editing -->
                         @if($edit)
                             {{ method_field("PUT") }}
@@ -85,7 +85,13 @@
                                     {{ $row->slugify }}
                                     <label class="control-label" for="name">{{ $row->getTranslatedAttribute('display_name') }}</label>
                                     @include('voyager::multilingual.input-hidden-bread-edit-add')
-                                    @if (isset($row->details->view))
+                                    @if ($row->field == 'status' && ($edit || $add))
+                                        <!-- Add status dropdown for editing and adding -->
+                                        <select class="form-control" name="{{ $row->field }}">
+                                            <option value="unblocked" {{ $dataTypeContent->{$row->field} == 'unblocked' ? 'selected' : '' }}>Unblocked</option>
+                                            <option value="blocked" {{ $dataTypeContent->{$row->field} == 'blocked' ? 'selected' : '' }}>Blocked</option>
+                                        </select>
+                                    @elseif (isset($row->details->view))
                                         @include($row->details->view, ['row' => $row, 'dataType' => $dataType, 'dataTypeContent' => $dataTypeContent, 'content' => $dataTypeContent->{$row->field}, 'action' => ($edit ? 'edit' : 'add'), 'view' => ($edit ? 'edit' : 'add'), 'options' => $row->details])
                                     @elseif ($row->type == 'relationship')
                                         @include('vendor.voyager.bread.relationship', ['options' => $row->details])

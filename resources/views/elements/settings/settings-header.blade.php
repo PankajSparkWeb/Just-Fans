@@ -1,6 +1,6 @@
 @if($type == 'generic')
     <div class="mt-3 ml-3">
-        <h5 class="text-bold {{(Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? '' : 'text-dark-r') : (Cookie::get('app_theme') == 'dark' ? '' : 'text-dark-r'))}}">{{__('Settings')}}</h5>
+        <h5 class="text-bold setting-top-heading {{(Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? '' : 'text-dark-r') : (Cookie::get('app_theme') == 'dark' ? '' : 'text-dark-r'))}}">{{__('Settings')}}</h5>
         <h6 class="mt-2 text-muted">{{__('Manage your account')}}</h6>
     </div>
 @else

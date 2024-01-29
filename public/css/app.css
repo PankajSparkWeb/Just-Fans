@@ -105,6 +105,126 @@ div#mySelectBox .interest {
   
 /*raaj css chnages starts here*/
 
+
+.top-profile-wrapper {
+    margin-top: 0px!important;
+    margin: auto;
+    padding: 100px 10px 45px 10px;
+}
+.inner-setting-wrapper {
+    display: block;
+}
+.setting-wrapper {
+    background: #fff;
+}
+.tab-top-menu .list-group-flush {
+    border: 0px!important;
+}
+.tab-top-menu .list-group-flush a {
+    border: 0px!important;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'IBM Plex Sans';
+}
+.tab-top-menu .list-group-flush a.active {
+    background: #fff!important;
+    border-bottom: 3px solid #0079d3!important;
+}
+
+.tab-top-menu .list-group-flush {
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    width: 100%;
+    border-top: 0px!important;
+}
+.setting-tab-top {
+    width: 100%;
+    max-width: 1200px!important;
+    margin: auto!important;
+    padding: 0px;
+}
+
+
+
+.compact-layout .upvote-downvote span {
+    margin: 0px;
+}
+.compact-layout .post-header-top a{
+    font-size:14px!important;
+    font-weight: 600!important;
+}
+ 
+.compact-layout .post-para h1,h2,h3,h4,h5,h6{
+    font-size:14px!important;
+    font-weight: 600!important;
+}
+.compact-layout .post-para p,a{
+    font-size:12px!important;
+    font-weight: 600!important;
+}
+.classic-layout .without-login-show {
+    row-gap: 0px!important;
+}
+.compact-layout .without-login-show {
+    row-gap: 0px!important;
+}
+.classic-layout .upvote-downvote span {
+    margin: 0px;
+}
+.post-layout button#defaultOption {
+    background: unset;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0px;
+}
+.post-layout span.material-symbols-outlined {
+    height: 22px;
+    width: 22px;
+    margin: 0px;
+    color: #878a8c;
+}
+.post-layout .dropdown-content a {
+    background: #fff!important;
+    column-gap: 14px;
+    color: #878a8c;
+    font-weight: 500;
+    font-size: 14px;
+    padding: 10px;
+}
+.post-layout .dropdown-content a:not(:last-child){
+     border-bottom: 1px solid #ccc;
+}
+.post-layout a.layout.active {
+    background: #fff!important;
+}
+
+.post-layout {
+    height: 22px;
+    width: 22px;
+    display: flex;
+}
+.post-layout .dropdown {
+    height: 20px;
+    width: 20px;
+}
+
+#top-wrapper-section.classic-layout {
+    max-width: 100%!important;
+    margin: unset!important;
+    width: 100%!important;
+}
+.classic-layout .feed-top-wrapper {
+    grid-template-columns: 85% 1fr!important;
+}
+.compact-layout .feed-top-wrapper {
+    grid-template-columns: 85% 1fr!important;
+}
+#top-wrapper-section.compact-layout {
+    max-width: 100%!important;
+    margin: unset!important;
+    width: 100%!important;
+}
 .post-text-area-main {
     flex-grow: 1;
 }
@@ -2002,4 +2122,66 @@ footer .ion-icon-wrapper{
 
 .n-mt-2{
     margin-top:-2rem;
+}
+
+
+
+
+/* Layout css */
+
+/* / Style for the dropdown / */
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* / Style for the dropdown button */
+.dropbtn {
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+/* / Style for the dropdown content / */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 52px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+    z-index: 1;
+    right: -96px;
+    top: 24px;
+    border: 1px solid #cccccc63;
+    border-radius: 4px;
+}
+
+/* / Style for the dropdown options / */
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    display: flex;
+    align-items: center;
+}
+
+/* / Change color on hover / */
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+/* / Show the dropdown content when the dropdown button is clicked / */
+.dropdown.active .dropdown-content {
+    display: block;
+}
+
+/* / Style for the Material Symbols Outlined icons / */
+.material-symbols-outlined {
+    font-family: 'Material Symbols Outlined', sans-serif;
+    font-size: 24px;
+    margin-right: 10px;
 }
