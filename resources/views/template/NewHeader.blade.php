@@ -1,13 +1,3 @@
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@500&display=swap" rel="stylesheet">
-
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link
-    href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500&family=Noto+Sans:wght@200;400&display=swap"
-    rel="stylesheet">
-
 
 {{-- Header Section start --}}
 <nav id="New-Header"
@@ -81,7 +71,7 @@
                         </a>
                     </div>
 
-
+{{-- 
                     <div class="massage-btn-header">
                         <a href="{{ route('my.messenger.get') }}"
                             class="nav-link {{ Route::currentRouteName() == 'my.messenger.get' ? 'active' : '' }} h-pill h-pill-primary d-flex justify-content-between">
@@ -99,7 +89,7 @@
                                 </div>
                             </div>
                         </a>
-                    </div>
+                    </div> --}}
 
 
                     <div class="header-notifaction-btn">

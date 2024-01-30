@@ -22,8 +22,8 @@ class SearchController extends Controller
         'top',
         'latest',
         'people',
-        'photos',
-        'videos',
+        // 'photos',
+        // 'videos',
     ];
 
     public function __construct()

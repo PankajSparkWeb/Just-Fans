@@ -658,7 +658,7 @@ function showContent(contentType) {
 
 
 
-// js for intrest popup sign up
+// js for intrest cocmunity
 document.getElementById('comunity_theameClick').addEventListener('click', function () {
     // Get references to all elements with the 'side-bar-heading' class
     var addThereDivs = document.querySelectorAll('.side-bar-heading');

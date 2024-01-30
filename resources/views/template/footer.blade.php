@@ -5,10 +5,10 @@
                 <a href="{{route('contact')}}" class="text-dark-r text-hover text-lg m-2">
                     {{__('Contact page')}}
                 </a>
-                <a href="{{route('about-us')}}" class="text-dark-r text-hover text-lg m-2">
+                <a href="{{ url('/pages/about-us') }}" class="text-dark-r text-hover text-lg m-2">
                     {{__('About Us')}}
                 </a>
-                <a href="{{route('content-policy')}}" class="text-dark-r text-hover text-lg m-2">
+                <a href="{{ url('/pages/content-policy') }}" class="text-dark-r text-hover text-lg m-2">
                     {{__('Content Policy')}}
                 </a>
                 @foreach(GenericHelper::getFooterPublicPages() as $page)

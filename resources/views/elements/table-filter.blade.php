@@ -3,8 +3,8 @@
                         <span  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="h-pill h-pill-primary rounded search-back-button d-flex justify-content-center align-items-center" data-toggle="collapse" href="#colappsableFilters" role="button" aria-expanded="false" aria-controls="colappsableFilters">
                              @include('elements.icon',['icon'=>'filter-outline','variant'=>'medium','centered'=>true])
                         </span>
-        <div class="dropdown-menu dropdown-menu-right mt-1">
-            <form class="px-4 py-3 card shadow-sm">
+        <div class="dropdown-menu dropdown-menu-right mt-1 profile-popup-form-wrapper">
+            <form class="px-4 py-3 card shadow-sm profile-popup-form" id='profile-popup-form'>
                 <div class="form-group">
                     <label for="exampleDropdownFormEmail1">Email address</label>
                     <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com">
@@ -19,7 +19,7 @@
                         Remember me
                     </label>
                 </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                <button type="submit" class="btn btn-primary setting-save-button">Sign in</button>
             </form>
         </div>
     </div>

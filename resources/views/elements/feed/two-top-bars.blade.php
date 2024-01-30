@@ -4,16 +4,21 @@
         <div class="container">
             <div class="top-bar-area">
                 <div class="top-white-bar-content">
-                    <div class="today_i_learnd_logo"><img src="img\logos\TodayLearndLogo.png" alt="IMG"></div>
+                    <div class="today_i_learnd_logo">
+                        <img src="{{ asset('img/logos/TodayLearndLogo.png') }}" alt="Img">
+                    </div>
                     <div class="today_i_learnd_text_JoinBtn">
                         <div class="today_i_learnd_text">
                             <h2>Today I Learned (TIL)</h2>
                             <p>r/todayilearned</p>
                         </div>
+                        @if (Auth::check())
+                        
+                        @else
                         <div class="today_i_learnd_Join&Bell">
-                            <a href="">Joined</a>
+                            <a href="{{ route('login') }}">Join</a>
                         </div>
-
+                        @endif
                     </div>
                 </div>
                 <div class="top-white-bar-btns">

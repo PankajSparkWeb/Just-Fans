@@ -56,12 +56,12 @@
                 </div>
             </div>
             <div class="col-md-8 col-lg-9 mb-5 mb-lg-0 min-vh-100 border-left border-right settings-content mt-1 mt-md-0 pl-md-0 pr-md-0 form-bottom-setting">
-                <div class="ml-3 d-none d-md-flex justify-content-between">
-                    <div>
+                <div class="ml-3 d-none d-md-flex justify-content-between setting-margin-remove">
+                    <div class='setting-inner-flex'>
                         <h5 class="text-bold mt-0 mt-md-3 mb-0 setting-top-heading {{(Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? '' : 'text-dark-r') : (Cookie::get('app_theme') == 'dark' ? '' : 'text-dark-r'))}}">{{ ucfirst(__($activeSettingsTab))}}</h5>
-                        <h6 class="mt-2 text-muted">{{__($currentSettingTab['heading'])}}</h6>
+                        {{-- <h6 class="mt-2 text-muted">{{__($currentSettingTab['heading'])}}</h6> --}}
                     </div>
-                   @include('elements.table-filter')
+                   {{-- @include('elements.table-filter') --}}
                 </div>
                 <hr class="{{in_array($activeSettingsTab, ['subscriptions','payments']) ? 'mb-0' : ''}} d-none d-md-block mt-2">
                 <div class="{{in_array($activeSettingsTab, ['subscriptions','payments', 'referrals']) ? '' : 'px-4 px-md-3'}}">

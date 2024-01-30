@@ -8,7 +8,7 @@
 
   <div class="container justify-content-between align-items-center">
        <div class="z-index-3 avatar-holder profile-avtar-holder">
-           <img src="{{$user->avatar}}" class="rounded-circle">
+        <img src="{{ asset($user->avatar) }}" class="rounded-circle" alt="User Avatar">
        </div>
        <div>
            @if(!Auth::check() || Auth::user()->id !== $user->id)

@@ -7,7 +7,7 @@
             @endif
         @endforeach
         <div class="d-flex flex-row-reverse mt-1 mb-1 mr-4">
-            {{ $notifications->onEachSide(1)->links() }}
+            
         </div>
     @else
         <div class="py-2">
@@ -21,4 +21,7 @@
             </div>
         </div>
     @endif
+</div>
+<div class="posts-pagination">
+    {{ $notifications->onEachSide(1)->links() }}
 </div>

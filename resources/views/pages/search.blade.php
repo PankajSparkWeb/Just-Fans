@@ -64,6 +64,8 @@
                         </span>
                     @endif
                 </div>
+                <div class="d-flex">
+                    <div class="search-area container-fluid">
                 <div class="py-2 m-pt-70">
                     @if($activeFilter == 'people')
                         <div class="mobile-search-filter collapse {{$searchFilterExpanded ? 'show' : ''}}"  id="colappsableFilters">
@@ -129,10 +131,11 @@
                     </div>
                     @include('elements.feed.posts-loading-spinner')
                 @endif
-
+            </div>
             
-            {{-- <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block">
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block">
                 <div class="search-widgets">
+                    @include('template.sideBarForSearch')
                     @include('elements.feed.suggestions-box',['profiles'=>$suggestions,'isMobile' => false])
                     @if(getSetting('custom-code-ads.sidebar_ad_spot'))
                         <div class="mt-4">
@@ -140,7 +143,8 @@
                         </div>
                     @endif
                 </div>
-            </div> --}}
+            </div>
+        </div>
         </div>
         @include('elements.checkout.checkout-box')
     </div>

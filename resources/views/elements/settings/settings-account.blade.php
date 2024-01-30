@@ -40,6 +40,6 @@
             </span>
         @endif
     </div>
-    <button class="btn btn-primary btn-block rounded mr-0" type="submit">{{__('Save')}}</button>
+    <button class="btn btn-primary btn-block rounded mr-0 setting-save-button" type="submit">{{__('Save')}}</button>
 
 </form>

@@ -47,12 +47,12 @@
 
             <!-- Interest popup -->
             @php
-            // Use the optional() function to handle null safely
-            $userInterests = optional(Auth::user())->interests;            
-            @endphp            
-            @if ($userInterests->isEmpty())                
+             // Use the optional() function to handle null safely 
+             $userInterests = optional(Auth::user())->interests;         
+             @endphp         
+           @if ($userInterests->isEmpty())  
                 @include('elements.post-textarea.popup');
-            @endif
+             @endif
          
             
             <div class="row feed-top-wrapper" id='main-page-chnages'>

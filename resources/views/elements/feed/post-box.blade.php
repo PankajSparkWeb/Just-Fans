@@ -407,12 +407,12 @@
 
 
     <!-- Start interst Need to remove code-->
-    {{ $post->id }}
+    {{-- {{ $post->id }}
     @if ($post->interests->isNotEmpty())
         @foreach ($post->interests as $interest)
             {{ $interest->name }} ,
         @endforeach
-    @endif
+    @endif --}}
     <!-- END interst Need to remove code-->
 
     @if (

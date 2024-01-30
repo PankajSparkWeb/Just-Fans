@@ -61,7 +61,7 @@
         <div class="dropzone-previews dropzone w-100 ppl-0 pr-0 pt-1 pb-1 border rounded"></div>
         <small class="form-text text-muted mb-2">{{__("Allowed file types")}}: {{str_replace(',',', ',AttachmentHelper::filterExtensions('manualPayments'))}}. {{__("Max size")}}: 4 {{__("MB")}}.</small>
         <div class="d-flex flex-row-reverse">
-            <button class="btn btn-primary mt-2">{{__("Submit")}}</button>
+            <button class="btn btn-primary mt-2 setting-save-button">{{__("Submit")}}</button>
         </div>
     @endif
     @if(Auth::user()->email_verified_at && Auth::user()->birthdate && (Auth::user()->verification && Auth::user()->verification->status == 'verified'))

@@ -2,7 +2,7 @@
     <div class="card py-3 px-3">
         <div class="custom-control custom-switch custom-switch">
             <input type="checkbox" class="custom-control-input" id="public_profile" {{Auth::user()->public_profile ? 'checked' : ''}}>
-            <label class="custom-control-label" for="public_profile">{{__('Is public account')}}</label>
+            <label class="custom-control-label setting-toggle-icon" for="public_profile">{{__('Is public account')}}</label>
         </div>
         <div class="mt-2">
             <span>{{__('Having your profile set to private means:')}}</span>
@@ -17,7 +17,7 @@
         <div class="card py-3 px-3  mt-3">
             <div class="custom-control custom-switch custom-switch">
                 <input type="checkbox" class="custom-control-input" id="open_profile" {{Auth::user()->open_profile ? 'checked' : ''}}>
-                <label class="custom-control-label" for="open_profile">{{__('Open profile')}}</label>
+                <label class="custom-control-label setting-toggle-icon" for="open_profile">{{__('Open profile')}}</label>
             </div>
             <div class="mt-2">
                 <span>{{__('Having your profile set to open means:')}}</span>
@@ -36,8 +36,8 @@
             <div class="">
                 <div class="custom-control custom-switch custom-switch">
                     <div class="ml-3">
-                        <input type="checkbox" class="custom-control-input" id="enable_geoblocking" {{Auth::user()->enable_geoblocking ? 'checked' : ''}}>
-                        <label class="custom-control-label" for="enable_geoblocking">{{__('Enable Geo-blocking')}}</label>
+                        <input type="checkbox" class="custom-control-input notification-checkbox" id="enable_geoblocking" {{Auth::user()->enable_geoblocking ? 'checked' : ''}}>
+                        <label class="custom-control-label setting-toggle-icon" for="enable_geoblocking">{{__('Enable Geo-blocking')}}</label>
                     </div>
                     <div class="ml-3 mt-2">
                         <small class="fa-details-label">{{__("If enabled, visitors from certain countries will be restricted access.")}}</small>
@@ -64,8 +64,8 @@
 
             <div class="custom-control custom-switch custom-switch">
                 <div class="ml-3">
-                    <input type="checkbox" class="custom-control-input" id="enable_2fa" {{Auth::user()->enable_2fa ? 'checked' : ''}}>
-                    <label class="custom-control-label" for="enable_2fa">{{__('Enable email 2FA')}}</label>
+                    <input type="checkbox" class="custom-control-input notification-checkbox" id="enable_2fa" {{Auth::user()->enable_2fa ? 'checked' : ''}}>
+                    <label class="custom-control-label setting-toggle-icon" for="enable_2fa">{{__('Enable email 2FA')}}</label>
                 </div>
                 <div class="ml-3 mt-2">
                     <small class="fa-details-label">{{__("If enabled, access from new devices will be restricted until verified.")}}</small>
