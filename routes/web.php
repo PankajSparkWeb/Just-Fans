@@ -166,6 +166,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
     // Feed routes
     Route::get('/feed', ['uses' => 'FeedController@index', 'as'   => 'feed']);
     Route::get('/feed/hot', ['uses' => 'FeedController@hotFeed', 'as'   => 'feed.hotFeed']);
+    Route::get('/feed/followedPeouple', ['uses' => 'FeedController@hotFeed', 'as'   => 'feed.followedPeouple']);
     Route::get('/feed/posts', ['uses' => 'FeedController@getFeedPosts', 'as'   => 'feed.posts']);
 
     // File uploader routes
@@ -189,6 +190,7 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
         Route::post('/pin', ['uses' => 'PostsController@updatePostPin', 'as'   => 'pin']);
         Route::delete('/delete', ['uses' => 'PostsController@deletePost', 'as'   => 'delete']);
         Route::post('/{postId}/share', ['uses' => 'PostsController@sharePost', 'as'   => 'share']);
+        Route::post('/{postId}/learnedPost', ['uses' => 'PostsController@learnedPost', 'as'   => 'learnedPost']);
     });
 
 

@@ -144,10 +144,24 @@
                     </span>
                 @endif
             </div>
+            <div class="post-link-and-tag">
+                <div class="post-link-section">
             @if ($post->external_post_link)
             <a href="{{ $post->external_post_link }}" target="_blank"
                 class='view_ext_link'>{{ $post->external_post_link }}</a>
         @endif
+    </div>
+        <div class="post-catogiry-section">
+            {{-- Code for show Post id and interest categorey in post --}}
+             {{-- {{ $post->id }} --}}
+             @if ($post->interests->isNotEmpty())
+                 @foreach ($post->interests as $interest)
+                     {{ $interest->name }} ,
+                 @endforeach
+             @endif 
+             <!-- END interst Need to remove code-->
+         </div>
+        </div>
             <div class="post-footer mt-3 pl-3 pr-3 post-bottom-footer">
                 <div class="footer-actions d-flex justify-content-between">
                     <div class="d-flex footer-icon-flex-wrap">
@@ -271,26 +285,30 @@
                                 <span class='post-span-tag'>share</span>
                             </a>
                            
-                            <div class="dropdown-menu">
+                            <div class="dropdown-menu share-popup-button">
                                 <!-- Dropdown menu links -->
                                 <a class="dropdown-item" href="javascript:void(0)"
                                     onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a>
                                    
 
-                                <!-- Example in a Blade view -->
-                                <form action="{{ route('posts.share', ['postId' => $post->id]) }}" method="post">
-                                    @csrf
-                                    <button type="submit">Share</button>
-                                </form>
-
+                                @if (auth()->check())
+                                    <!-- Example in a Blade view -->
+                                    <form action="{{ route('posts.share', ['postId' => $post->id]) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class='share-submit-button'>Share</button>
+                                    </form>
+                                @endif
+                                    
                             </div>
                         </div>
+                        
                         <div
                             class="dropdown exclude-child {{ GenericHelper::getSiteDirection() == 'rtl' ? 'dropright' : 'dropleft' }}">
                             <a class="post-top-third-icon btn btn-sm text-dark-r text-hover btn-outline-{{ Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? 'dark' : 'light') : (Cookie::get('app_theme') == 'dark' ? 'dark' : 'light') }} dropdown-toggle px-2 py-1 m-0"
                                 data-toggle="dropdown" href="#" role="button" aria-haspopup="true"
                                 aria-expanded="false">
-                                @include('elements.icon', ['icon' => 'ellipsis-horizontal-outline'])
+                                ...
+                                {{-- @include('elements.icon', ['icon' => 'ellipsis-horizontal-outline']) --}}
                             </a>
                             <div class="dropdown-menu">
                                 <!-- Dropdown menu links -->
@@ -331,6 +349,19 @@
                                 @endif
                             </div>
                         </div>
+                        @if (auth()->check())
+                            @if(! auth()->user()->learnedPost()->where('post_id', $post->id)->exists())
+                                <div class="learned-btn">
+                                    {{-- <a href="">Learned</a> --}}
+                                    <form action="{{ route('posts.learnedPost', ['postId' => $post->id]) }}" method="post">
+                                        @csrf
+                                        <button type="submit" class='share-submit-button'>Learned</button>
+                                    </form>
+                                </div>
+                            @else
+                            <!-- already Read -->    
+                            @endif
+                        @endif
 
                     </div>
                     <div class="mt-0 d-flex align-items-center justify-content-center post-count-details">
@@ -405,15 +436,6 @@
         </div>
     @endif
 
-
-    <!-- Start interst Need to remove code-->
-    {{-- {{ $post->id }}
-    @if ($post->interests->isNotEmpty())
-        @foreach ($post->interests as $interest)
-            {{ $interest->name }} ,
-        @endforeach
-    @endif --}}
-    <!-- END interst Need to remove code-->
 
     @if (
         $post->isSubbed ||

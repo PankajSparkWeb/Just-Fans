@@ -14,13 +14,14 @@
     <div class="tabs-and-layout d-flex justify-content-between bg-white align-items-center feed-top-dfrt-sec">
         <div class="option-categery d-flex justify-content-between">
         <div class="hot-posts">
-            <a class="posts_top_nav {{ Route::currentRouteName() == 'feed.hotFeed' ? 'active' : '' }}" href="{{route('feed.hotFeed')}}">Hot</a>
+            <a class="posts_top_nav {{ Route::currentRouteName() == 'feed.hotFeed' ? 'active' : '' }}" href="{{route('feed.hotFeed')}}">Explorer</a>
         </div>
         <div class="new-posts">
-            <a class="posts_top_nav {{ Route::currentRouteName() == 'feed' ? 'active' : '' }}" href="{{route('feed')}}">New</a>            
+            <a class="posts_top_nav {{ Route::currentRouteName() == 'feed' ? 'active' : '' }}" href="{{route('feed')}}">My Interested</a>            
         </div>
         <div class="top-posts">
-            <a href="">Top</a>
+            
+            <a class="posts_top_nav {{ Route::currentRouteName() == 'feed.followedPeouple' ? 'active' : '' }}" href="{{route('feed.followedPeouple')}}">People who followed</a>  
         </div>
         <div class="more-btn"></div>
     </div>

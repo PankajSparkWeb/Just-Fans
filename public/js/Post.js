@@ -84,14 +84,14 @@ var Post = {
         $.ajax({
             type: 'POST',
             data: {
-                'message': postElement.find('.textarea-comment-area .ql-editor').html(),
+                'message': postElement.find('.textarea-comment-area').val(),
                 'post_id': postID,
                 'comment_parent_id': comment_parent_id
             },
             url: app.baseUrl+'/posts/comments/add',
             success: function (result) {
                 if(result.success){
-                    postElement.find('.textarea-comment-area .ql-editor').empty();
+                    postElement.find('.textarea-comment-area').val();
 
                     launchToast('success',trans('Success'),trans('Comment added'));
                     postElement.find('.no-comments-label').addClass('d-none');

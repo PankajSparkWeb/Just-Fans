@@ -72,7 +72,11 @@
             @if(Auth::check())
             <li>
                 <a class="nav-item nav-link {{ $activeTab == 'comments' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username, 'tab' => 'comments']) }}">Comments</a></li>
-            <li><a class="nav-item nav-link {{ $activeTab == 'share' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username, 'tab' => 'share']) }}">Share</a>
+            <li>
+                <a class="nav-item nav-link {{ $activeTab == 'share' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username, 'tab' => 'share']) }}">Share</a>
+            </li>
+            <li>
+                <a class="nav-item nav-link {{ $activeTab == 'learned' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username, 'tab' => 'learned']) }}">learned</a>
             </li>
             @else
                 
@@ -198,9 +202,16 @@
                     <script>window.location = "{{ route('login') }}";</script>
                     @endif
                 @elseif($activeTab == 'share')
-                    <!-- Display likes history content -->
+                    <!-- Display Share history content -->
                     @if(Auth::check())
                     @include('elements.profile.shareHistory', ['history' => $shareHistory])
+                    @else
+                    <script>window.location = "{{ route('login') }}";</script>
+                    @endif
+                @elseif($activeTab == 'learned')
+                    <!-- Display Learned history content -->
+                    @if(Auth::check())
+                    @include('elements.profile.learnedHistory', ['history' => $learnedHistory])
                     @else
                     <script>window.location = "{{ route('login') }}";</script>
                     @endif

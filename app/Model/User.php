@@ -2,10 +2,12 @@
 
 namespace App;
 
+use App\Http\Controllers\UserController;
 use App\Model\Post;
 use App\Model\Subscription;
 use App\Model\UserList;
 use App\Model\Newinterest;
+use App\Model\UserlearnedPost;
 use App\Model\UserSharedPost;
 use App\Providers\GenericHelperServiceProvider;
 use Carbon\Carbon;
@@ -212,5 +214,10 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
     public function sharedPosts()
     {
         return $this->hasMany(UserSharedPost::class);
+    }
+
+    public function learnedPost()
+    {
+        return $this->hasMany(UserlearnedPost::class)->with('post.interests');        
     }
 }

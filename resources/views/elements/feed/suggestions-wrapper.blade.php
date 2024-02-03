@@ -1,9 +1,9 @@
 <div class="suggestions-content">
     @if(count($profiles) > 0)
     <div class="swiper-container mySwiper">
-        <div class="swiper-wrapper">
+        <div class="swiper-wrapper swiper-slider-flex-wrapper">
             @foreach ($profiles->chunk(GenericHelper::isMobileDevice() ? 2 : (int)getSetting('feed.feed_suggestions_card_per_page')) as $profilesSet)
-                <div class="swiper-slide px-1">
+                <div class="swiper-slide px-1 swiper-slider-post-wrapper">
                     @foreach ($profilesSet as $k => $profile)
                         @include('elements.feed.suggestion-card',['profile' => $profile ,'isListMode' => false, 'isListManageable' => false])
                     @endforeach

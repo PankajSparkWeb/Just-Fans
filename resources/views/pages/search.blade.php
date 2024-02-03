@@ -48,10 +48,10 @@
 @stop
 
 @section('content')
-    <div class="container">
+    <div class="container search-top-container">
         
             <div class="col-12 col-sm-12 second p-0">
-                <div class="d-flex neutral-bg fixed-top-m px-3 py-3 feed-mobile-search">
+                {{-- <div class="d-flex neutral-bg fixed-top-m px-3 py-3 feed-mobile-search">
                     <span class="h-pill h-pill-primary rounded search-back-button d-flex justify-content-center align-items-center" onClick="Search.goBack()">
                         @include('elements.icon',['icon'=>'arrow-back-outline','variant'=>'medium','centered'=>true])
                     </span>
@@ -63,20 +63,18 @@
                              @include('elements.icon',['icon'=>'filter-outline','variant'=>'medium','centered'=>true])
                         </span>
                     @endif
-                </div>
-                <div class="d-flex">
-                    <div class="search-area container-fluid">
-                <div class="py-2 m-pt-70">
+                </div> --}}
+                <div class="py-2 m-pt-70 search-tab-wrapper">
                     @if($activeFilter == 'people')
                         <div class="mobile-search-filter collapse {{$searchFilterExpanded ? 'show' : ''}}"  id="colappsableFilters">
                             @include('elements.search.search-filters')
                         </div>
                     @endif
-                    <div class="inline-border-tabs mt-3">
-                        <nav class="nav nav-pills nav-justified bookmarks-nav">
+                    <div class="inline-border-tabs mt-3 search-tab-section">
+                        <nav class="nav nav-pills nav-justified bookmarks-nav search-tab-navbar" id='search-tab-navbar'>
                             @foreach($availableFilters as $filter)
                                 <a class="nav-item nav-link {{$filter == $activeFilter ? 'active' : ''}}" href="{{route('search.get',array_merge(['query'=>isset($searchTerm) && $searchTerm ? $searchTerm : ''],['filter'=>$filter]))}}">
-                                    <div class="d-flex justify-content-center text-bold">
+                                    <div class="d-flex justify-content-center text-bold search-text-contain">
                                         <span class="d-md-none">
                                         @switch($filter)
                                                 @case('live')
@@ -107,6 +105,9 @@
                         </nav>
                     </div>
                 </div>
+                <div class="d-flex search-top-flex-wrapper">
+                    <div class="search-area container-fluid search-left-section">
+               
 
                 @include('elements.message-alert',['classes'=>'p-2'])
 
@@ -119,7 +120,7 @@
                 @endif
 
                 @if(isset($users))
-                    <div class="users-box mt-4 users-wrapper">
+                    <div class="users-box mt-4 users-wrapper search-third-tab-user">
                         @include('elements.search.users-wrapper',['posts'=>$users])
                     </div>
                     @include('elements.feed.posts-loading-spinner')
@@ -133,7 +134,7 @@
                 @endif
             </div>
             
-            <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block">
+            <div class="col-12 col-sm-12 col-md-5 col-lg-4 first border-left order-0 pt-4 pb-5 min-vh-100 suggestions-wrapper d-none d-md-block search-sidebar-wraper">
                 <div class="search-widgets">
                     @include('template.sideBarForSearch')
                     @include('elements.feed.suggestions-box',['profiles'=>$suggestions,'isMobile' => false])

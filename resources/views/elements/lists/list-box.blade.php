@@ -1,4 +1,4 @@
-<div class="px-2 list-item">
+<div class="px-2 list-item test">
     <a href="{{route('my.lists.show', ['list_id'=> $list->type !== \App\Model\UserList::FOLLOWERS_TYPE ? $list->id : 'followers'])}}" class="list-link d-flex flex-column pt-2 pb-2 pl-3 rounded">
         <div class="d-flex flex-row-no-rtl justify-content-between">
             <div>

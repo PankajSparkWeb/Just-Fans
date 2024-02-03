@@ -51,7 +51,7 @@
              $userInterests = optional(Auth::user())->interests;         
              @endphp         
            @if ($userInterests->isEmpty())  
-                @include('elements.post-textarea.popup');
+                @include('elements.post-textarea.popup')
              @endif
          
             

@@ -1,4 +1,4 @@
-<div class="suggestion-box card text-white mb-2 border-0 rounded" data-memberuserid="{{$profile->id}}">
+<div class="suggestion-box card text-white mb-2 border-0 rounded swiper-slider-card-wrapper" data-memberuserid="{{$profile->id}}">
     <div style="background: url({{$profile->cover}});" class="card-img suggestion-header-bg"></div>
     <div class="card-img-overlay p-0">
         <div class="h-100 w-100 p-0 m-0 position-absolute z-index-0">

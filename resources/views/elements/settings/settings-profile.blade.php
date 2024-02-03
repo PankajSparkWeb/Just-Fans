@@ -104,23 +104,30 @@
         @endif
     </div>
 
-    <div class="form-group">
+    <div class="form-group interest-lable-ckeckboxes">
 
         <div class="d-flex justify-content-between">
-            <label for="interest">
+            <label class='interset-label' for="interest">
                 {{__('Interest')}}
             </label>            
         </div>
         @php
         $userInterests = Auth::user()->interests->pluck('id')->toArray();
-        @endphp        
+        @endphp
+        <div class="profile-checkboxes-flex">      
         @foreach ($interests as $interest)
-            <label>              
-                <input type="checkbox" name="interests[]" value="{{ $interest->id }}" {{ in_array($interest->id, $userInterests) ? 'checked' : '' }}>
-                {{ $interest->name }}
-    
-            </label><br>
+        <div class='interset-checkboxes-wrapper'>
+            <label class='inteest-all-lables'>              
+                {{$interest->name}}
+            </label>
+            <input class='interset-checbokes' type="checkbox" name="interests[]" value="{{ $interest->id }}" {{ in_array($interest->id, $userInterests) ? 'checked' : '' }}>
+           
+        </div>
         @endforeach
+        </div>
+
+
+        
 
         @if($errors->has('interests'))
             <span class="invalid-feedback" role="alert">
@@ -193,3 +200,43 @@
     </div>
     <button class="btn btn-primary btn-block rounded mr-0 setting-save-button" type="submit">{{__('Save')}}</button>
 </form>
+
+ <script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var checkboxesWrapper = document.querySelectorAll('.interset-checkboxes-wrapper');
+
+    checkboxesWrapper.forEach(function (wrapper) {
+        var checkbox = wrapper.querySelector('.interset-checbokes');
+        var label = wrapper.querySelector('.inteest-all-lables');
+
+        wrapper.addEventListener('click', function (event) {
+            // Check if the click occurred on the checkbox
+            if (event.target === checkbox) {
+                return;
+            }
+
+            checkbox.checked = !checkbox.checked;
+            toggleCheckboxStyles(checkbox, label);
+        });
+
+        // Set initial styles based on checkbox state
+        toggleCheckboxStyles(checkbox, label);
+    });
+
+    function toggleCheckboxStyles(checkbox, label) {
+        var isChecked = checkbox.checked;
+
+        if (isChecked) {
+            checkbox.style.backgroundColor = '#ff0000';
+            label.style.color = '#000000';
+            // Add any other styles you want for the label and checkbox when checked
+        } else {
+            checkbox.style.backgroundColor = '';
+            label.style.color = '';
+            // Reset styles when unchecked
+        }
+    }
+});
+
+
+    </script>

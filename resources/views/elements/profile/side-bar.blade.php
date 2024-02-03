@@ -14,7 +14,7 @@
            @if(!Auth::check() || Auth::user()->id !== $user->id)
                <div class="d-flex flex-row">
                    @if(Auth::check())
-                       <div class="">
+                       {{-- <div class="">
                        <span class="p-pill ml-2 pointer-cursor to-tooltip"
                              @if(!Auth::user()->email_verified_at && getSetting('site.enforce_email_validation'))
                              data-placement="top"
@@ -44,7 +44,7 @@
                        >
                         @include('elements.icon',['icon'=>'cash-outline'])
                        </span>
-                       </div>
+                       </div> --}}
                        
                        <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('Add to your lists')}}" onclick="Lists.showListAddModal();">
                         @include('elements.icon',['icon'=>'list-outline'])
@@ -81,8 +81,8 @@
    </div>
 </div>
 
-   <div class="container pt-2 pl-0 pr-0 profile-bottom-section">
 
+   <div class="container pt-2 pl-0 pr-0 profile-bottom-section">
        <div class="pt-2 pl-4 pr-4 profile-avtar-name">
            <h5 class="text-bold d-flex align-items-center">
                <span>{{$user->name}}</span>
@@ -97,8 +97,18 @@
                    </span>
                @endif
            </h5> 
-          <h6 class="text-muted">{{$user->username}}</h6>
+          {{-- <h6 class="text-muted">{{$user->username}}</h6> --}}
        </div> 
+       
+       <div class="followers-following">
+        <div class="followers">
+            <a href="/my/lists/followers">Followers : 12000</a> 
+            </div>
+        <div class="following">
+           <a href="">Following : 12</a>
+           </div>
+       </div>
+
        @if(Auth::check() && Auth::user()->id === $user->id)
     <div class="mr-2 go-to-profile">
         <a href="{{route('my.settings')}}" class="p-pill p-pill-text ml-2 pointer-cursor">
@@ -167,6 +177,25 @@
            @endif
         </div>
        </div>
+
+       <div class="interest-count-percentage">        
+            @php
+            $users_interests = get_users_learned_posts_interests();
+            @endphp        
+            @if (count($users_interests) > 0)
+                <ul class='user_interest_count'>
+                    @foreach ($users_interests as $key => $interestCount)
+                        <li>
+                            <span>{{ $key }} ____ {{ $interestCount['total_posts'] }} ({{ $interestCount['percentage'] }})</span>
+                        </li>
+                    @endforeach
+                </ul>
+            @else
+                <p>No user interests available.</p>
+            @endif
+        </div>
+
+
        @if(Auth::check() && Auth::user()->id === $user->id)
        <div class="new-post-profile-side">
        <a class="" href="{{ route('posts.create') }}">New Post</a>
@@ -177,7 +206,7 @@
        @include('elements.message-alert',['classes'=>'px-2 pt-4'])
        @if($user->paid_profile && (!getSetting('profiles.allow_users_enabling_open_profiles') || (getSetting('profiles.allow_users_enabling_open_profiles') && !$user->open_profile)))
            @if( (!Auth::check() || Auth::user()->id !== $user->id) && !$hasSub)
-               <div class="p-4 subscription-holder">
+               <div class="p-4 subscription-holder subscribe-button">
                    <h6 class="font-weight-bold text-uppercase mb-3">{{__('Subscription')}}</h6>
                    @if(count($offer))
                        <h5 class="m-0 text-bold">{{__('Limited offer main label',['discount'=> round($offer['discountAmount']), 'days_remaining'=> $offer['daysRemaining'] ])}}</h5>
@@ -231,11 +260,11 @@
                        @endif
                    @endif
                </div>
-               <div class="bg-separator border-top border-bottom"></div>
+               {{-- <div class="bg-separator border-top border-bottom"></div> --}}
            @endif
            
        @elseif(!Auth::check() || (Auth::check() && Auth::user()->id !== $user->id))
-       <div class="follow-chat d-flex">
+       <div class="follow-chat d-flex follow-chat-flex-wrapper">
            <div class="subscription-holder">
                @if(Auth::check())
                    <button class="btn btn-round btn-lg btn-primary btn-block mt-3 mb-0 manage-follow-button" onclick="Lists.manageFollowsAction('{{$user->id}}')">
@@ -250,10 +279,11 @@
                    </button>
                @endif
            </div>
-           <div class="">
+           <div class="follow-wrapper">
             @if($hasSub || $viewerHasChatAccess)
                 <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('Send a message')}}" onclick="messenger.showNewMessageDialog()">
-                    @include('elements.icon',['icon'=>'chatbubbles-outline'])
+                    {{-- @include('elements.icon',['icon'=>'chatbubbles-outline']) --}}
+                    chat
                 </span>
             @else
                 <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('DMs unavailable without subscription')}}">
@@ -262,10 +292,12 @@
             @endif
         </div>
     </div>
-           <div class="bg-separator border-top border-bottom"></div>
+           {{-- <div class="bg-separator border-top border-bottom"></div> --}}
        @endif 
        
    </div>
+
+   
 </div>
 {{-- <div class="col-md-8 col-lg-9 mb-5 mb-lg-0 min-vh-100 border-left border-right settings-content mt-1 mt-md-0 pl-md-0 pr-md-0">
     <div class="ml-3 d-none d-md-flex justify-content-between">

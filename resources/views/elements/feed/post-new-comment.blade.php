@@ -1,11 +1,11 @@
 <div class="px-3 new-post-comment-area">
-    <div class="d-flex justify-content-center align-items-center">
+    <div class="d-flex justify-content-center align-items-center comment-text-area-section">
         <img class="rounded-circle" src="{{Auth::user()->avatar}}">
         <div class="input-group">
-            <div   name="message" class="form-control comment-textarea mx-3 comment-text text-editor-input textarea-comment-area" placeholder="{{__('Write a message..')}}"  onkeyup="textAreaAdjust(this)" rows="1" spellcheck="false" placeholder="Title"></div>
+            <textarea   name="message" class="post-textarea-field form-control comment-textarea mx-3 comment-text text-editor-input textarea-comment-area" placeholder="{{__('Write a message..')}}"  onkeyup="textAreaAdjust(this)" rows="1" spellcheck="false" placeholder="Title"></textarea>
             
-            @include('elements.post-textarea.script-comment')
-            <div class="input-group-append z-index-3 d-flex align-items-center justify-content-center">
+            {{-- @include('elements.post-textarea.script-comment') --}}
+            <div class="input-group-append z-index-3 d-flex align-items-center justify-content-center space-box-mini">
                 <span class="h-pill h-pill-primary rounded mr-3 trigger" data-toggle="tooltip" data-placement="top" title="Like" ></span>
             </div>
             <span class="invalid-feedback pl-4 text-bold" role="alert"></span>

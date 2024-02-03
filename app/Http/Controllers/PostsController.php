@@ -125,13 +125,25 @@ class PostsController extends Controller
         $user = Auth::user();
         // Check if the user has already shared the post
         if (!$user->sharedPosts()->where('post_id', $postId)->exists()) {
-            $create_history = $this->create_history_on_visit_share_post( $postId , 'share');
+            //$create_history = $this->create_history_on_visit_share_post( $postId , 'share');
             // Share the post
             $user->sharedPosts()->create(['post_id' => $postId]);
             // Additional logic (e.g., update post share count)
             return redirect()->back()->with('success', 'Post shared successfully');
         }
         return redirect()->back()->with('error', 'Post already shared');
+    }
+
+    public function learnedPost($postId){
+        $user = Auth::user();
+        // Check if the user has already shared the post
+        if (!$user->learnedPost()->where('post_id', $postId)->exists()) {            
+            // Share the post
+            $user->learnedPost()->create(['post_id' => $postId]);
+            // Additional logic (e.g., update post share count)
+            return redirect()->back()->with('success', 'Post learned');
+        }
+        return redirect()->back()->with('error', 'Already Learned');
     }
     /**
      * Renders the post create page.

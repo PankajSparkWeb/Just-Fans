@@ -8,7 +8,10 @@ use App\Providers\ListsHelperServiceProvider;
 use App\Providers\PostsHelperServiceProvider;
 use App\Providers\StreamsServiceProvider;
 use Carbon\Carbon;
+use App\Model\UserList;
 use App\Model\History;
+use App\Model\UserlearnedPost;
+use App\Model\UserSharedPost;
 use Cookie;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -156,14 +159,17 @@ class ProfileController extends Controller
         $data['activeTab'] = $request->get('tab', 'posts');
 
         if($data['activeTab'] == 'history'){
-            $data['postsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'view'])->orderBy('created_at', 'desc')->paginate(1);              
+            $data['postsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'view'])->orderBy('created_at', 'desc')->paginate(10);              
         }
         elseif($data['activeTab'] == 'comments'){
-            $data['postscommentsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'comment'])->orderBy('created_at', 'desc')->paginate(1);              
+            $data['postscommentsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'comment'])->orderBy('created_at', 'desc')->paginate(10);              
         }
         elseif($data['activeTab'] == 'share'){
-             $data['shareHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'share'])->orderBy('created_at', 'desc')->paginate(1);
-        }       
+             $data['shareHistory'] = UserSharedPost::where(['user_id' => $this->user->id])->orderBy('created_at', 'desc')->paginate(10);
+        }
+        elseif($data['activeTab'] == 'learned'){
+            $data['learnedHistory'] = UserlearnedPost::where(['user_id' => $this->user->id])->orderBy('created_at', 'desc')->paginate(10);
+       }            
         
 
         //       $postsFilter = $request->get('filter') ? $request->get('filter') : false;
@@ -183,6 +189,12 @@ class ProfileController extends Controller
         return view('pages.profile', $data);
     }
 
+    // New method to get follower count
+    public function getFollowerCount($listId)
+    {
+        $list = UserList::findOrFail($listId);
+        return $list->followers()->count();
+    }
 
 
     /**
