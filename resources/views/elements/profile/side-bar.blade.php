@@ -180,7 +180,7 @@
 
        <div class="interest-count-percentage">        
             @php
-            $users_interests = get_users_learned_posts_interests();
+            $users_interests = get_users_learned_posts_interests($user->id);
             @endphp        
             @if (count($users_interests) > 0)
                 <ul class='user_interest_count'>

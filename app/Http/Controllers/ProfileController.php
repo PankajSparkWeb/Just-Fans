@@ -189,13 +189,6 @@ class ProfileController extends Controller
         return view('pages.profile', $data);
     }
 
-    // New method to get follower count
-    public function getFollowerCount($listId)
-    {
-        $list = UserList::findOrFail($listId);
-        return $list->followers()->count();
-    }
-
 
     /**
      * Fetches user posts, to be paginated into the profile page.

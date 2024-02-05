@@ -4,14 +4,23 @@ use App\Providers\GenericHelperServiceProvider;
 use App\Providers\InstallerServiceProvider;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
+use App\User;
+
 
 if (!function_exists('get_users_learned_posts_interests')) {
-    function get_users_learned_posts_interests()
+    function get_users_learned_posts_interests( $user_id = null )
     {
         $interestPostCounts = [];
         $totalPostsInAllInterest = 0;
-        if (Auth::check()) {
-            $user = Auth::user();
+        if( $user_id ){
+            $user = User::find($user_id);
+        }else{
+            if (Auth::check()) {
+                $user = Auth::user();
+            }
+        }    
+        if ($user) {
+            //$user = Auth::user();
             $learnedPosts = $user->learnedPost;
             // Count the total number of learned posts
             $totalLearnedPosts = $learnedPosts->count();
