@@ -173,11 +173,13 @@ class PostsHelperServiceProvider extends ServiceProvider
      * @param bool $mediaType
      * @return array
      */
-    public static function getFeedPosts($userID, $encodePostsToHtml = false, $pageNumber = false, $mediaType = false, $sortOrder = false, $searchTerm = '')
+    public static function getFeedPosts($userID, $encodePostsToHtml = false, $pageNumber = false, $mediaType = false, $sortOrder = false, $searchTerm = '', $feed_type = '')
     {
-        return self::getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, false, false, false, $sortOrder, $searchTerm);
+        
+        return self::getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, false, false, false, $sortOrder, $searchTerm, $feed_type);
     }
-
+    
+    
     //get hot posts
     public static function getFeedPostsHot($userID, $encodePostsToHtml = false, $pageNumber = false, $mediaType = false, $sortOrder = false, $searchTerm = '')
     {
@@ -222,7 +224,7 @@ class PostsHelperServiceProvider extends ServiceProvider
      * @param bool $mediaType
      * @return array
      */
-    public static function getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, $ownPosts, $hasSub, $bookMarksOnly, $sortOrder = false, $searchTerm = '')
+    public static function getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, $ownPosts, $hasSub, $bookMarksOnly, $sortOrder = false, $searchTerm = '', $feed_type = '')
     {
         $relations = ['user', 'reactions', 'attachments', 'bookmarks', 'postPurchases'];
 
@@ -251,8 +253,8 @@ class PostsHelperServiceProvider extends ServiceProvider
             $posts = self::filterPosts($posts, $userID, 'blocked');
         }
         // For feed page
-        else {
-            $posts = self::filterPosts($posts, $userID, 'all');
+        else {            
+            $posts = self::filterPosts($posts, $userID, 'all', false, false, '', $feed_type);
         }
 
         if (!$ownPosts) { // More feed/bookmarks/search rules
@@ -333,38 +335,58 @@ class PostsHelperServiceProvider extends ServiceProvider
      * @param bool $mediaType
      * @return mixed
      */
-    public static function filterPosts($posts, $userID, $filterType, $mediaType = false, $sortOrder = false, $searchTerm = '')
+    public static function filterPosts($posts, $userID, $filterType, $mediaType = false, $sortOrder = false, $searchTerm = '', $feed_type = '')
     {
-        if ($filterType == 'following' || $filterType == 'all') {
-            // Followers only
-            /*$posts->join('user_list_members as following', function ($join) use ($userID) {
-                $join->on('following.user_id', '=', 'posts.user_id');
-                $join->on('following.list_id', '=', DB::raw(Auth::user()->lists->firstWhere('type', 'following')->id));
-            });*/    
+        if( $feed_type == 'interest' ){
             $user = Auth::user();
             $userInterests = $user->interests;
-            if ($userInterests && !$userInterests->isEmpty()) {
+            //if ($userInterests && !$userInterests->isEmpty()) {
                 $posts->whereHas('interests', function ($query) use ($userInterests) {
                     $query->whereIn('newinterests.id', $userInterests->pluck('id'));
                 });
+            //}
+        }elseif(  $feed_type == 'follow_people'  ){
+            $posts->join('user_list_members as following', function ($join) use ($userID) {
+                $join->on('following.user_id', '=', 'posts.user_id');
+                $join->on('following.list_id', '=', DB::raw(Auth::user()->lists->firstWhere('type', 'following')->id));
+            });
+        }else{
+            if ($filterType == 'following' || $filterType == 'all') {
+                // Followers only
+                /*$posts->join('user_list_members as following', function ($join) use ($userID) {
+                    $join->on('following.user_id', '=', 'posts.user_id');
+                    $join->on('following.list_id', '=', DB::raw(Auth::user()->lists->firstWhere('type', 'following')->id));
+                });*/    
+                $user = Auth::user();
+                $userInterests = $user->interests;
+                if ($userInterests && !$userInterests->isEmpty()) {
+                    $posts->whereHas('interests', function ($query) use ($userInterests) {
+                        $query->whereIn('newinterests.id', $userInterests->pluck('id'));
+                    });
+                }
             }
         }
-
 
         if ($filterType == 'blocked' || $filterType == 'all') {
             // Blocked users
             $blockedUsers = ListsHelperServiceProvider::getListMembers(Auth::user()->lists->firstWhere('type', 'blocked')->id);
             $posts->whereNotIn('posts.user_id', $blockedUsers);
         }
-
+        
         if ($filterType == 'subs' || $filterType == 'all') {
-            if($filterType == 'all'){
-                $userIds = array_merge(self::getUserActiveSubs($userID), self::getFreeFollowingProfiles($userID));
-                $posts->whereIn('posts.user_id', $userIds);
-            } else {
-                // Subs only
-                $activeSubs = self::getUserActiveSubs($userID);
-                $posts->whereIn('posts.user_id', $activeSubs);
+            //get all based on interest
+            if( $feed_type == 'interest' ){
+
+            }else{
+
+                if($filterType == 'all'){
+                    $userIds = array_merge(self::getUserActiveSubs($userID), self::getFreeFollowingProfiles($userID));
+                    $posts->whereIn('posts.user_id', $userIds);
+                } else {
+                    // Subs only
+                    $activeSubs = self::getUserActiveSubs($userID);
+                    $posts->whereIn('posts.user_id', $activeSubs);
+                }
             }
         }
 
@@ -411,7 +433,7 @@ class PostsHelperServiceProvider extends ServiceProvider
                     $posts->orderBy('created_at','DESC');
                 }    
                 elseif($sortOrder =='hot'){
-                     //HOT POST SORTING                
+                    //HOT POST SORTING                
                     $now = Carbon::now();                
                     $twentyFourHoursAgo = $now->subHours(24);                
                     $relationsCount = ['reactions', 'comments'];

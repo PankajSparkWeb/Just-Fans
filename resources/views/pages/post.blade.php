@@ -41,7 +41,9 @@
         <div class="min-vh-100 col-12 border-right  pr-md-0 all-post-user-id">
             <div class="feed-box mt-0 pt-4 mb-3 posts-wrapper">
                 @include('elements.message-alert',['classes'=>'pt-0 pb-4 px-2'])
-                @include('elements.feed.post-box')                
+                
+                @include('elements.feed.post-box')    
+                
             </div>
         </div>
         

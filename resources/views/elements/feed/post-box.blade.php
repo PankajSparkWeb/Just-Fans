@@ -315,15 +315,18 @@
                                 {{-- <a class="dropdown-item" href="javascript:void(0)"
                                         onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a> --}}
                                 @if (Auth::check())
-                                    {{-- <a class="dropdown-item bookmark-button {{ PostsHelper::isPostBookmarked($post->bookmarks) ? 'is-active' : '' }}"
-                                            href="javascript:void(0);"
-                                            onclick="Post.togglePostBookmark({{ $post->id }});">{{ PostsHelper::isPostBookmarked($post->bookmarks) ? __('Remove the bookmark') : __('Bookmark this post') }}
-                                        </a> --}}
+                                     <a class="dropdown-item hide-button {{ $post->is_hidden ? 'is-active' : '' }}"
+                                        href="javascript:void(0);"
+                                        onclick="Post.togglePostVisibility({{ $post->id }});">
+                                        {{ $post->is_hidden ? __('Unhide') : __('Hide') }}
+                                     </a>
                                     @if (Auth::user()->id === $post->user_id)
-                                        {{-- <a class="dropdown-item pin-button {{ $post->is_pinned ? 'is-active' : '' }}"
-                                                href="javascript:void(0);"
-                                                onclick="Post.togglePostPin({{ $post->id }});">{{ $post->is_pinned ? __('Un-pin post') : __('Pin this post') }}
-                                            </a> --}}
+                                    {{-- <a class="dropdown-item hide-button {{ $post->is_hidden ? 'is-active' : '' }}"
+                                        href="javascript:void(0);"
+                                        onclick="Post.togglePostVisibility({{ $post->id }});">
+                                        {{ $post->is_hidden ? __('Unhide post') : __('Hide this post') }}
+                                     </a> --}}
+                                     
                                     @endif
                                     @if (Auth::check() && Auth::user()->id != $post->user->id)
                                         <div class="dropdown-divider"></div>
@@ -352,7 +355,6 @@
                         @if (auth()->check())
                             @if(! auth()->user()->learnedPost()->where('post_id', $post->id)->exists())
                                 <div class="learned-btn">
-                                    {{-- <a href="">Learned</a> --}}
                                     <form action="{{ route('posts.learnedPost', ['postId' => $post->id]) }}" method="post">
                                         @csrf
                                         <button type="submit" class='share-submit-button'>Learned</button>

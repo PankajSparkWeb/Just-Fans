@@ -166,7 +166,8 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
     // Feed routes
     Route::get('/feed', ['uses' => 'FeedController@index', 'as'   => 'feed']);
     Route::get('/feed/hot', ['uses' => 'FeedController@hotFeed', 'as'   => 'feed.hotFeed']);
-    Route::get('/feed/followedPeouple', ['uses' => 'FeedController@hotFeed', 'as'   => 'feed.followedPeouple']);
+    Route::get('/feed/followedPeople', ['uses' => 'FeedController@followedPeople', 'as'   => 'feed.followedPeople']);
+    Route::get('/feed/followedPeoplePagination', ['uses' => 'FeedController@followedPeoplePagination', 'as'   => 'feed.followedPeoplePagination']);
     Route::get('/feed/posts', ['uses' => 'FeedController@getFeedPosts', 'as'   => 'feed.posts']);
 
     // File uploader routes

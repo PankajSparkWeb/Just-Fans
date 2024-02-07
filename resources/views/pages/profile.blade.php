@@ -61,6 +61,7 @@
 <div class='post-tab-outer'>
 <div class="mt-3 inline-border-tabs top-tab-header">
     <div class="border-wrapper">
+                {{-- Nav For profile --}}
     <nav class="nav nav-pills nav-justified text-bold post-top-navbar">
         <ul class="nav nav-tabs">
             <li class="nav-item">
@@ -81,6 +82,13 @@
             @else
                 
             @endif
+            @if(Auth::check() && Auth::user()->id === $user->id)
+            <li>
+                <a class="nav-item nav-link {{ $activeTab == 'hiddenPosts' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username, 'tab' => 'hiddenPosts']) }}">Hidden</a>
+            </li>
+            @else
+                
+            @endif
         </ul>
         
     </nav>
@@ -89,101 +97,7 @@
 </div>
     <div class="row all-posts-visited">
         <div class="min-vh-100 col-12 col-md-8 border-right pr-md-0 post-container-left-section">
-
-            {{-- <div class="container d-flex justify-content-between align-items-center">
-                
-                <div>
-                    @if(!Auth::check() || Auth::user()->id !== $user->id)
-                        <div class="d-flex flex-row">
-                            @if(Auth::check())
-                                <div class="">
-                                <span class="p-pill ml-2 pointer-cursor to-tooltip"
-                                      @if(!Auth::user()->email_verified_at && getSetting('site.enforce_email_validation'))
-                                      data-placement="top"
-                                      title="{{__('Please verify your account')}}"
-                                      @elseif(!\App\Providers\GenericHelperServiceProvider::creatorCanEarnMoney($user))
-                                      data-placement="top"
-                                      title="{{__('This creator cannot earn money yet')}}"
-                                      @else
-                                      data-placement="top"
-                                      title="{{__('Send a tip')}}"
-                                      data-toggle="modal"
-                                      data-target="#checkout-center"
-                                      data-type="tip"
-                                      data-first-name="{{Auth::user()->first_name}}"
-                                      data-last-name="{{Auth::user()->last_name}}"
-                                      data-billing-address="{{Auth::user()->billing_address}}"
-                                      data-country="{{Auth::user()->country}}"
-                                      data-city="{{Auth::user()->city}}"
-                                      data-state="{{Auth::user()->state}}"
-                                      data-postcode="{{Auth::user()->postcode}}"
-                                      data-available-credit="{{Auth::user()->wallet->total}}"
-                                      data-username="{{$user->username}}"
-                                      data-name="{{$user->name}}"
-                                      data-avatar="{{$user->avatar}}"
-                                      data-recipient-id="{{$user->id}}"
-                                      @endif
-                                >
-                                 @include('elements.icon',['icon'=>'cash-outline'])
-                                </span>
-                                </div>
-                                <div class="">
-                                    @if($hasSub || $viewerHasChatAccess)
-                                        <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('Send a message')}}" onclick="messenger.showNewMessageDialog()">
-                                            @include('elements.icon',['icon'=>'chatbubbles-outline'])
-                                        </span>
-                                    @else
-                                        <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('DMs unavailable without subscription')}}">
-                                        @include('elements.icon',['icon'=>'chatbubbles-outline'])
-                                    </span>
-                                    @endif
-                                </div>
-                                <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('Add to your lists')}}" onclick="Lists.showListAddModal();">
-                                 @include('elements.icon',['icon'=>'list-outline'])
-                            </span>
-                            @endif
-                            @if(getSetting('profiles.allow_profile_qr_code'))
-                                <div>
-                                    <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('Get profile QR code')}}" onclick="Profile.getProfileQRCode()">
-                                        @include('elements.icon',['icon'=>'qr-code-outline'])
-                                    </span>
-                                </div>
-                            @endif
-                            <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('Copy profile link')}}" onclick="shareOrCopyLink()">
-                                 @include('elements.icon',['icon'=>'share-social-outline'])
-                            </span>
-                        </div>
-                    @else
-                        <div class="d-flex flex-row">
-                            <div class="mr-2">
-                                <a href="{{route('my.settings')}}" class="p-pill p-pill-text ml-2 pointer-cursor">
-                                    @include('elements.icon',['icon'=>'settings-outline','classes'=>'mr-1'])
-                                    <span class="d-none d-md-block">{{__('Edit profile')}}</span>
-                                    <span class="d-block d-md-none">{{__('Edit')}}</span>
-                                </a>
-                            </div>
-                            @if(getSetting('profiles.allow_profile_qr_code'))
-                                <div>
-                                    <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('Get profile QR code')}}" onclick="Profile.getProfileQRCode()">
-                                        @include('elements.icon',['icon'=>'qr-code-outline'])
-                                    </span>
-                                </div>
-                            @endif
-                            <div>
-                                <span class="p-pill ml-2 pointer-cursor" data-toggle="tooltip" data-placement="top" title="{{__('Copy profile link')}}" onclick="shareOrCopyLink()">
-                                    @include('elements.icon',['icon'=>'share-social-outline'])
-                                </span>
-                            </div>
-                        </div>
-                    @endif
-                </div>
-            </div> --}}
-
             <div class="container pt-2 pl-0 pr-0 post-container-div">
-                {{-- <div class="bg-separator border-top border-bottom"></div> --}}
-
-            
-               
                 <div class="justify-content-center align-items-center {{(Cookie::get('app_feed_prev_page') && PostsHelper::isComingFromPostPage(request()->session()->get('_previous'))) ? 'mt-3' : ''}}">
                     @if($activeTab == 'posts')
                     <!-- Display posts content -->
@@ -212,6 +126,14 @@
                     <!-- Display Learned history content -->
                     @if(Auth::check())
                     @include('elements.profile.learnedHistory', ['history' => $learnedHistory])
+                    @else
+                    <script>window.location = "{{ route('login') }}";</script>
+                    @endif
+                @elseif($activeTab == 'hiddenPosts')
+                    <!-- Display Learned history content -->
+                    @if(Auth::check() && Auth::user()->id === $user->id)
+                    @include('elements.profile.hiddenPosts')
+                    {{-- , ['history' => $hiddenPosts] --}}
                     @else
                     <script>window.location = "{{ route('login') }}";</script>
                     @endif

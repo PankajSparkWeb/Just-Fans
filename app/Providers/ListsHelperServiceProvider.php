@@ -87,39 +87,58 @@ class ListsHelperServiceProvider extends ServiceProvider
      * Returns all the lists of an user.
      * @return \Illuminate\Database\Eloquent\Builder[]|\Illuminate\Database\Eloquent\Collection
      */
+
+
     public static function getUserLists()
     {
-        $lists = UserList::with(['members', 'members.user', 'members.userPosts'])->where('user_id', Auth::user()->id)->get()->each(function ($item, $key) {
-            $item->posts_count = 0;
-            foreach ($item->members as $member) {
-                $item->posts_count += count($member->userPosts->posts);
-            }
-            $item->members = self::getUsersForListMembers($item->members);
-            return $item;
-        });
-        return $lists;
-    }
-
-    /**
-     * Creates a "virtual" list, holding all of the user followers
-     * @return UserList
-     */
-    public static function getUserFollowersList(){
-        $followersList = new UserList();
-        $followersList->name = __("Followers");
-        $followersList->type = UserList::FOLLOWERS_TYPE;
-        $followersList->user_id = Auth::user()->id;
-        $followersList->posts_count = 0;
-        $followers = ListsHelperServiceProvider::getUserFollowers(Auth::user()->id);
-        $followers = collect($followers)->pluck('user_id');
-        $followers = User::whereIn('id',$followers)->withCount('posts')->get();
-        $followersList->posts_count = 0;
-        foreach($followers as $follower){
-            $followersList->posts_count += $follower->posts_count;
-        }
-        $followersList->members = $followers;
-        return $followersList;
-    }
+        // Retrieve user-specific lists with their members and their posts count
+        $lists = UserList::with(['members', 'members.user', 'members.userPosts'])
+                        ->where('user_id', Auth::user()->id)
+                        ->get()
+                        ->each(function ($item, $key) {
+                            // Calculate total posts count for each list
+                            $item->posts_count = 0;
+                            foreach ($item->members as $member) {
+                                $item->posts_count += count($member->userPosts->posts);
+                            }
+                            // Retrieve and set formatted members for the list
+                            $item->members = self::getUsersForListMembers($item->members);
+                            return $item;
+                        });
+                        return $lists;
+                    }
+                    
+                /**
+                 * Creates a "virtual" list holding all of the user followers
+                 * @return UserList
+                 */
+                public static function getUserFollowersList(){
+                    // Create a new list instance for followers
+                    $followersList = new UserList();
+                    $followersList->name = __("Followers");
+                    $followersList->type = UserList::FOLLOWERS_TYPE;
+                    $followersList->user_id = Auth::user()->id;
+                
+                    // Retrieve followers of the authenticated user
+                    $followers = ListsHelperServiceProvider::getUserFollowers(Auth::user()->id);
+                
+                    // Extract user IDs of the followers
+                    $followerIds = collect($followers)->pluck('user_id');
+                
+                    // Retrieve follower details with posts count
+                    $followers = User::whereIn('id', $followerIds)
+                                    ->withCount('posts')
+                                    ->get();
+                
+                    // Calculate total posts count for the followers list
+                    $followersList->posts_count = $followers->sum('posts_count');
+                
+                    // Set the followers as members of the list
+                    $followersList->members = $followers;
+                
+                    return $followersList;
+                }
+                
 
     public static function getUsersForListMembers($members){
         $filteredUsers = [];

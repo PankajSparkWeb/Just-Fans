@@ -100,14 +100,25 @@
           {{-- <h6 class="text-muted">{{$user->username}}</h6> --}}
        </div> 
        
-       <div class="followers-following">
-        <div class="followers">
-            <a href="/my/lists/followers">Followers : 12000</a> 
+       @if(Auth::check() && Auth::user()->id === $user->id)
+        <div class="following-follower">
+            <div class="lists-wrapper mt-2">
+                @if(count($lists) >= 2) <!-- Ensure there are at least two lists -->
+                    @php $counter = 0; @endphp <!-- Initialize a counter -->
+                    @foreach($lists as $key => $list)
+                        @if($counter < 2) <!-- Check if we've displayed two lists -->
+                            @include('elements.lists.list-box', ['list'=>$list, 'isLastItem' => (count($lists) == $key + 1)])
+                            @php $counter++; @endphp <!-- Increment the counter -->
+                        @endif
+                    @endforeach
+                @else
+                    <p class="ml-4">{{__('No lists available')}}</p>
+                @endif
             </div>
-        <div class="following">
-           <a href="">Following : 12</a>
+            
            </div>
-       </div>
+        @else
+        @endif
 
        @if(Auth::check() && Auth::user()->id === $user->id)
     <div class="mr-2 go-to-profile">

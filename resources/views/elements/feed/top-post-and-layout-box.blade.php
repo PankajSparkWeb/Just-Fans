@@ -21,7 +21,7 @@
         </div>
         <div class="top-posts">
             
-            <a class="posts_top_nav {{ Route::currentRouteName() == 'feed.followedPeouple' ? 'active' : '' }}" href="{{route('feed.followedPeouple')}}">People who followed</a>  
+            <a class="posts_top_nav {{ Route::currentRouteName() == 'feed.followedPeople' ? 'active' : '' }}" href="{{route('feed.followedPeople')}}">People who followed</a>  
         </div>
         <div class="more-btn"></div>
     </div>

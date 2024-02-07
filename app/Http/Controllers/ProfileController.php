@@ -8,7 +8,6 @@ use App\Providers\ListsHelperServiceProvider;
 use App\Providers\PostsHelperServiceProvider;
 use App\Providers\StreamsServiceProvider;
 use Carbon\Carbon;
-use App\Model\UserList;
 use App\Model\History;
 use App\Model\UserlearnedPost;
 use App\Model\UserSharedPost;
@@ -170,7 +169,17 @@ class ProfileController extends Controller
         elseif($data['activeTab'] == 'learned'){
             $data['learnedHistory'] = UserlearnedPost::where(['user_id' => $this->user->id])->orderBy('created_at', 'desc')->paginate(10);
        }            
-        
+        elseif($data['activeTab'] == 'hiddenPosts'){
+            $data['hiddenPosts'] = UserlearnedPost::where(['user_id' => $this->user->id])->orderBy('created_at', 'desc')->paginate(10);
+       }            
+       
+        $lists = ListsHelperServiceProvider::getUserLists();
+        $followersList = ListsHelperServiceProvider::getUserFollowersList();
+        $lists->splice(1, 0, [$followersList]);
+
+        return view('pages.profile', $data,[
+            'lists' => $lists,
+        ]);
 
         //       $postsFilter = $request->get('filter') ? $request->get('filter') : false;
         //       $startPage = PostsHelperServiceProvider::getFeedStartPage(PostsHelperServiceProvider::getPrevPage($request));
@@ -186,10 +195,10 @@ class ProfileController extends Controller
 
         // $data['shareHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'share'])->orderBy('created_at', 'desc')->paginate(10);
 
-        return view('pages.profile', $data);
+        
     }
 
-
+  
     /**
      * Fetches user posts, to be paginated into the profile page.
      *
