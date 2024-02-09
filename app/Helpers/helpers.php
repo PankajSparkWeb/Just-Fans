@@ -128,6 +128,18 @@ function handledExec($command, $throw_exception = true)
     }
     return implode("\n", $output);
 }
+if (!function_exists('formatReactionCount')) {
+    function formatReactionCount($count)
+    {
+        // If the count is divisible by 1000 and greater than or equal to 1000, format it as "1k", "2k", etc.
+        if ( abs($count) >= 1000 ) {
+            return number_format($count / 1000, 1) . 'k';
+        } else {
+            // If the count is less than 1000 or not divisible by 1000, return it as is.
+            return $count;
+        }
+    }
+}
 
 function checkMysqlndForPDO()
 {

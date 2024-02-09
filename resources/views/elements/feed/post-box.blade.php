@@ -315,19 +315,12 @@
                                 {{-- <a class="dropdown-item" href="javascript:void(0)"
                                         onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a> --}}
                                 @if (Auth::check())
-                                     <a class="dropdown-item hide-button {{ $post->is_hidden ? 'is-active' : '' }}"
-                                        href="javascript:void(0);"
-                                        onclick="Post.togglePostVisibility({{ $post->id }});">
-                                        {{ $post->is_hidden ? __('Unhide') : __('Hide') }}
-                                     </a>
-                                    @if (Auth::user()->id === $post->user_id)
-                                    {{-- <a class="dropdown-item hide-button {{ $post->is_hidden ? 'is-active' : '' }}"
-                                        href="javascript:void(0);"
-                                        onclick="Post.togglePostVisibility({{ $post->id }});">
-                                        {{ $post->is_hidden ? __('Unhide post') : __('Hide this post') }}
-                                     </a> --}}
-                                     
+                                    @if(!PostsHelper::isPostHidden($post->id))
+                                        <a class="dropdown-item hide-button" href="javascript:void(0);" onclick="Post.togglePostHide({{$post->id}}, 'hide');"> Hide this post</a>
+                                    @else
+                                        <a class="dropdown-item hide-button" href="javascript:void(0);" onclick="Post.togglePostHide({{$post->id}}, 'unhide');">Unhide</a>
                                     @endif
+
                                     @if (Auth::check() && Auth::user()->id != $post->user->id)
                                         <div class="dropdown-divider"></div>
                                         {{-- <a class="dropdown-item" href="javascript:void(0);"
@@ -352,6 +345,22 @@
                                 @endif
                             </div>
                         </div>
+
+                            <div class="post-save-btn">
+                                @if (Auth::check())
+                                    @if(!PostsHelper::isPostSaved($post->id))
+                                        <a class="dropdown-item save-button" href="javascript:void(0);" onclick="Post.togglePostSave({{$post->id}}, 'save');">
+                                            Save
+                                        </a>
+                                    @else
+                                        <a class="dropdown-item save-button" href="javascript:void(0);" onclick="Post.togglePostSave({{$post->id}}, 'unsave');">
+                                            Unsave
+                                        </a>
+                                    @endif
+                                @endif
+                            </div>
+                        
+                        
                         @if (auth()->check())
                             @if(! auth()->user()->learnedPost()->where('post_id', $post->id)->exists())
                                 <div class="learned-btn">

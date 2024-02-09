@@ -18,7 +18,7 @@
 @stop
 
 @section('content')
-    <div class="row test">
+    <div class="row">
         <div class="min-vh-100 border-right col-12 pr-md-0">
             <div class="pt-4 pl-4 px-3 d-flex justify-content-between pb-3 border-bottom">
                 <h5 class="mb-0 text-truncate text-bold {{(Cookie::get('app_theme') == null ? (getSetting('site.default_user_theme') == 'dark' ? '' : 'text-dark-r') : (Cookie::get('app_theme') == 'dark' ? '' : 'text-dark-r'))}}">{{__($list->name)}}</h5>

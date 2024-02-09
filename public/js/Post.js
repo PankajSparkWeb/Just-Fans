@@ -53,16 +53,11 @@ var Post = {
     initGalleryModule: function (gallerySelector = false) {
         mswpScanPage(gallerySelector,'mswp');
     },
-
-     /**
-     * Method used for adding a new post comment
-     * @param postID
-     */
-     addComment: function (postID, thisEle) {
+    addComment: function (postID, thisEle) {
         var comment_parent_id = '';
         var newCommentButton;  // Declare the variable outside the if block
         var postElement;  // Declare the variable outside the if block
-
+    
         var replyForm = $(thisEle).closest('.reply-form');
         let postElement_sectoin = $('*[data-postID="'+postID+'"]');
         
@@ -91,8 +86,11 @@ var Post = {
             url: app.baseUrl+'/posts/comments/add',
             success: function (result) {
                 if(result.success){
+                    // Clear the comment input box
+                    postElement.find('.textarea-comment-area').val('');
+                    
                     postElement.find('.textarea-comment-area').val();
-
+    
                     launchToast('success',trans('Success'),trans('Comment added'));
                     postElement.find('.no-comments-label').addClass('d-none');
                     if( comment_parent_id ){                                                
@@ -108,7 +106,6 @@ var Post = {
                             var ulElement = $('<ul>', { class: 'replies-list' }).append($('<li>').append(result.data));
                             findUlElement_c.after(ulElement).fadeIn('slow');
                         }                       
-                                     
                     }else{
                         postElement_sectoin.find('.post-comments-wrapper').prepend(result.data).fadeIn('slow');
                     }
@@ -117,7 +114,7 @@ var Post = {
                     postElement.find('.post-comments-label-count').html(commentsCount);
                     postElement.find('.post-comments-label').html(trans_choice('comments',commentsCount));
                     updateButtonState('loaded',newCommentButton);
-
+    
                     $(thisEle).closest('.reply-form').hide();
                 }
                 else{
@@ -143,6 +140,8 @@ var Post = {
             }
         });
     },
+    
+
     /**
      * Shows up post comment delete dialog confirmation dialog
      * @param postID
@@ -518,6 +517,94 @@ var Post = {
             }
         });
     },
+
+    // hide post
+    togglePostHide: function (id, type = 'hide') {
+        let reactElement = $('*[data-postID="'+id+'"]');
+        const isHidden = type == 'hide' ? true : false;
+        $.ajax({
+            type: 'POST',
+            data: {                
+                'id': id,
+                'type': type,
+            },
+            dataType: 'json',
+            url: app.baseUrl+'/posts/hide_unhide_posts',
+            success: function (result) {
+                if(result.success){
+                    //if hide
+                    if(isHidden){
+                       // Hide post content
+                        reactElement.find(".post-content").hide();
+                        // Create the wrapper div with both the anchor tag and span inside
+                        var unhidePostsSection = document.createElement('div');
+                        unhidePostsSection.setAttribute('class', 'unhide_posts_section');
+                        unhidePostsSection.innerHTML = `
+                            <span class="dropdown-item unhide-button">Post hidden</span>
+                            <a class="dropdown-item unhide-button" href="javascript:void(0);" onclick="Post.togglePostHide('${id}', 'unhide')">Undo</a>
+                        `;
+                        // Append the wrapper div to the appropriate container
+                        reactElement.append(unhidePostsSection);
+                    } else {
+                        // Find all elements with the class .hide-button
+                        reactElement.find(".unhide_posts_section").remove();
+                        reactElement.find(".post-content").show();                        
+                        reactElement.find(".hide-button").each(function() {
+                            // Add onclick event
+                            $(this).attr("onclick", "Post.togglePostHide(" + id + ", 'hide');");
+                            // Change text
+                            $(this).text("Hide this post");
+                        });
+                    }                    
+                    launchToast('success',trans('Success'),result.message);
+                } else {
+                    launchToast('danger',trans('Error'),result.errors[0]);
+                }
+            },
+            error: function (result) {
+                launchToast('danger',trans('Error'),result.responseJSON.message);
+            }
+        });
+    },
+    
+
+        // save post
+        togglePostSave: function (id, type = 'save') {
+            let reactElement = $('*[data-postID="'+id+'"]');
+            const isSaved = type == 'save' ? true : false;
+            $.ajax({
+                type: 'POST',
+                data: {                
+                    'id': id,
+                    'type': type,
+                },
+                dataType: 'json',
+                url: app.baseUrl+'/posts/save_unsave_posts',
+                success: function (result) {
+                    if(result.success){
+                        // Toggle the icon or class of the save button
+                        let saveButton = reactElement.find(".save-button");
+                        if(isSaved){
+                            saveButton.find("span").removeClass("material-symbols-outlined bookmark").addClass("material-symbols-outlined bookmark_added");
+                            saveButton.attr("onclick", "Post.togglePostSave(" + id + ", 'unsave');");
+                        } else {
+                            saveButton.find("span").removeClass("material-symbols-outlined bookmark_added").addClass("material-symbols-outlined bookmark");
+                            saveButton.attr("onclick", "Post.togglePostSave(" + id + ", 'save');");
+                        }
+                        // Optionally, you can update the button text here
+                        saveButton.text(isSaved ? "Unsave" : "Save");
+                        launchToast('success',trans('Success'),result.message);
+                    } else {
+                        launchToast('danger',trans('Error'),result.errors[0]);
+                    }
+                },
+                error: function (result) {
+                    launchToast('danger',trans('Error'),result.responseJSON.message);
+                }
+            });
+        },
+
+
 
     /**
      * Function used to pin/unpin a post

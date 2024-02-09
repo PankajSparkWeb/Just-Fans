@@ -1590,6 +1590,9 @@ a.posts_top_nav.active {
     font-size: 14px;
     color: #202020;
 }
+div#toast-container {
+    top: 70px !important;
+}
 .post-para p {
     color: #222222;
     font-weight: 500;
@@ -1610,6 +1613,10 @@ a.view_ext_link {
 .new-side-bar .feed-suggession-card {
     max-width: 300px;
     width: 100%;
+}
+button.share-submit-button {
+    border: none !important;
+    background-color: transparent !important;
 }
 .footer-actions {
     align-items: center;

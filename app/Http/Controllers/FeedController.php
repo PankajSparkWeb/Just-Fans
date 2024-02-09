@@ -71,14 +71,15 @@ class FeedController extends Controller
         header('Expires: 0 '); // Proxies.
 
         $startPage = PostsHelperServiceProvider::getFeedStartPage(PostsHelperServiceProvider::getPrevPage($request));
-        $posts = PostsHelperServiceProvider::getFeedPostsHot(Auth::user()->id, false, $startPage);
+        //$posts = PostsHelperServiceProvider::getFeedPosts(Auth::user()->id, false, $startPage);
+        $posts = PostsHelperServiceProvider::getFeedPosts(Auth::user()->id, false, $startPage, false,false,false,'hot');
        
         PostsHelperServiceProvider::shouldDeletePaginationCookie($request);
 
         JavaScript::put([
             'paginatorConfig' => [
-                'next_page_url' => str_replace('/feed/hot?page=', '/feed/hot/posts?page=', $posts->nextPageUrl()),
-                'prev_page_url' => str_replace('/feed/hot?page=', '/feed/hot/posts?page=', $posts->previousPageUrl()),
+                'next_page_url' => str_replace('/feed/hot?page=', '/feed/postsHot?page=', $posts->nextPageUrl()),
+                'prev_page_url' => str_replace('/feed/hot?page=', '/feed/postsHot?page=', $posts->previousPageUrl()),
                 'current_page' => $posts->currentPage(),
                 'total' => $posts->total(),
                 'per_page' => $posts->perPage(),
@@ -163,6 +164,11 @@ class FeedController extends Controller
     public function followedPeoplePagination(Request $request)
     {
         return response()->json(['success'=>true, 'data'=> PostsHelperServiceProvider::getFeedPosts(Auth::user()->id, true, false, false,false,false,'follow_people')]);
+    }
+
+    public function postsHot(Request $request)
+    {
+        return response()->json(['success'=>true, 'data'=> PostsHelperServiceProvider::getFeedPosts(Auth::user()->id, true, false, false,false,false,'hot')]);
     }
 
     /**

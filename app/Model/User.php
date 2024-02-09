@@ -9,6 +9,8 @@ use App\Model\UserList;
 use App\Model\Newinterest;
 use App\Model\UserlearnedPost;
 use App\Model\UserSharedPost;
+use App\Model\PostHide;
+use App\Model\SavePost;
 use App\Providers\GenericHelperServiceProvider;
 use Carbon\Carbon;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -219,5 +221,13 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
     public function learnedPost()
     {
         return $this->hasMany(UserlearnedPost::class)->with('post.interests');        
+    }
+    public function hidedPost()
+    {
+        return $this->hasMany(PostHide::class);        
+    }
+    public function SavedPost()
+    {
+        return $this->hasMany(SavePost::class);        
     }
 }

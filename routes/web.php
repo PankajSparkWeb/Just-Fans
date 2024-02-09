@@ -165,10 +165,11 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
 
     // Feed routes
     Route::get('/feed', ['uses' => 'FeedController@index', 'as'   => 'feed']);
+    Route::get('/feed/posts', ['uses' => 'FeedController@getFeedPosts', 'as'   => 'feed.posts']);
     Route::get('/feed/hot', ['uses' => 'FeedController@hotFeed', 'as'   => 'feed.hotFeed']);
+    Route::get('/feed/postsHot', ['uses' => 'FeedController@postsHot', 'as'   => 'feed.postsHot']);
     Route::get('/feed/followedPeople', ['uses' => 'FeedController@followedPeople', 'as'   => 'feed.followedPeople']);
     Route::get('/feed/followedPeoplePagination', ['uses' => 'FeedController@followedPeoplePagination', 'as'   => 'feed.followedPeoplePagination']);
-    Route::get('/feed/posts', ['uses' => 'FeedController@getFeedPosts', 'as'   => 'feed.posts']);
 
     // File uploader routes
     Route::group(['prefix' => 'attachment', 'as' => 'attachment.'], function () {
@@ -188,6 +189,8 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
         Route::delete('/comments/delete', ['uses' => 'PostsController@deleteComment', 'as'   => 'delete.comments']);                
         Route::post('/reaction', ['uses' => 'PostsController@updateReaction', 'as'   => 'react']);
         Route::post('/bookmark', ['uses' => 'PostsController@updatePostBookmark', 'as'   => 'bookmark']);
+        Route::post('/hide_unhide_posts', ['uses' => 'PostsController@hide_unhide_posts', 'as' => 'hide_unhide_posts']);        
+        Route::post('/save_unsave_posts', ['uses' => 'PostsController@save_unsave_posts', 'as' => 'save_unsave_posts']);        
         Route::post('/pin', ['uses' => 'PostsController@updatePostPin', 'as'   => 'pin']);
         Route::delete('/delete', ['uses' => 'PostsController@deletePost', 'as'   => 'delete']);
         Route::post('/{postId}/share', ['uses' => 'PostsController@sharePost', 'as'   => 'share']);

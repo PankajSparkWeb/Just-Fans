@@ -78,7 +78,7 @@ class PostComment extends Model
             // $likeCount = $postReactions->where('reaction_type', 'like')->where('post_id', $this->id)->count();
             // $dislikeCount = $postReactions->where('reaction_type', 'dislike')->where('post_id', $this->id)->count();
             $total_votes = $likeCount - $dislikeCount;
-            return $total_votes;
+            return formatReactionCount($total_votes);
             //return $total_votes > 0 ? $total_votes : 0;
         } else {
             // If 'reactions' relationship is not loaded, you may choose to load it or return a default value

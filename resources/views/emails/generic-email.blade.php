@@ -1,7 +1,7 @@
 @component('mail::layout')
 {{-- Header --}}
 @slot('header')
-    @if($showEmailHeader)
+    @if($showEmailHeader)    
     @component('mail::header', ['url' => config('app.url')])
         <!-- header here -->
         <img src="{{asset(getSetting('site.light_logo'))}}" class="mail-logo" width="250">

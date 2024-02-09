@@ -9,6 +9,8 @@ use App\Model\Stream;
 use App\Model\Subscription;
 use App\Model\Transaction;
 use App\Model\UserList;
+use App\Model\PostHide;
+use App\Model\SavePost;
 use App\User;
 use Carbon\Carbon;
 use Cookie;
@@ -175,16 +177,10 @@ class PostsHelperServiceProvider extends ServiceProvider
      */
     public static function getFeedPosts($userID, $encodePostsToHtml = false, $pageNumber = false, $mediaType = false, $sortOrder = false, $searchTerm = '', $feed_type = '')
     {
-        
+
+        $sortOrder = $feed_type == 'hot' ? 'hot' : $sortOrder;        
         return self::getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, false, false, false, $sortOrder, $searchTerm, $feed_type);
-    }
-    
-    
-    //get hot posts
-    public static function getFeedPostsHot($userID, $encodePostsToHtml = false, $pageNumber = false, $mediaType = false, $sortOrder = false, $searchTerm = '')
-    {
-        return self::getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, false, false, false, 'hot', $searchTerm);
-    }
+    }   
 
     /**
      * Gets list of posts for profile.
@@ -213,6 +209,27 @@ class PostsHelperServiceProvider extends ServiceProvider
     }
 
     
+  /**
+     * Check if a post is hidden by a user.
+     *
+     * @param  int  $postId
+     * @return bool
+     */
+    public static function isPostHidden($postId)
+    {
+        return PostHide::where('post_id', $postId)->where('user_id', auth()->id())->exists();
+    }
+
+    /**
+     * Check if a post is saved by a user.
+     *
+     * @param  int  $postId
+     * @return bool
+     */
+    public static function isPostSaved($postId)
+    {
+        return SavePost::where('post_id', $postId)->where('user_id', auth()->id())->exists();
+    }
 
     /**
      * Returns lists of posts, conditioned by different filters.
@@ -337,6 +354,14 @@ class PostsHelperServiceProvider extends ServiceProvider
      */
     public static function filterPosts($posts, $userID, $filterType, $mediaType = false, $sortOrder = false, $searchTerm = '', $feed_type = '')
     {
+        //if logged in then show posts
+        if ( Auth::check() ) {
+            $user = Auth::user();
+            // Get IDs of posts hidden by the current user
+            $hiddenPostIds = $user->hidedPost()->pluck('post_id');
+            // Query for posts that are not hidden by the user
+            $posts->whereNotIn('posts.id', $hiddenPostIds)->get();                        
+        }
         if( $feed_type == 'interest' ){
             $user = Auth::user();
             $userInterests = $user->interests;
@@ -350,6 +375,8 @@ class PostsHelperServiceProvider extends ServiceProvider
                 $join->on('following.user_id', '=', 'posts.user_id');
                 $join->on('following.list_id', '=', DB::raw(Auth::user()->lists->firstWhere('type', 'following')->id));
             });
+        }elseif(  $feed_type == 'hot'  ){
+
         }else{
             if ($filterType == 'following' || $filterType == 'all') {
                 // Followers only
@@ -376,9 +403,12 @@ class PostsHelperServiceProvider extends ServiceProvider
         if ($filterType == 'subs' || $filterType == 'all') {
             //get all based on interest
             if( $feed_type == 'interest' ){
+                //if interest type
+
+            }elseif( $feed_type == 'hot' ){
+                //if hot posts
 
             }else{
-
                 if($filterType == 'all'){
                     $userIds = array_merge(self::getUserActiveSubs($userID), self::getFreeFollowingProfiles($userID));
                     $posts->whereIn('posts.user_id', $userIds);

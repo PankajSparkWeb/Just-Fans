@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Model\Country;
+use App\Model\SavePost;
 use App\Providers\GenericHelperServiceProvider;
 use App\Providers\ListsHelperServiceProvider;
 use App\Providers\PostsHelperServiceProvider;
@@ -10,6 +11,7 @@ use App\Providers\StreamsServiceProvider;
 use Carbon\Carbon;
 use App\Model\History;
 use App\Model\UserlearnedPost;
+use App\Model\PostHide;
 use App\Model\UserSharedPost;
 use Cookie;
 use Illuminate\Http\Request;
@@ -68,12 +70,11 @@ class ProfileController extends Controller
         if ($errors->getBag('default')->has('email') || $errors->getBag('default')->has('name') || $errors->getBag('default')->has('password')) {
             $data['showLoginDialog'] = true;
         }
-        
-        $postsFilter = $request->get('filter') ? $request->get('filter') : false;
-        $startPage = PostsHelperServiceProvider::getFeedStartPage(PostsHelperServiceProvider::getPrevPage($request));
-        $posts = PostsHelperServiceProvider::getUserPosts($this->user->id, false, $startPage, $postsFilter, $this->hasSub);
+        $postsFilter    = $request->get('filter') ? $request->get('filter') : false;
+        $startPage      = PostsHelperServiceProvider::getFeedStartPage(PostsHelperServiceProvider::getPrevPage($request));
+        $posts          = PostsHelperServiceProvider::getUserPosts($this->user->id, false, $startPage, $postsFilter, $this->hasSub);
         PostsHelperServiceProvider::shouldDeletePaginationCookie($request);
-        $posts = $posts->appends($_GET);
+        $posts          = $posts->appends($_GET);
         
         $offer = [];
         if ($this->user->offer) {
@@ -169,9 +170,12 @@ class ProfileController extends Controller
         elseif($data['activeTab'] == 'learned'){
             $data['learnedHistory'] = UserlearnedPost::where(['user_id' => $this->user->id])->orderBy('created_at', 'desc')->paginate(10);
        }            
-        elseif($data['activeTab'] == 'hiddenPosts'){
-            $data['hiddenPosts'] = UserlearnedPost::where(['user_id' => $this->user->id])->orderBy('created_at', 'desc')->paginate(10);
-       }            
+        elseif($data['activeTab'] == 'hiddenPosts') {
+            $data['hiddenPosts']    = PostHide::where('user_id', $this->user->id)->orderBy('created_at', 'desc')->paginate(10);
+        }   
+        elseif($data['activeTab'] == 'savedPosts') {
+            $data['savedPosts']    = SavePost::where('user_id', $this->user->id)->orderBy('created_at', 'desc')->paginate(10);
+        }   
        
         $lists = ListsHelperServiceProvider::getUserLists();
         $followersList = ListsHelperServiceProvider::getUserFollowersList();
@@ -180,22 +184,6 @@ class ProfileController extends Controller
         return view('pages.profile', $data,[
             'lists' => $lists,
         ]);
-
-        //       $postsFilter = $request->get('filter') ? $request->get('filter') : false;
-        //       $startPage = PostsHelperServiceProvider::getFeedStartPage(PostsHelperServiceProvider::getPrevPage($request));
-        //       $posts = PostsHelperServiceProvider::getUserPosts($this->user->id, false, $startPage, $postsFilter, $this->hasSub);
-        //       PostsHelperServiceProvider::shouldDeletePaginationCookie($request);
-        //       $posts = $posts->appends($_GET);
-
-        // // history in profile
-        
-        // $data['postsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'view'])->orderBy('created_at', 'desc')->paginate(10);  
-        
-        // $data['postscommentsHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'comment'])->orderBy('created_at', 'desc')->paginate(10);
-
-        // $data['shareHistory'] = History::where(['user_id' => $this->user->id, 'action' => 'share'])->orderBy('created_at', 'desc')->paginate(10);
-
-        
     }
 
   

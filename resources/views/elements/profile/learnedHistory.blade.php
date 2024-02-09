@@ -11,8 +11,7 @@
                         @php 
                         $post = $history->post;
                         @endphp
-                       <div class="post-visit_history"
-                       onclick="window.location.href = '{{ Route::currentRouteName() != 'posts.get' ? route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) : '#comments' }}';">
+                       <div class="post-visit_history">
                            <div class="min-vh-100 col-12 border-right  pr-md-0 post-history-inner-wraper">
                                <div class="feed-box mt-0 pt-4 mb-3 posts-wrapper">                               
                                    @include('elements.feed.post-box')                

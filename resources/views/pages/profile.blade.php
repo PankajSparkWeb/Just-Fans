@@ -89,6 +89,13 @@
             @else
                 
             @endif
+            @if(Auth::check() && Auth::user()->id === $user->id)
+            <li>
+                <a class="nav-item nav-link {{ $activeTab == 'savedPosts' ? 'active' : '' }}" href="{{ route('profile', ['username' => $user->username, 'tab' => 'savedPosts']) }}">Saved</a>
+            </li>
+            @else
+                
+            @endif
         </ul>
         
     </nav>
@@ -130,9 +137,17 @@
                     <script>window.location = "{{ route('login') }}";</script>
                     @endif
                 @elseif($activeTab == 'hiddenPosts')
-                    <!-- Display Learned history content -->
+                    <!-- Display Hidden post history content -->
                     @if(Auth::check() && Auth::user()->id === $user->id)
                     @include('elements.profile.hiddenPosts')
+                    {{-- , ['history' => $hiddenPosts] --}}
+                    @else
+                    <script>window.location = "{{ route('login') }}";</script>
+                    @endif
+                @elseif($activeTab == 'savedPosts')
+                    <!-- Display Saved post history content -->
+                    @if(Auth::check() && Auth::user()->id === $user->id)
+                    @include('elements.profile.savedPosts')
                     {{-- , ['history' => $hiddenPosts] --}}
                     @else
                     <script>window.location = "{{ route('login') }}";</script>

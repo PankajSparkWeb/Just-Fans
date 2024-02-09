@@ -9,6 +9,7 @@ use App\Http\Requests\UpdatePostBookmarkRequest;
 use App\Http\Requests\UpdateReactionRequest;
 use App\Model\Attachment;
 use App\Model\Post;
+use App\Model\PostHide;
 use App\Model\History;
 use App\Model\PostComment;
 use App\Model\Newinterest;
@@ -496,6 +497,7 @@ class PostsController extends Controller
         }
     }
 
+
     /**
      * Method used for adding / deleting a post bookmark.
      *
@@ -542,43 +544,87 @@ class PostsController extends Controller
         }
     }
 
-    /**
-     * Updated the post pin status
-     * @param Request $request
-     * @return \Illuminate\Http\JsonResponse
-     */
-    public function updatePostPin(Request $request){
-        $postID = $request->get('id');
-        $action = $request->get('action');
-        try {
-            // Checking authorization & post existence
-            $post = Post::where('id', $postID)->where('user_id', Auth::user()->id)->first();
-            if (! $post) {
-                return response()->json(['success' => false, 'errors' => [__('Not found')], 'message'=> __('Post not found')], 404);
+// function for hide post
+    public function hide_unhide_posts(Request $request)
+    {
+        $user = Auth::user();
+        $postId = $request->get('id');
+        $type = $request->get('type');
+        if( $type == 'hide' ){
+            if (!$user->hidedPost()->where('post_id', $postId)->exists()) {                        
+                $user->hidedPost()->create(['post_id' => $postId]);                        
+                return response()->json(['success' => true, 'message' => 'Post hidden successfully']);
+            }else{
+                return response()->json(['success' => false, 'errors' => [__('Post already hidden')], 'message' => 'Post already hidden']);
             }
-
-            // Delete prev pinned post
-            $pinnedPost = Post::where('user_id', Auth::user()->id)->where('is_pinned', 1)->first();
-            if($pinnedPost){
-                $pinnedPost->is_pinned = false;
-                $pinnedPost->save();
+        }else{
+            if ($user->hidedPost()->where('post_id', $postId)->exists()) {                            
+                $user->hidedPost()->where('post_id', $postId)->delete();          
+                return response()->json(['success' => true, 'message' => 'Post unhide successfully']);
+            }else{
+                return response()->json(['success' => false, 'errors' => [__('Post already unhide')], 'message' => 'Post already unhide']);
             }
-
-            $message = '';
-            if ($action == 'add') {
-                $message = 'Pin added.';
-                $post->is_pinned = true;
-                $post->save();
-            } elseif ($action == 'remove') {
-                $message = 'Pin removed.';
-            }
-
-            return response()->json(['success' => true, 'message' => __($message)]);
-
-        } catch (\Exception $exception) {
-            return response()->json(['success' => false, 'errors' => [__('An internal error has occurred.') . $exception->getMessage()]]);
         }
     }
+    // function for hide post
+        public function save_unsave_posts(Request $request)
+        {
+            $user = Auth::user();
+            $postId = $request->get('id');
+            $type = $request->get('type');
+            if( $type == 'save' ){
+                if (!$user->savedPost()->where('post_id', $postId)->exists()) {                        
+                    $user->savedPost()->create(['post_id' => $postId]);                        
+                    return response()->json(['success' => true, 'message' => 'Post saved successfully']);
+                }else{
+                    return response()->json(['success' => false, 'errors' => [__('Post already saved')], 'message' => 'Post already saved']);
+                }
+            }else{
+                if ($user->savedPost()->where('post_id', $postId)->exists()) {                            
+                    $user->savedPost()->where('post_id', $postId)->delete();          
+                    return response()->json(['success' => true, 'message' => 'Post unsave successfully']);
+                }else{
+                    return response()->json(['success' => false, 'errors' => [__('Post already unsave')], 'message' => 'Post already unsave']);
+                }
+            }
+        }
+        /**
+         * Updated the post pin status
+         * @param Request $request
+         * @return \Illuminate\Http\JsonResponse
+         */
+        public function updatePostPin(Request $request){
+            $postID = $request->get('id');
+            $action = $request->get('action');
+            try {
+                // Checking authorization & post existence
+                $post = Post::where('id', $postID)->where('user_id', Auth::user()->id)->first();
+                if (! $post) {
+                    return response()->json(['success' => false, 'errors' => [__('Not found')], 'message'=> __('Post not found')], 404);
+                }
+
+                // Delete prev pinned post
+                $pinnedPost = Post::where('user_id', Auth::user()->id)->where('is_pinned', 1)->first();
+                if($pinnedPost){
+                    $pinnedPost->is_pinned = false;
+                    $pinnedPost->save();
+                }
+
+                $message = '';
+                if ($action == 'add') {
+                    $message = 'Pin added.';
+                    $post->is_pinned = true;
+                    $post->save();
+                } elseif ($action == 'remove') {
+                    $message = 'Pin removed.';
+                }
+
+                return response()->json(['success' => true, 'message' => __($message)]);
+
+            } catch (\Exception $exception) {
+                return response()->json(['success' => false, 'errors' => [__('An internal error has occurred.') . $exception->getMessage()]]);
+            }
+        }
 
     /**
      * Method used for deleting a post.
