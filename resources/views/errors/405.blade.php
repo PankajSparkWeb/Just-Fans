@@ -1,4 +1,4 @@
-@extends('layouts.generic')
+@extends('layouts.NewHomeLayout')
 @section('page_title', __('Too Many Requests'))
 
 @section('content')
