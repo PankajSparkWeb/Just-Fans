@@ -605,6 +605,77 @@ var Post = {
         },
 
 
+        // User learned post js
+        togglePostLearned: function (id, type = 'Learned') {
+            let reactElement = $('*[data-postID="'+id+'"]');
+            const isLearned = type == 'Learned' ? true : false;
+            $.ajax({
+                type: 'POST',
+                data: {                
+                    'id': id,
+                    'type': type,
+                },
+                dataType: 'json',
+                url: app.baseUrl+'/posts/learnedPost',
+                success: function (result) {
+                    if(result.success){
+                        // Toggle the icon or class of the save button
+                        let learnedButton = reactElement.find(".learned-btn");
+                        if(isLearned){
+                            learnedButton.find("span").removeClass("material-symbols-outlined bookmark").addClass("material-symbols-outlined bookmark_added");
+                            learnedButton.attr("onclick", "Post.togglePostLearned(" + id + ", 'unlearned');");
+                        } else {
+                            // Hide the button's parent container
+                            learnedButton.parent().hide();
+                        }
+                        // Optionally, you can update the button text here
+                        learnedButton.text(isLearned ? "Unlearned" : "Learned");
+                        launchToast('success',trans('Success'),result.message);
+                    } else {
+                        launchToast('danger',trans('Error'),result.errors[0]);
+                    }
+                },
+                error: function (result) {
+                    launchToast('danger',trans('Error'),result.responseJSON.message);
+                }
+            });
+        },
+
+        // user shared post js
+        
+        togglePostShare: function (id, type = 'shared') {
+            let reactElement = $('*[data-postID="'+id+'"]');
+            const isShared = type == 'shared' ? true : false;
+            $.ajax({
+                type: 'POST',
+                data: {                
+                    'id': id,
+                    'type': type,
+                },
+                dataType: 'json',
+                url: app.baseUrl+'/posts/share',
+                success: function (result) {
+                    if(result.success){
+                        // Toggle the icon or class of the share button
+                        let sharedButton = reactElement.find(".share-button");
+                        if(isShared){
+                            sharedButton.find("span").removeClass("material-symbols-outlined bookmark").addClass("material-symbols-outlined bookmark_added");
+                            sharedButton.attr("onclick", "Post.togglePostShare(" + id + ", 'Already Shared');");
+                        } 
+                        // Optionally, you can update the button text here
+                        sharedButton.text(isShared ? "Share" : "Already Shared");
+                        launchToast('success',trans('Success'),result.message);
+                    } else {
+                        launchToast('danger',trans('Error'),result.errors[0]);
+                    }
+                },
+                error: function (result) {
+                    launchToast('danger',trans('Error'),result.responseJSON.message);
+                }
+            });
+        },
+        
+
 
     /**
      * Function used to pin/unpin a post
@@ -675,4 +746,6 @@ var Post = {
     },
 
 };
+
+
 

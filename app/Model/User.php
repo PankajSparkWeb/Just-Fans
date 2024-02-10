@@ -213,7 +213,7 @@ class User extends \TCG\Voyager\Models\User implements MustVerifyEmail
         return $this->hasMany('App\Model\History');
     }
 
-    public function sharedPosts()
+    public function sharedPost()
     {
         return $this->hasMany(UserSharedPost::class);
     }

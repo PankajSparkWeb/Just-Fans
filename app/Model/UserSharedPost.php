@@ -2,7 +2,7 @@
 // app/Model/UserSharedPost.php
 
 namespace App\Model;
-
+use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class UserSharedPost extends Model

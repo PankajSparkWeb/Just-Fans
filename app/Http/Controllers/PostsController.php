@@ -43,6 +43,7 @@ class PostsController extends Controller
     {
         $post_id = $request->route('post_id');
         $username = $request->route('username');
+        
 
         $user = PostsHelperServiceProvider::getUserByUsername($username);
         if (! $user) {
@@ -105,6 +106,7 @@ class PostsController extends Controller
         
         return view('pages.post', $data);
     }
+    
 
     private function create_history_on_visit_share_post( $post_id, $action = 'view' ){
         // Delete old history entries for the same user and post
@@ -122,30 +124,6 @@ class PostsController extends Controller
         return true;
     }
 
-    public function sharePost($postId){
-        $user = Auth::user();
-        // Check if the user has already shared the post
-        if (!$user->sharedPosts()->where('post_id', $postId)->exists()) {
-            //$create_history = $this->create_history_on_visit_share_post( $postId , 'share');
-            // Share the post
-            $user->sharedPosts()->create(['post_id' => $postId]);
-            // Additional logic (e.g., update post share count)
-            return redirect()->back()->with('success', 'Post shared successfully');
-        }
-        return redirect()->back()->with('error', 'Post already shared');
-    }
-
-    public function learnedPost($postId){
-        $user = Auth::user();
-        // Check if the user has already shared the post
-        if (!$user->learnedPost()->where('post_id', $postId)->exists()) {            
-            // Share the post
-            $user->learnedPost()->create(['post_id' => $postId]);
-            // Additional logic (e.g., update post share count)
-            return redirect()->back()->with('success', 'Post learned');
-        }
-        return redirect()->back()->with('error', 'Already Learned');
-    }
     /**
      * Renders the post create page.
      *
@@ -588,6 +566,76 @@ class PostsController extends Controller
                 }
             }
         }
+
+        // old learnd post code
+
+        // public function learnedPost($postId){
+        //     $user = Auth::user();
+        //     // Check if the user has already shared the post
+        //     if (!$user->learnedPost()->where('post_id', $postId)->exists()) {            
+        //         // Share the post
+        //         $user->learnedPost()->create(['post_id' => $postId]);
+        //         // Additional logic (e.g., update post share count)
+        //         return redirect()->back()->with('success', 'Post learned');
+        //     }
+        //     return redirect()->back()->with('error', 'Already Learned');
+        // }
+
+        // controller function for learn post
+        public function learnedPost(Request $request)
+        {
+            $user = Auth::user();
+            $postId = $request->get('id');
+            $type = $request->get('type');
+            if( $type == 'learned' ){
+                if (!$user->learnedPost()->where('post_id', $postId)->exists()) {                        
+                    $user->learnedPost()->create(['post_id' => $postId]);                        
+                    return response()->json(['success' => true, 'message' => 'Post learned successfully']);
+                }else{
+                    return response()->json(['success' => false, 'errors' => [__('Post already learned')], 'message' => 'Post already learned']);
+                }
+            }else{
+                if ($user->learnedPost()->where('post_id', $postId)->exists()) {                            
+                    $user->learnedPost()->where('post_id', $postId)->delete();          
+                    return response()->json(['success' => true, 'message' => 'Post learned successfully']);
+                }else{
+                       return response()->json(['success' => false, 'errors' => [__('Post already learned')], 'message' => 'Post already learned']);
+                }
+            }
+        }
+
+        // old code for sharing post 
+
+        // public function sharePost($postId){
+        //     $user = Auth::user();
+        //     // Check if the user has already shared the post
+        //     if (!$user->sharedPosts()->where('post_id', $postId)->exists()) {
+        //         //$create_history = $this->create_history_on_visit_share_post( $postId , 'share');
+        //         // Share the post
+        //         $user->sharedPosts()->create(['post_id' => $postId]);
+        //         // Additional logic (e.g., update post share count)
+        //         return redirect()->back()->with('success', 'Post shared successfully');
+        //     }
+        //     return redirect()->back()->with('error', 'Post already shared');
+        // }
+
+        // new code for sharing post
+
+        public function sharePost(Request $request)
+        {
+            $user = Auth::user();
+            $postId = $request->get('id');
+            
+            if (!$user->sharedPost()->where('post_id', $postId)->exists()) {                        
+                $user->sharedPost()->create(['post_id' => $postId]);                        
+                return response()->json(['success' => true, 'message' => 'Post shared successfully']);
+            } else {
+                return response()->json(['success' => false, 'errors' => [__('Post already shared')], 'message' => 'Post already shared']);
+            }
+        }
+        
+
+
         /**
          * Updated the post pin status
          * @param Request $request

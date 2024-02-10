@@ -659,22 +659,22 @@ function showContent(contentType) {
 
 
 // js for intrest cocmunity
-document.getElementById('comunity_theameClick').addEventListener('click', function () {
-    // Get references to all elements with the 'side-bar-heading' class
-    var addThereDivs = document.querySelectorAll('.side-bar-heading');
+// document.getElementById('comunity_theameClick').addEventListener('click', function () {
+//     // Get references to all elements with the 'side-bar-heading' class
+//     var addThereDivs = document.querySelectorAll('.side-bar-heading');
 
-    // Loop through each element
-    addThereDivs.forEach(function (addThereDiv) {
-        // Check if the div already has the 'bg-white' class
-        if (addThereDiv.classList.contains('bg-white')) {
-            // If it has, remove the 'bg-white' class
-            addThereDiv.classList.remove('bg-white');
-        } else {
-            // If it doesn't have, add the 'bg-white' class
-            addThereDiv.classList.add('bg-white');
-        }
-    });
-});
+//     // Loop through each element
+//     addThereDivs.forEach(function (addThereDiv) {
+//         // Check if the div already has the 'bg-white' class
+//         if (addThereDiv.classList.contains('bg-white')) {
+//             // If it has, remove the 'bg-white' class
+//             addThereDiv.classList.remove('bg-white');
+//         } else {
+//             // If it doesn't have, add the 'bg-white' class
+//             addThereDiv.classList.add('bg-white');
+//         }
+//     });
+// });
 
 function execCommand(command, value = null) {
     document.execCommand(command, false, value);
@@ -765,6 +765,29 @@ function selectOption(iconName, clickedAnchor) {
     });
 }
 
+    // document.cookie = "name=Pankaj; expires=Sun, 10 Feb 2024 12:00:00 UTC; path=/";
 
+    //     // Get a cookie
+    //     function getCookie(name) {
+    //         const cookieString = document.cookie;
+    //         const cookies = cookieString.split('; ');
+    //         for (let i = 0; i < cookies.length; i++) {
+    //             const cookie = cookies[i].split('=');
+    //             if (cookie[0] === name) {
+    //                 return cookie[1];
+    //             }
+    //         }
+    //         return null;
+    //     }
+
+    //     const myCookie = getCookie('name');
+    //     console.log(myCookie); // Output: Pankaj
+
+    //     // Delete a cookie
+    //     function deleteCookie(name) {
+    //         document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    //     }
+
+    //     deleteCookie('name');
 
 

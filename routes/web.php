@@ -170,6 +170,11 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
     Route::get('/feed/postsHot', ['uses' => 'FeedController@postsHot', 'as'   => 'feed.postsHot']);
     Route::get('/feed/followedPeople', ['uses' => 'FeedController@followedPeople', 'as'   => 'feed.followedPeople']);
     Route::get('/feed/followedPeoplePagination', ['uses' => 'FeedController@followedPeoplePagination', 'as'   => 'feed.followedPeoplePagination']);
+    Route::get('/getCookie', ['uses' => 'CookieController@getCookie', 'as'   => 'getCookie']);
+    Route::get('/setCookie', ['uses' => 'CookieController@setCookie', 'as'   => 'setCookie']);
+    Route::get('/deleteCookie', ['uses' => 'CookieController@deleteCookie', 'as'   => 'deleteCookie']);
+
+
 
     // File uploader routes
     Route::group(['prefix' => 'attachment', 'as' => 'attachment.'], function () {
@@ -191,10 +196,11 @@ Route::group(['middleware' => ['auth','verified','2fa']], function () {
         Route::post('/bookmark', ['uses' => 'PostsController@updatePostBookmark', 'as'   => 'bookmark']);
         Route::post('/hide_unhide_posts', ['uses' => 'PostsController@hide_unhide_posts', 'as' => 'hide_unhide_posts']);        
         Route::post('/save_unsave_posts', ['uses' => 'PostsController@save_unsave_posts', 'as' => 'save_unsave_posts']);        
+        Route::post('/share', ['uses' => 'PostsController@sharePost', 'as'   => 'share']);
+        Route::post('/learnedPost', ['uses' => 'PostsController@learnedPost', 'as'   => 'learnedPost']);
         Route::post('/pin', ['uses' => 'PostsController@updatePostPin', 'as'   => 'pin']);
         Route::delete('/delete', ['uses' => 'PostsController@deletePost', 'as'   => 'delete']);
-        Route::post('/{postId}/share', ['uses' => 'PostsController@sharePost', 'as'   => 'share']);
-        Route::post('/{postId}/learnedPost', ['uses' => 'PostsController@learnedPost', 'as'   => 'learnedPost']);
+
     });
 
 

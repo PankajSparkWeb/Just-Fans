@@ -1,4 +1,64 @@
-{{-- on click event for open full div in  --}}
+<script>
+    window.onload = function() {
+        var postId = localStorage.getItem('mypost');
+        var username = localStorage.getItem('myusername');
+        
+        // Check if the user is navigating back from another page
+        var isNavigatingBack = localStorage.getItem('isNavigatingBack');
+        
+        // Clear the flag indicating navigation to previous or next post
+        localStorage.removeItem('isNavigatingBack');
+        
+        // Check if the current route is the feed page
+        if (window.location.pathname === '/feed' && postId && username && isNavigatingBack) {
+            var postBoxContainer = document.querySelector('.post-box[data-postid="' + postId + '"]');
+            if (postBoxContainer) {
+                postBoxContainer.classList.add('post-box-container-section');
+                
+                // Create a new div element to hold the post information
+                var postInfoDiv = document.createElement('div');
+                postInfoDiv.innerHTML = 'Last Visited Post: Post ID ' + postId + ', Username: ' + username;
+                
+                // Append the new div element to the post box container
+                postBoxContainer.appendChild(postInfoDiv);
+            }
+        }
+    }
+    
+    function savePostIdAndRedirect(postId, username) {
+        // Save the post ID and username to localStorage
+        localStorage.setItem('mypost', postId);
+        localStorage.setItem('myusername', username);
+        
+        // Set flag to indicate navigating away from posts page
+        localStorage.setItem('isNavigatingBack', true);
+        
+        // Redirect based on current route
+        var destination = '{{ route('posts.get', ['post_id' => '__POST_ID__', 'username' => '__USERNAME__']) }}';
+        destination = destination.replace('__POST_ID__', postId);
+        destination = destination.replace('__USERNAME__', username);
+        
+        window.location.href = destination;
+    }
+</script>
+
+
+
+
+
+
+
+
+
+    
+
+    
+
+
+
+
+
+
 <div class="post-box post-box-container-section {{isset($is_visited) && $is_visited ? 'visited_post' : '' }}" data-postID="{{ $post->id }}"  >
     <div class="post-content mt-3  pl-3 pr-3 upvote_downvote_section">
         @if (
@@ -130,8 +190,9 @@
                     </div>
                 </div>
             </div>
-            <div class="post-visit post-para"
-                onclick="window.location.href = '{{ Route::currentRouteName() != 'posts.get' ? route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) : '#comments' }}';">
+            {{-- new modified code --}}
+            <div class="post-visit post-para" 
+            onclick="savePostIdAndRedirect('{{ $post->id }}', '{{ $post->user->username }}')">
                 <p
                     class="text-break post-content-data  {{ getSetting('feed.enable_post_description_excerpts') && (strlen($post->text) >= 85 || substr_count($post->text, "\r\n") > 1) ? 'line-clamp-1 pb-0 mb-0' : '' }}">
                     {!! $post->text !!}</p>
@@ -144,6 +205,25 @@
                     </span>
                 @endif
             </div>
+
+
+            {{-- original code for visit post --}}
+            {{-- <div class="post-visit post-para"
+                onclick="window.location.href = '{{ Route::currentRouteName() != 'posts.get' ? route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) : '#comments' }}';">
+                <p
+                    class="text-break post-content-data  {{ getSetting('feed.enable_post_description_excerpts') && (strlen($post->text) >= 85 || substr_count($post->text, "\r\n") > 1) ? 'line-clamp-1 pb-0 mb-0' : '' }}">
+                    {!! $post->text !!}</p>
+                @if (getSetting('feed.enable_post_description_excerpts') &&
+                        (strlen($post->text) >= 85 || substr_count($post->text, "\r\n") > 1))
+                    <span class="text-primary pointer-cursor"
+                        onclick="Post.toggleFullDescription({{ $post->id }})">
+                        <span class="label-more">{{ __('More info') }}</span>
+                        <span class="label-less d-none">{{ __('Show less') }}</span>
+                    </span>
+                @endif
+            </div> --}}
+
+
             <div class="post-link-and-tag">
                 <div class="post-link-section">
             @if ($post->external_post_link)
@@ -291,13 +371,27 @@
                                     onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a>
                                    
 
-                                @if (auth()->check())
+                                {{-- @if (auth()->check())
                                     <!-- Example in a Blade view -->
                                     <form action="{{ route('posts.share', ['postId' => $post->id]) }}" method="post">
                                         @csrf
                                         <button type="submit" class='share-submit-button'>Share</button>
                                     </form>
-                                @endif
+                                @endif --}}
+
+                                <div class="post-save-btn">
+                                    @if (Auth::check())
+                                        @if(!PostsHelper::isPostShared($post->id))
+                                            <a class="dropdown-item share-button" href="javascript:void(0);" onclick="Post.togglePostShare({{$post->id}}, 'Share');">
+                                                Share
+                                            </a>
+                                        @else
+                                            <a class="dropdown-item share-button" href="javascript:void(0);" onclick="Post.togglePostShare({{$post->id}}, 'Already Shared');">
+                                                Share
+                                            </a>
+                                        @endif
+                                    @endif
+                                </div>
                                     
                             </div>
                         </div>
@@ -312,8 +406,19 @@
                             </a>
                             <div class="dropdown-menu">
                                 <!-- Dropdown menu links -->
-                                {{-- <a class="dropdown-item" href="javascript:void(0)"
-                                        onclick="shareOrCopyLink('{{ route('posts.get', ['post_id' => $post->id, 'username' => $post->user->username]) }}')">{{ __('Copy post link') }}</a> --}}
+                                <div class="post-save-btn">
+                                @if (Auth::check())
+                                    @if(!PostsHelper::isPostSaved($post->id))
+                                        <a class="dropdown-item save-button" href="javascript:void(0);" onclick="Post.togglePostSave({{$post->id}}, 'save');">
+                                            Save
+                                        </a>
+                                    @else
+                                        <a class="dropdown-item save-button" href="javascript:void(0);" onclick="Post.togglePostSave({{$post->id}}, 'unsave');">
+                                            Unsave
+                                        </a>
+                                    @endif
+                                @endif
+                            </div>
                                 @if (Auth::check())
                                     @if(!PostsHelper::isPostHidden($post->id))
                                         <a class="dropdown-item hide-button" href="javascript:void(0);" onclick="Post.togglePostHide({{$post->id}}, 'hide');"> Hide this post</a>
@@ -346,22 +451,21 @@
                             </div>
                         </div>
 
-                            <div class="post-save-btn">
+                                                        
+                            <div class="post-learned-btn bg-red">
                                 @if (Auth::check())
-                                    @if(!PostsHelper::isPostSaved($post->id))
-                                        <a class="dropdown-item save-button" href="javascript:void(0);" onclick="Post.togglePostSave({{$post->id}}, 'save');">
-                                            Save
+                                    @if(!PostsHelper::isPostLearned($post->id))
+                                        <a class="dropdown-item learned-btn" href="javascript:void(0);" onclick="Post.togglePostLearned({{$post->id}}, 'learned');">
+                                            Learned
                                         </a>
                                     @else
-                                        <a class="dropdown-item save-button" href="javascript:void(0);" onclick="Post.togglePostSave({{$post->id}}, 'unsave');">
-                                            Unsave
-                                        </a>
+                                        
                                     @endif
                                 @endif
                             </div>
                         
                         
-                        @if (auth()->check())
+                        {{-- @if (auth()->check())
                             @if(! auth()->user()->learnedPost()->where('post_id', $post->id)->exists())
                                 <div class="learned-btn">
                                     <form action="{{ route('posts.learnedPost', ['postId' => $post->id]) }}" method="post">
@@ -372,7 +476,7 @@
                             @else
                             <!-- already Read -->    
                             @endif
-                        @endif
+                        @endif --}}
 
                     </div>
                     <div class="mt-0 d-flex align-items-center justify-content-center post-count-details">

@@ -10,7 +10,9 @@ use App\Model\Subscription;
 use App\Model\Transaction;
 use App\Model\UserList;
 use App\Model\PostHide;
+use App\Model\UserSharedPost;
 use App\Model\SavePost;
+use App\Model\UserlearnedPost;
 use App\User;
 use Carbon\Carbon;
 use Cookie;
@@ -230,6 +232,27 @@ class PostsHelperServiceProvider extends ServiceProvider
     {
         return SavePost::where('post_id', $postId)->where('user_id', auth()->id())->exists();
     }
+    /**
+     * Check if a post is saved by a user.
+     *
+     * @param  int  $postId
+     * @return bool
+     */
+    public static function isPostShared($postId)
+    {
+        return UserSharedPost::where('post_id', $postId)->where('user_id', auth()->id())->exists();
+    }
+/**
+ * Check if a post is learned by a user.
+ *
+ * @param  int  $postId
+ * @return bool
+ */
+public static function isPostLearned($postId)
+{
+    return UserlearnedPost::where('post_id', $postId)->where('user_id', auth()->id())->exists();
+}
+
 
     /**
      * Returns lists of posts, conditioned by different filters.

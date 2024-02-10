@@ -2,6 +2,7 @@
 
 // History.php
 namespace App\Model;
+Use App\User;
 
 use Illuminate\Database\Eloquent\Model;
 
