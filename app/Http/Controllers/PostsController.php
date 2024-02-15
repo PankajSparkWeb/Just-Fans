@@ -29,6 +29,7 @@ use Illuminate\Support\Facades\Auth;
 use JavaScript;
 use Log;
 use View;
+use Session;
 
 class PostsController extends Controller
 {
@@ -43,8 +44,10 @@ class PostsController extends Controller
     {
         $post_id = $request->route('post_id');
         $username = $request->route('username');
+        Session::forget('mypostId');
+        Session::put('mypostId', $post_id);
+        $selectedPostId = Session::get('mypostId');
         
-
         $user = PostsHelperServiceProvider::getUserByUsername($username);
         if (! $user) {
             abort(404);

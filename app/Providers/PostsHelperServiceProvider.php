@@ -20,6 +20,7 @@ use DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\ServiceProvider;
 use View;
+use Illuminate\Support\Facades\Session;
 
 class PostsHelperServiceProvider extends ServiceProvider
 {
@@ -179,10 +180,11 @@ class PostsHelperServiceProvider extends ServiceProvider
      */
     public static function getFeedPosts($userID, $encodePostsToHtml = false, $pageNumber = false, $mediaType = false, $sortOrder = false, $searchTerm = '', $feed_type = '')
     {
+        $sortOrder = $feed_type == 'hot' ? 'hot' : $sortOrder;
 
-        $sortOrder = $feed_type == 'hot' ? 'hot' : $sortOrder;        
         return self::getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, false, false, false, $sortOrder, $searchTerm, $feed_type);
-    }   
+    }
+
 
     /**
      * Gets list of posts for profile.
@@ -267,66 +269,58 @@ public static function isPostLearned($postId)
     public static function getFilteredPosts($userID, $encodePostsToHtml, $pageNumber, $mediaType, $ownPosts, $hasSub, $bookMarksOnly, $sortOrder = false, $searchTerm = '', $feed_type = '')
     {
         $relations = ['user', 'reactions', 'attachments', 'bookmarks', 'postPurchases'];
-
-        // Fetching basic posts information
+    
         $posts = Post::withCount('tips')
             ->with($relations);
-
-        // For profile page
+    
         if ($ownPosts) {
             $posts->where('user_id', $userID);
-            // Registered
             if(Auth::check() && Auth::user()->id !== $userID) {
                 $posts = self::filterPosts($posts, $userID, 'scheduled');
                 $posts = self::filterPosts($posts, $userID, 'approvedPostsOnly');
             }
-            // Un-registered
             elseif (!Auth::check()){
                 $posts = self::filterPosts($posts, $userID, 'scheduled');
                 $posts = self::filterPosts($posts, $userID, 'approvedPostsOnly');
             }
             $posts = self::filterPosts($posts, $userID, 'pinned');
         }
-        // For bookmarks page
         elseif ($bookMarksOnly) {
             $posts = self::filterPosts($posts, $userID, 'bookmarks');
             $posts = self::filterPosts($posts, $userID, 'blocked');
         }
-        // For feed page
         else {            
             $posts = self::filterPosts($posts, $userID, 'all', false, false, '', $feed_type);
         }
-
-        if (!$ownPosts) { // More feed/bookmarks/search rules
+    
+        if (!$ownPosts) {
             $posts = self::filterPosts($posts, $userID, 'scheduled');
             $posts = self::filterPosts($posts, $userID, 'approvedPostsOnly');
         }
-
-        // Media type filters
+    
         if ($mediaType) {
             $posts = self::filterPosts($posts, $userID, 'media', $mediaType);
         }
-
-        // Filtering the search term
+    
         if($searchTerm){
             $posts = self::filterPosts($posts, $userID, 'search',false,false,$searchTerm);
         }
+    
+        $selectedPostId = Session::get('mypostId');
+        $perPage = $selectedPostId ? $posts->count() : getSetting('feed.feed_posts_per_page');
 
-        // Processing sorting
-        $posts = self::filterPosts($posts, $userID, 'order',false,$sortOrder);
-
+        // Paginate the results
         if ($pageNumber) {
-            $posts = $posts->paginate(getSetting('feed.feed_posts_per_page'), ['*'], 'page', $pageNumber)->appends(request()->query());
+            $posts = $posts->paginate($perPage, ['*'], 'page', $pageNumber)->appends(request()->query());
         } else {
-            $posts = $posts->paginate(getSetting('feed.feed_posts_per_page'))->appends(request()->query());
+            $posts = $posts->paginate($perPage)->appends(request()->query());
         }
-
+    
         if(Auth::check() && Auth::user()->role_id === 1){
             $hasSub = true;
         }
-
+    
         if ($encodePostsToHtml) {
-            // Posts encoded as JSON
             $data = [
                 'total' => $posts->total(),
                 'currentPage' => $posts->currentPage(),
@@ -344,12 +338,11 @@ public static function isPostLearned($postId)
                 }
                 $post->setAttribute('postPage',$data['currentPage']);
                 $post = ['id' => $post->id, 'html' => View::make('elements.feed.post-box')->with('post', $post)->render()];
-
+    
                 return $post;
             });
             $data['posts'] = $postsData;
         } else {
-            // Collection data posts | To be rendered on the server side
             $postsCurrentPage = $posts->currentPage();
             $posts->map(function ($post) use ($hasSub, $ownPosts, $postsCurrentPage) {
                 if ($ownPosts) {
@@ -363,7 +356,7 @@ public static function isPostLearned($postId)
             });
             $data = $posts;
         }
-
+    
         return $data;
     }
 

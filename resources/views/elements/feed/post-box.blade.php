@@ -1,63 +1,22 @@
 <script>
-    window.onload = function() {
-        var postId = localStorage.getItem('mypost');
-        var username = localStorage.getItem('myusername');
-        
-        // Check if the user is navigating back from another page
-        var isNavigatingBack = localStorage.getItem('isNavigatingBack');
-        
-        // Clear the flag indicating navigation to previous or next post
-        localStorage.removeItem('isNavigatingBack');
-        
-        // Check if the current route is the feed page
-        if (window.location.pathname === '/feed' && postId && username && isNavigatingBack) {
-            var postBoxContainer = document.querySelector('.post-box[data-postid="' + postId + '"]');
-            if (postBoxContainer) {
-                postBoxContainer.classList.add('post-box-container-section');
-                
-                // Create a new div element to hold the post information
-                var postInfoDiv = document.createElement('div');
-                postInfoDiv.innerHTML = 'Last Visited Post: Post ID ' + postId + ', Username: ' + username;
-                
-                // Append the new div element to the post box container
-                postBoxContainer.appendChild(postInfoDiv);
-            }
-        }
-    }
-    
     function savePostIdAndRedirect(postId, username) {
-        // Save the post ID and username to localStorage
-        localStorage.setItem('mypost', postId);
-        localStorage.setItem('myusername', username);
-        
+        // Save the post ID and username to sessionStorage
+        sessionStorage.setItem('mypost', postId);
+        sessionStorage.setItem('myusername', username);
+
         // Set flag to indicate navigating away from posts page
-        localStorage.setItem('isNavigatingBack', true);
-        
+        sessionStorage.setItem('isNavigatingBack', true);
+
         // Redirect based on current route
         var destination = '{{ route('posts.get', ['post_id' => '__POST_ID__', 'username' => '__USERNAME__']) }}';
+        console.log('destination',destination)
         destination = destination.replace('__POST_ID__', postId);
         destination = destination.replace('__USERNAME__', username);
-        
+
         window.location.href = destination;
     }
+
 </script>
-
-
-
-
-
-
-
-
-
-    
-
-    
-
-
-
-
-
 
 <div class="post-box post-box-container-section {{isset($is_visited) && $is_visited ? 'visited_post' : '' }}" data-postID="{{ $post->id }}"  >
     <div class="post-content mt-3  pl-3 pr-3 upvote_downvote_section">

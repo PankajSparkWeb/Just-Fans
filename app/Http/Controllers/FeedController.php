@@ -22,14 +22,12 @@ class FeedController extends Controller
     public function index(Request $request)
     {
         $interests = Newinterest::orderBy('name', 'asc')->get();
-        // Avoid (browser) page caching when hitting back button
-        header('Cache-Control: no-cache, no-store, must-revalidate'); // HTTP 1.1.
-        header('Pragma: no-cache'); // HTTP 1.0.
-        header('Expires: 0 '); // Proxies.
-
+    
+        // Retrieve the selected post ID from the session
+        // Adjust the query based on the selected post ID
         $startPage = PostsHelperServiceProvider::getFeedStartPage(PostsHelperServiceProvider::getPrevPage($request));
-        $posts = PostsHelperServiceProvider::getFeedPosts(Auth::user()->id, false, $startPage, false,false,false,'interest');        
-
+        $posts = PostsHelperServiceProvider::getFeedPosts(Auth::user()->id, false, $startPage, false, false, false, 'interest');
+    
         PostsHelperServiceProvider::shouldDeletePaginationCookie($request);
         JavaScript::put([
             'paginatorConfig' => [
@@ -42,7 +40,7 @@ class FeedController extends Controller
             ],
             'initialPostIDs' => $posts->pluck('id')->toArray(),
             'sliderConfig' => [
-              'autoslide'=> getSetting('feed.feed_suggestions_autoplay') ? true : false,
+                'autoslide'=> getSetting('feed.feed_suggestions_autoplay') ? true : false,
             ],
             'user' => [
                 'username' => Auth::user()->username,
@@ -52,16 +50,14 @@ class FeedController extends Controller
                     'following'=>Auth::user()->lists->firstWhere('type', 'following')->id,
                 ],
             ],
-
         ]);
-
+    
         return view('pages.feed', [
             'posts' => $posts,
             'interests' => $interests,
             'suggestions' => MembersHelperServiceProvider::getSuggestedMembers(),
         ]);
     }
-
     public function hotFeed(Request $request)
     {
         $interests = Newinterest::orderBy('name', 'asc')->get();
